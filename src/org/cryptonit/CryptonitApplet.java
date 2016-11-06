@@ -6,12 +6,12 @@ import javacard.framework.ISO7816;
 import javacard.framework.ISOException;
 
 public class CryptonitApplet extends Applet {
-    protected CryptonitApplet() {
+    protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         register();
     }
 
     public static void install(byte[] bArray, short bOffset, byte bLength) {
-        new CryptonitApplet();
+        new CryptonitApplet(bArray, bOffset, bLength);
     }
 
     @Override
