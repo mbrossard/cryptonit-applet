@@ -1,6 +1,9 @@
 package org.cryptonit;
 
-import javacard.framework.*;
+import javacard.framework.APDU;
+import javacard.framework.Applet;
+import javacard.framework.ISO7816;
+import javacard.framework.ISOException;
 
 public class CryptonitApplet extends Applet {
     protected CryptonitApplet() {
