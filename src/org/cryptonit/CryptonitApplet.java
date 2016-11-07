@@ -32,6 +32,16 @@ public class CryptonitApplet extends Applet {
             }
             ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
         }
-        ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+
+        switch (ins) {
+            case ISO7816.INS_SELECT:
+                doSelect(apdu);
+                break;
+            default:
+                ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+        }
+    }
+
+    private void doSelect(APDU apdu) throws ISOException {
     }
 }
