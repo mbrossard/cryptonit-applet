@@ -13,6 +13,7 @@ public class CryptonitApplet extends Applet {
     private final static byte PIN_MAX_TRIES  = 5;
 
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
+        pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         register();
     }
 
