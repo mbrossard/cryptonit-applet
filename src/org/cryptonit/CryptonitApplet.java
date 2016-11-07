@@ -12,6 +12,7 @@ public class CryptonitApplet extends Applet {
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
 
+    public static final byte INS_VERIFY_PIN =                  (byte) 0x20;
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         register();
@@ -37,11 +38,17 @@ public class CryptonitApplet extends Applet {
             case ISO7816.INS_SELECT:
                 doSelect(apdu);
                 break;
+            case INS_VERIFY_PIN:
+                doVerifyPin(apdu);
+                break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
         }
     }
 
     private void doSelect(APDU apdu) throws ISOException {
+    }
+
+    private void doVerifyPin(APDU apdu) throws ISOException {
     }
 }
