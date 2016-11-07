@@ -4,8 +4,14 @@ import javacard.framework.APDU;
 import javacard.framework.Applet;
 import javacard.framework.ISO7816;
 import javacard.framework.ISOException;
+import javacard.framework.OwnerPIN;
 
 public class CryptonitApplet extends Applet {
+    private OwnerPIN pin;
+
+    private final static byte PIN_MAX_LENGTH = 8;
+    private final static byte PIN_MAX_TRIES  = 5;
+
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         register();
     }
