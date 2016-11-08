@@ -51,6 +51,13 @@ public class CryptonitApplet extends Applet {
     }
 
     private void doSelect(APDU apdu) throws ISOException {
+        byte[] buf = apdu.getBuffer();
+        byte p1 = buf[ISO7816.OFFSET_P1];
+        byte p2 = buf[ISO7816.OFFSET_P2];
+
+        if((p1 == 0x04) && (p2 == 0x00)) {
+            ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
+        }
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
     }
 
