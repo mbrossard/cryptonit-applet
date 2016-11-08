@@ -51,6 +51,7 @@ public class CryptonitApplet extends Applet {
     }
 
     private void doSelect(APDU apdu) throws ISOException {
+        ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
     }
 
     private void doVerifyPin(APDU apdu) throws ISOException {
