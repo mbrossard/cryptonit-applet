@@ -62,5 +62,16 @@ public class CryptonitApplet extends Applet {
     }
 
     private void doVerifyPin(APDU apdu) throws ISOException {
+        byte[] buffer = apdu.getBuffer();
+        short offset, lc;
+
+        if ((lc = apdu.setIncomingAndReceive()) != apdu.getIncomingLength()) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
+        offset = apdu.getOffsetCdata();
+
+        if(!pin.check(buffer, offset, lc)) {
+            ISOException.throwIt((short)(SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
+        }
     }
 }
