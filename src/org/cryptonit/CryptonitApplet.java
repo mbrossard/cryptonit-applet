@@ -27,13 +27,6 @@ public class CryptonitApplet extends Applet {
         byte buffer[] = apdu.getBuffer();
         byte ins = buffer[ISO7816.OFFSET_INS];
 
-		if (apdu.isISOInterindustryCLA()) {
-            if (ins == ISO7816.INS_SELECT) {
-                return;
-            }
-            ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
-        }
-
         if (apdu.isSecureMessagingCLA()) {
             ISOException.throwIt(ISO7816.SW_SECURE_MESSAGING_NOT_SUPPORTED);
         }
