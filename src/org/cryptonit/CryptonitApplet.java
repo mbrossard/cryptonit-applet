@@ -13,6 +13,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
 
+    public static final byte INS_GET_DATA =                    (byte) 0xCB;
     public static final byte INS_VERIFY_PIN =                  (byte) 0x20;
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
@@ -38,6 +39,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             case INS_VERIFY_PIN:
                 doVerifyPin(apdu);
+                break;
+            case INS_GET_DATA:
+                doGetData(apdu);
                 break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
@@ -75,5 +79,15 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if(!pin.check(buffer, offset, lc)) {
             ISOException.throwIt((short)(SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
         }
+    }
+
+    private void doGetData(APDU apdu) throws ISOException {
+        byte[] buf = apdu.getBuffer();
+        byte p1 = buf[ISO7816.OFFSET_P1];
+        byte p2 = buf[ISO7816.OFFSET_P2];
+        short lc = apdu.setIncomingAndReceive();
+        short offset = apdu.getOffsetCdata();
+
+        ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
     }
 }
