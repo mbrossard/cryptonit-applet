@@ -5,8 +5,9 @@ import javacard.framework.Applet;
 import javacard.framework.ISO7816;
 import javacard.framework.ISOException;
 import javacard.framework.OwnerPIN;
+import javacardx.apdu.ExtendedLength;
 
-public class CryptonitApplet extends Applet {
+public class CryptonitApplet extends Applet implements ExtendedLength {
     private OwnerPIN pin;
 
     private final static byte PIN_MAX_LENGTH = 8;
