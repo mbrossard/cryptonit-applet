@@ -8,7 +8,7 @@
   <target name="applet">
     <javacard jckit="sdks/jc222_kit">
       <cap output="Cryptonit.cap" sources="src/org/cryptonit">
-        <applet class="org.cryptonit.CryptonitApplet" aid="A00000000001"/>
+        <applet class="org.cryptonit.CryptonitApplet" aid="A0:00:00:03:08:00:00:10:00"/>
       </cap>
     </javacard>
   </target>
