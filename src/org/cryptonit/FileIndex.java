@@ -16,7 +16,7 @@ public class FileIndex {
     };
 
     public FileIndex() {
-        entries = new IndexEntry[4];
+        entries = new IndexEntry[11];
         entries[DISCOVERY      ] = new IndexEntry(DISCOVERY      , (short) 0x6050, discovery);
     }
 }
