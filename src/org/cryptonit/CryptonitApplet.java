@@ -9,6 +9,7 @@ import javacardx.apdu.ExtendedLength;
 
 public class CryptonitApplet extends Applet implements ExtendedLength {
     private OwnerPIN pin;
+    private FileIndex index;
 
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
@@ -18,6 +19,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     public static final byte INS_GENERATE_ASYMMETRIC_KEYPAIR = (byte) 0x47;
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
+        index = new FileIndex();
         register();
     }
 
