@@ -138,6 +138,21 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
     }
 
+    private byte keyMapping(byte keyRef) {
+        switch (keyRef) {
+            case (byte)0x9A:
+                return 0;
+            case (byte)0x9C:
+                return 1;
+            case (byte)0x9D:
+                return 2;
+            case (byte)0x9E:
+                return 3;
+            default:
+                return (byte) 0xFF;
+        }
+    }
+
     private void doGenerateKeyPair(APDU apdu) throws ISOException {
     }
 }
