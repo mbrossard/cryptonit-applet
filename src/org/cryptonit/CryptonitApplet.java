@@ -171,5 +171,13 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                              (byte) 0, (byte) prefix.length) != 0) {
             ISOException.throwIt(ISO7816.SW_WRONG_DATA);
         }
+
+        switch (buf[offset + 4]) {
+            case 0x07:
+            case 0x11:
+            case 0x14:
+            default:
+                ISOException.throwIt(ISO7816.SW_WRONG_DATA);
+        }
     }
 }
