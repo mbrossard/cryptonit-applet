@@ -110,6 +110,13 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
         switch(buf[offset+1]) {
             case 0x1:
+                if (buf[offset + 2] == (byte) 0x7E) {
+                    byte [] d = index.entries[FileIndex.DISCOVERY].content;
+                    apdu.setOutgoing();
+                    apdu.setOutgoingLength((short) d.length);
+                    apdu.sendBytesLong(d, (byte) 0, (short) d.length);
+                    return;
+                }
                 break;
             case 0x3:
                 break;
