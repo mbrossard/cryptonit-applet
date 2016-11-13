@@ -159,5 +159,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         byte p2 = buf[ISO7816.OFFSET_P2];
         short lc = apdu.setIncomingAndReceive();
         short offset = apdu.getOffsetCdata();
+
+        if((p1 != (byte) 0x00) || (keyMapping(p2) == (byte) 0xFF)) {
+            ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
+        }
     }
 }
