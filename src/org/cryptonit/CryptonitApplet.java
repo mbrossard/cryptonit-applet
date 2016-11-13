@@ -15,6 +15,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
     public static final byte INS_GET_DATA =                    (byte) 0xCB;
     public static final byte INS_VERIFY_PIN =                  (byte) 0x20;
+    public static final byte INS_GENERATE_ASYMMETRIC_KEYPAIR = (byte) 0x47;
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         register();
@@ -42,6 +43,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             case INS_GET_DATA:
                 doGetData(apdu);
+                break;
+            case INS_GENERATE_ASYMMETRIC_KEYPAIR:
+                doGenerateKeyPair(apdu);
                 break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
@@ -93,5 +97,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         short offset = apdu.getOffsetCdata();
 
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
+    }
+
+    private void doGenerateKeyPair(APDU apdu) throws ISOException {
     }
 }
