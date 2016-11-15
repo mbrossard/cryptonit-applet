@@ -185,6 +185,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
     }
 
+    private void sendRSAPublicKey(APDU apdu, RSAPublicKey key) {
+    }
+
     void doGenRSA(APDU apdu, byte keyRef) {
         KeyPair kp = null;
         byte index = keyMapping(keyRef);
@@ -200,6 +203,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (kp != null) {
             kp.genKeyPair();
             keys[index] = kp.getPrivate();
+            sendRSAPublicKey(apdu, (RSAPublicKey)kp.getPublic());
         }
     }
 }
