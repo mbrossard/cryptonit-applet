@@ -1,10 +1,16 @@
 package org.cryptonit;
 
 import javacard.framework.APDU;
+import javacard.framework.APDUException;
 import javacard.framework.Applet;
 import javacard.framework.ISO7816;
 import javacard.framework.ISOException;
 import javacard.framework.OwnerPIN;
+import javacard.framework.Util;
+import javacard.security.Key;
+import javacard.security.KeyBuilder;
+import javacard.security.KeyPair;
+import javacard.security.RSAPublicKey;
 import javacardx.apdu.ExtendedLength;
 
 public class CryptonitApplet extends Applet implements ExtendedLength {
