@@ -186,7 +186,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     }
 
     private void sendRSAPublicKey(APDU apdu, RSAPublicKey key) {
-        byte [] buf = new byte [270];
+        byte [] buf = new byte [271];
         short off = 0;
 
         byte [] header = new byte [] {
@@ -197,6 +197,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         Util.arrayCopy(header, (short) 0, buf, (short) 0, (short) header.length);
         off += header.length;
         short l = key.getModulus(buf, (short) off);
+        if(l > 0x0100) {
+            buf[0x04] = (byte)(l - 0x0100 + 9);
+            buf[0x08] = (byte)(l - 0x0100);
+        }
         off += l;
         buf[off++] = (byte) 0x82;
         buf[off++] = (byte) 0x03;
