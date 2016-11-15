@@ -174,10 +174,15 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
         switch (buf[offset + 4]) {
             case 0x07:
+                doGenRSA(apdu, buf[ISO7816.OFFSET_P2]);
+                break;
             case 0x11:
             case 0x14:
             default:
                 ISOException.throwIt(ISO7816.SW_WRONG_DATA);
         }
+    }
+
+    void doGenRSA(APDU apdu, byte keyRef) {
     }
 }
