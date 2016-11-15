@@ -10,6 +10,7 @@ import javacardx.apdu.ExtendedLength;
 public class CryptonitApplet extends Applet implements ExtendedLength {
     private OwnerPIN pin;
     private FileIndex index;
+    private Key[] keys = null;
 
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
@@ -20,6 +21,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         index = new FileIndex();
+        keys = new Key[4];
         register();
     }
 
@@ -185,6 +187,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
     void doGenRSA(APDU apdu, byte keyRef) {
         KeyPair kp = null;
+        byte index = keyMapping(keyRef);
+
         try {
             kp = new KeyPair(KeyPair.ALG_RSA_CRT, KeyBuilder.LENGTH_RSA_2048);
         } catch (CryptoException e) {
@@ -192,6 +196,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
             }
             ISOException.throwIt(ISO7816.SW_UNKNOWN);
+        }
+        if (kp != null) {
+            kp.genKeyPair();
+            keys[index] = kp.getPrivate();
         }
     }
 }
