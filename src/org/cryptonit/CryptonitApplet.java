@@ -31,7 +31,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         index = new FileIndex();
-        keys = new Key[(byte)4];
+        keys  = new Key[(byte) 4];
         register();
     }
 
@@ -71,7 +71,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         byte p1 = buf[ISO7816.OFFSET_P1];
         byte p2 = buf[ISO7816.OFFSET_P2];
 
-        if((p1 == 0x04) && (p2 == 0x00)) {
+        if((p1 == (byte) 0x04) && (p2 == (byte) 0x00)) {
             final byte [] apt = { (byte) 0x61, (byte) 0x11, (byte) 0x4F, (byte) 0x06,
                                   (byte) 0x00, (byte) 0x00, (byte) 0x10, (byte) 0x00,
                                   (byte) 0x01, (byte) 0x00, (byte) 0x79, (byte) 0x07,
