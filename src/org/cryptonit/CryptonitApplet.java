@@ -184,5 +184,14 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     }
 
     void doGenRSA(APDU apdu, byte keyRef) {
+        KeyPair kp = null;
+        try {
+            kp = new KeyPair(KeyPair.ALG_RSA_CRT, KeyBuilder.LENGTH_RSA_2048);
+        } catch (CryptoException e) {
+            if (e.getReason() == CryptoException.NO_SUCH_ALGORITHM) {
+                ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
+            }
+            ISOException.throwIt(ISO7816.SW_UNKNOWN);
+        }
     }
 }
