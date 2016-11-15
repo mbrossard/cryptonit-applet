@@ -27,7 +27,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         index = new FileIndex();
-        keys = new Key[4];
+        keys = new Key[(byte)4];
         register();
     }
 
@@ -75,7 +75,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                                   (byte) 0x00, (byte) 0x03, (byte) 0x08 };
             apdu.setOutgoing();
             apdu.setOutgoingLength((short) apt.length);
-            apdu.sendBytesLong(apt, (byte) 0, (byte) apt.length);
+            apdu.sendBytesLong(apt, (byte) 0, (short) apt.length);
             return;
         }
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
@@ -106,7 +106,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         short lc = apdu.setIncomingAndReceive();
         short offset = apdu.getOffsetCdata();
 
-        if(p1 != (byte)0x3F || p2 != (byte)0xFF) {
+        if(p1 != (byte) 0x3F || p2 != (byte) 0xFF) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
         if (lc != apdu.getIncomingLength()) {
@@ -115,11 +115,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (buf[offset] != (byte) 0x5C) {
             ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
-
-        switch(buf[offset+1]) {
+        switch (buf[(short) (offset + 1)]) {
             case 0x1:
-                if (buf[offset + 2] == (byte) 0x7E) {
-                    byte [] d = index.entries[FileIndex.DISCOVERY].content;
+                if (buf[(short) (offset + 2)] == (byte) 0x7E) {
+                    byte[] d = index.entries[FileIndex.DISCOVERY].content;
                     apdu.setOutgoing();
                     apdu.setOutgoingLength((short) d.length);
                     apdu.sendBytesLong(d, (byte) 0, (short) d.length);
@@ -127,14 +126,14 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 }
                 break;
             case 0x3:
-                if ((buf[offset + 2] != (byte) 0x5F)
-                    || (buf[offset + 3] != (byte) 0xC1)
-                    || (buf[offset + 4] == (byte) 0x4)
-                    || (buf[offset + 4] > (byte) 0xA)) {
+                if ((buf[(short) (offset + 2)] != (byte) 0x5F)
+                        || (buf[(short) (offset + 3)] != (byte) 0xC1)
+                        || (buf[(short) (offset + 4)] == (byte) 0x4)
+                        || (buf[(short) (offset + 4)] > (byte) 0xA)) {
                     ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
                 }
-                byte[] d = index.entries[buf[offset + 4] - 1].content;
-                if(d != null) {
+                byte[] d = index.entries[(byte)(buf[(byte)(offset + 4)] - 1)].content;
+                if (d != null) {
                     apdu.setOutgoing();
                     apdu.setOutgoingLength((short) d.length);
                     apdu.sendBytesLong(d, (byte) 0, (short) d.length);
@@ -142,7 +141,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 }
                 break;
             default:
-         }
+        }
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
     }
 
@@ -180,7 +179,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             ISOException.throwIt(ISO7816.SW_WRONG_DATA);
         }
 
-        switch (buf[offset + 4]) {
+        switch (buf[(short) (offset + 4)]) {
             case 0x07:
                 doGenRSA(apdu, buf[ISO7816.OFFSET_P2]);
                 break;
@@ -202,24 +201,24 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
         Util.arrayCopy(header, (short) 0, buf, (short) 0, (short) header.length);
         off += header.length;
-        short l = key.getModulus(buf, (short) off);
+        short l = key.getModulus(buf, off);
         if(l > 0x0100) {
-            buf[0x04] = (byte)(l - 0x0100 + 9);
-            buf[0x08] = (byte)(l - 0x0100);
+            buf[(short)0x04] = (byte)(l - 0x0100 + 9);
+            buf[(short)0x08] = (byte)(l - 0x0100);
         }
         off += l;
         buf[off++] = (byte) 0x82;
         buf[off++] = (byte) 0x03;
-        l = key.getExponent(buf, (short) off);
+        l = key.getExponent(buf, off);
         off += l;
         apdu.setOutgoing();
         apdu.setOutgoingLength(off);
-        apdu.sendBytesLong(buf, (byte) 0, (short) off);
+        apdu.sendBytesLong(buf, (byte) 0, off);
     }
 
     void doGenRSA(APDU apdu, byte keyRef) {
         KeyPair kp = null;
-        byte index = keyMapping(keyRef);
+        byte id = keyMapping(keyRef);
 
         try {
             kp = new KeyPair(KeyPair.ALG_RSA_CRT, KeyBuilder.LENGTH_RSA_2048);
@@ -231,7 +230,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
         if (kp != null) {
             kp.genKeyPair();
-            keys[index] = kp.getPrivate();
+            keys[id] = kp.getPrivate();
             sendRSAPublicKey(apdu, (RSAPublicKey)kp.getPublic());
         }
     }
