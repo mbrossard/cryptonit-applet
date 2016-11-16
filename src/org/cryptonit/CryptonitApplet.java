@@ -76,11 +76,19 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         byte p2 = buf[ISO7816.OFFSET_P2];
 
         if((p1 == (byte) 0x04) && (p2 == (byte) 0x00)) {
-            final byte [] apt = { (byte) 0x61, (byte) 0x11, (byte) 0x4F, (byte) 0x06,
-                                  (byte) 0x00, (byte) 0x00, (byte) 0x10, (byte) 0x00,
-                                  (byte) 0x01, (byte) 0x00, (byte) 0x79, (byte) 0x07,
-                                  (byte) 0x4F, (byte) 0x05, (byte) 0xA0, (byte) 0x00,
-                                  (byte) 0x00, (byte) 0x03, (byte) 0x08 };
+            final byte [] apt = {
+                /* Application property template */
+                (byte) 0x61, (byte) 0x11,
+                /* - Application identifier of application */
+                (byte) 0x4F, (byte) 0x06,
+                (byte) 0x00, (byte) 0x00, (byte) 0x10, (byte) 0x00, (byte) 0x01,
+                (byte) 0x00,
+                /* - Coexistent tag allocation authority */
+                (byte) 0x79, (byte) 0x07,
+                /*   - Application identifier */
+                (byte) 0x4F, (byte) 0x05,
+                (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08
+            };
             apdu.setOutgoing();
             apdu.setOutgoingLength((short) apt.length);
             apdu.sendBytesLong(apt, (byte) 0, (short) apt.length);
