@@ -180,6 +180,23 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 || (id > (byte) 0x09)) {
             ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
+        if(buf[(short) (offset + 5)] != (byte) 0x53) {
+            ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+        }
+
+        offset += 6;
+        short l = (short) buf[offset];
+        if ((buf[offset] & (byte) 0x80) == 0) {
+            offset += 1;
+        } else if (buf[offset] == (byte) 0x81) {
+            l = (short) (buf[(short) (offset + 1)]);
+            offset += 2;
+        } else if (buf[offset] == (byte) 0x82) {
+            l = Util.getShort(buf, (short) (offset + 1));
+            offset += 3;
+        } else {
+            ISOException.throwIt(ISO7816.SW_UNKNOWN);
+        }
     }
     
     private byte keyMapping(byte keyRef) {
