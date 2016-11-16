@@ -9,9 +9,13 @@ public class FileIndex {
     public IndexEntry [] entries;
 
     public final static byte[] discovery = {
-        (byte) 0x7E, (byte) 0x12, (byte) 0x4F, (byte) 0x0B, (byte) 0xA0,
-        (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08, (byte) 0x00,
+        /* (0x7E) Discovery Object: interindustry ISO7816 template */
+        (byte) 0x7E, (byte) 0x12,
+        /* - (0x4F) AID of Application */
+        (byte) 0x4F, (byte) 0x0B,
+        (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08, (byte) 0x00,
         (byte) 0x00, (byte) 0x10, (byte) 0x00, (byte) 0x01, (byte) 0x00,
+        /* - (0x5F2F)  Usage Policy */
         (byte) 0x5F, (byte) 0x2F, (byte) 0x02, (byte) 0x40, (byte) 0x00
     };
 
