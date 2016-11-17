@@ -98,19 +98,21 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     }
 
     private void doVerifyPin(APDU apdu) throws ISOException {
-        byte[] buffer = apdu.getBuffer();
-        short offset, lc;
+        byte[] buf = apdu.getBuffer();
+        byte p1 = buf[ISO7816.OFFSET_P1];
+        byte p2 = buf[ISO7816.OFFSET_P2];
+        short offset, lc = apdu.setIncomingAndReceive();
 
-        if(buffer[ISO7816.OFFSET_P1] != 0x00 || buffer[ISO7816.OFFSET_P2] != 0x01) {
+        if((p1 != (byte) 0x00 && p1 != (byte) 0x01) || (p2 != (byte) 0x80)) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
 
-        if ((lc = apdu.setIncomingAndReceive()) != apdu.getIncomingLength()) {
+        if ((lc != apdu.getIncomingLength()) || lc != (short) 8) {
             ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
         }
         offset = apdu.getOffsetCdata();
 
-        if(!pin.check(buffer, offset, (byte) lc)) {
+        if(!pin.check(buf, offset, (byte) lc)) {
             ISOException.throwIt((short)(SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
         }
     }
