@@ -4,6 +4,7 @@ import javacard.framework.APDU;
 import javacard.framework.Applet;
 import javacard.framework.ISO7816;
 import javacard.framework.ISOException;
+import javacard.framework.JCSystem;
 import javacard.framework.OwnerPIN;
 import javacard.framework.Util;
 import javacard.security.CryptoException;
@@ -17,6 +18,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private OwnerPIN pin;
     private FileIndex index;
     private Key[] keys = null;
+    private boolean[] authenticated = null;
 
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
@@ -32,6 +34,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         index = new FileIndex();
         keys  = new Key[(byte) 4];
+        authenticated = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_DESELECT);
         register();
     }
 
@@ -112,7 +115,11 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         offset = apdu.getOffsetCdata();
 
         if(!pin.check(buf, offset, (byte) lc)) {
+            authenticated[0] = false;
             ISOException.throwIt((short)(SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
+        } else {
+            authenticated[0] = true;
+            ISOException.throwIt(ISO7816.SW_NO_ERROR);
         }
     }
 
