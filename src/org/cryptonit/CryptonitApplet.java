@@ -328,5 +328,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if(keys[id] == null) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
+
+        short cur = offset;
+        if(buf[cur++] != (byte)0x7C) {
+            ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+        }
     }
 }
