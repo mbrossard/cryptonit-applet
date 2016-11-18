@@ -374,6 +374,11 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if(m < lc && buf[m] == (byte) 0x81) {
             short k = decodeLength(buf, (short) (m + 1));
             m += lengthLength(k) + 1;
+
+            byte[] signature = null;
+            short l = 0;
+            if (keys[id].getType() == KeyBuilder.TYPE_RSA_CRT_PRIVATE) {
+            }
         }
     }
 }
