@@ -26,6 +26,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     public static final byte INS_GET_DATA =                    (byte) 0xCB;
     public static final byte INS_PUT_DATA =                    (byte) 0xDB;
     public static final byte INS_VERIFY_PIN =                  (byte) 0x20;
+    public static final byte INS_GENERAL_AUTHENTICATE =        (byte) 0x87;
     public static final byte INS_GENERATE_ASYMMETRIC_KEYPAIR = (byte) 0x47;
 
     public static final short SW_PIN_TRIES_REMAINING = 0x63C0;
@@ -66,6 +67,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             case INS_GENERATE_ASYMMETRIC_KEYPAIR:
                 doGenerateKeyPair(apdu);
+                break;
+            case INS_GENERAL_AUTHENTICATE:
+                doPrivateKeyOperation(apdu);
                 break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
@@ -311,5 +315,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             keys[id] = kp.getPrivate();
             sendRSAPublicKey(apdu, (RSAPublicKey)kp.getPublic());
         }
+    }
+
+    private void doPrivateKeyOperation(APDU apdu) throws ISOException {
     }
 }
