@@ -372,6 +372,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         cur += lengthLength(decodeLength(buf, cur));
         short m = getTag(buf, cur, lc, (byte) 0x81);
         if(m < lc && buf[m] == (byte) 0x81) {
+            short k = decodeLength(buf, (short) (m + 1));
+            m += lengthLength(k) + 1;
         }
     }
 }
