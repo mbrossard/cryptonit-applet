@@ -365,5 +365,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if(buf[cur++] != (byte)0x7C) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
+
+        cur += lengthLength(decodeLength(buf, cur));
+        short m = getTag(buf, cur, lc, (byte) 0x81);
+        if(m < lc && buf[m] == (byte) 0x81) {
+        }
     }
 }
