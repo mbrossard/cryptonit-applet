@@ -317,6 +317,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
     }
 
+    
     public static short decodeLength(byte[] buf, short offset) {
         byte b = buf[offset];
         short s = buf[offset];
@@ -332,6 +333,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             }
         }
         return s;
+    }
+
+    public static short lengthLength(short l) {
+        return (short) ((l < 128) ? 1 : ((l < 256) ? 2 : 3));
     }
     private void doPrivateKeyOperation(APDU apdu) throws ISOException {
         byte[] buf = apdu.getBuffer();
