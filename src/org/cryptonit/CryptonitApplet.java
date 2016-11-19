@@ -163,7 +163,12 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                         || (buf[(short) (offset + 4)] > (byte) 0xA)) {
                     ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
                 }
-                byte[] d = index.entries[(byte)(buf[(byte)(offset + 4)] - 1)].content;
+                byte id = (byte)(buf[(byte)(offset + 4)] - 1);
+                if (((id == (byte) 0x2) || (id == (byte) 0x7)
+                     || (id == (byte) 0x8)) && authenticated[0] == false) {
+                    ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
+                }
+                byte[] d = index.entries[id].content;
                 if (d != null) {
                     apdu.setOutgoing();
                     apdu.setOutgoingLength((short) d.length);
