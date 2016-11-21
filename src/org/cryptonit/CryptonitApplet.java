@@ -386,6 +386,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 if(k != 256) {
                     ISOException.throwIt(ISO7816.SW_DATA_INVALID);
                 }
+                l = (short) 264;
+                signature = new byte[l];
             }
         }
     }
