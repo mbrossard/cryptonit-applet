@@ -393,7 +393,14 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                     (byte) 0x82, (byte) 0x82, (byte) 0x01, (byte) 0x00
                 }, (short) 0, signature, (short) 0, (short) 8);
                 rsa_cipher.init(keys[id], Cipher.MODE_DECRYPT);
+                try {
                     k = rsa_cipher.doFinal(buf, m, k, signature, (short) 8);
+                } catch (CryptoException e) {
+                    if (e.getReason() == CryptoException.NO_SUCH_ALGORITHM) {
+                        ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
+                    }
+                    ISOException.throwIt(ISO7816.SW_UNKNOWN);
+                }
             }
         }
     }
