@@ -388,6 +388,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 }
                 l = (short) 264;
                 signature = new byte[l];
+                Util.arrayCopy(new byte[]{
+                    (byte) 0x7C, (byte) 0x82, (byte) 0x01, (byte) 0x04,
+                    (byte) 0x82, (byte) 0x82, (byte) 0x01, (byte) 0x00
+                }, (short) 0, signature, (short) 0, (short) 8);
             }
         }
     }
