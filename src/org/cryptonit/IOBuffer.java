@@ -21,4 +21,11 @@ public class IOBuffer {
         this.buffer = JCSystem.makeTransientByteArray((short)256, JCSystem.CLEAR_ON_DESELECT);
         this.shorts = JCSystem.makeTransientShortArray((short)3, JCSystem.CLEAR_ON_DESELECT);
     }
+
+    public void sendBuffer(byte[] buf, short length, APDU apdu) {
+        short le = apdu.setOutgoing();
+
+        apdu.setOutgoingLength(le);
+        apdu.sendBytesLong(buf, (short) 0, le);
+    }
 }
