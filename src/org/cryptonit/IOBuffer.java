@@ -29,6 +29,13 @@ public class IOBuffer {
             le = apdu.getOutBlockSize();
         }
 
+        if(le < length) {
+            short l = (short) (length - le);
+            Util.arrayCopy(buf, (short) le, this.buffer, (short) 0, l);
+            this.bools[isLOADED] = true;
+            this.bools[isFILE] = false;
+        }
+
         apdu.setOutgoingLength(le);
         apdu.sendBytesLong(buf, (short) 0, le);
     }
