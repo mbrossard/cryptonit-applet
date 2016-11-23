@@ -7,6 +7,10 @@ public class IOBuffer {
     private byte [] buffer = null;
 
     private short [] shorts = null;
+    final private byte SIZE = 0x0;
+    final private byte PATH = 0x1;
+    final private byte OFFSET = 0x2;
+
     private boolean [] bools = null;
     final private byte isLOADED = 0x0;
     final private byte isFILE   = 0x1;
