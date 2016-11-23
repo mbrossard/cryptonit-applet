@@ -7,6 +7,9 @@ public class IOBuffer {
     private byte [] buffer = null;
 
     private boolean [] bools = null;
+    final private byte isLOADED = 0x0;
+    final private byte isFILE   = 0x1;
+
     public IOBuffer(FileIndex index) {
         this.index = index;
         this.bools = JCSystem.makeTransientBooleanArray((short) 2, JCSystem.CLEAR_ON_DESELECT);
