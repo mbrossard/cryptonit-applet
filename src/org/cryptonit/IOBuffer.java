@@ -31,6 +31,9 @@ public class IOBuffer {
 
         if(le < length) {
             short l = (short) (length - le);
+            if(l > (short) this.buffer.length) {
+                ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+            }
             Util.arrayCopy(buf, (short) le, this.buffer, (short) 0, l);
             this.bools[isLOADED] = true;
             this.bools[isFILE] = false;
