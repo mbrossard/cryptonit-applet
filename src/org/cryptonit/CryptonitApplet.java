@@ -26,6 +26,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private final static byte PIN_MAX_TRIES  = 5;
 
     public static final byte INS_GET_DATA =                    (byte) 0xCB;
+    public static final byte INS_GET_RESPONSE =                (byte) 0xC0;
     public static final byte INS_PUT_DATA =                    (byte) 0xDB;
     public static final byte INS_VERIFY_PIN =                  (byte) 0x20;
     public static final byte INS_GENERAL_AUTHENTICATE =        (byte) 0x87;
@@ -64,6 +65,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             case INS_GET_DATA:
                 doGetData(apdu);
+                break;
+            case INS_GET_RESPONSE:
+                io.getResponse(apdu);
                 break;
             case INS_PUT_DATA:
                 doPutData(apdu);
