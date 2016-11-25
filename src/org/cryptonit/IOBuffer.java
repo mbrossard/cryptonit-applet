@@ -87,5 +87,9 @@ public class IOBuffer {
 
         apdu.setOutgoingLength(le);
         apdu.sendBytesLong(d, offset, le);
+
+        if (r > 0) {
+            ISOException.throwIt((short) (ISO7816.SW_BYTES_REMAINING_00 | r));
+        }
     }
 }
