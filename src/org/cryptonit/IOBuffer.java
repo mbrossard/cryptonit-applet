@@ -52,6 +52,9 @@ public class IOBuffer {
         apdu.sendBytesLong(buf, (short) 0, le);
 
         if(r > 0) {
+            if (r >= (short) (APDU.getOutBlockSize() - 2)) {
+                r = 0;
+            }
             Util.arrayCopy(buf, le, this.buffer, (short) 0, r);
         }
     }
