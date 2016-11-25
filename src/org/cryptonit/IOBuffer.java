@@ -60,6 +60,12 @@ public class IOBuffer {
         } else {
             this.bools[isLOADED] = false;
         }
+    }
+ 
+    public void sendFile(short id, APDU apdu, short offset) {
+        byte[] d = index.entries[id].content;
+        if (d == null) {
+            ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
     }
 }
