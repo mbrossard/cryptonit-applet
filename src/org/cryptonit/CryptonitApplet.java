@@ -22,6 +22,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private boolean[] authenticated = null;
 
     private Cipher rsa_cipher = null;
+    IOBuffer io = null;
+
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
 
@@ -40,6 +42,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         keys  = new Key[(byte) 4];
         authenticated = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_DESELECT);
         rsa_cipher = Cipher.getInstance(Cipher.ALG_RSA_NOPAD, false);
+        io = new IOBuffer(index);
         register();
     }
 
