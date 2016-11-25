@@ -101,6 +101,8 @@ public class IOBuffer {
     public void getResponse(APDU apdu) {
         if(this.bools[isFILE]) {
             sendFile(this.shorts[PATH], apdu, this.shorts[OFFSET]);
+        } else {
+            sendBuffer(this.buffer, this.shorts[SIZE], apdu);
         }
     }
 }
