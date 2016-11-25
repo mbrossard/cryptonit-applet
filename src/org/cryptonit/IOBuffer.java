@@ -93,6 +93,8 @@ public class IOBuffer {
                 r = 0;
             }
             ISOException.throwIt((short) (ISO7816.SW_BYTES_REMAINING_00 | r));
+        } else {
+            this.bools[isLOADED] = false;
         }
     }
 }
