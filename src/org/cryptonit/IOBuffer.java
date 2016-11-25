@@ -28,7 +28,7 @@ public class IOBuffer {
     }
 
     public void sendBuffer(byte[] buf, short length, APDU apdu) {
-        short le = apdu.setOutgoing();
+        short le = apdu.setOutgoing(), r = 0;
 
         if(le == 0) {
             le = (short) (APDU.getOutBlockSize() - 2);
@@ -39,16 +39,19 @@ public class IOBuffer {
         }
 
         if(le < length) {
-            short l = (short) (length - le);
-            if(l > (short) this.buffer.length) {
+            r = (short) (length - le);
+            if(r > (short) this.buffer.length) {
                 ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
             }
-            Util.arrayCopy(buf, (short) le, this.buffer, (short) 0, l);
             this.bools[isLOADED] = true;
             this.bools[isFILE] = false;
         }
 
         apdu.setOutgoingLength(le);
         apdu.sendBytesLong(buf, (short) 0, le);
+
+        if(r > 0) {
+            Util.arrayCopy(buf, le, this.buffer, (short) 0, r);
+        }
     }
 }
