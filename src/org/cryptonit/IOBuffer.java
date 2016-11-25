@@ -97,4 +97,7 @@ public class IOBuffer {
             this.bools[isLOADED] = false;
         }
     }
+
+    public void getResponse(APDU apdu) {
+    }
 }
