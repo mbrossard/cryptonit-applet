@@ -44,7 +44,8 @@ public class IOBuffer {
                 ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
             }
             this.bools[isLOADED] = true;
-            this.bools[isFILE] = false;
+            this.bools[isFILE]   = false;
+            this.shorts[SIZE]    = r;
         }
 
         apdu.setOutgoingLength(le);
