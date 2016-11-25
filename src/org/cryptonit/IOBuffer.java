@@ -84,5 +84,8 @@ public class IOBuffer {
             this.shorts[OFFSET]  = (short) (le + offset);
             this.shorts[PATH]  = id;
         }
+
+        apdu.setOutgoingLength(le);
+        apdu.sendBytesLong(d, offset, le);
     }
 }
