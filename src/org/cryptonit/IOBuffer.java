@@ -57,6 +57,9 @@ public class IOBuffer {
             }
             Util.arrayCopy(buf, le, this.buffer, (short) 0, r);
             ISOException.throwIt((short) (ISO7816.SW_BYTES_REMAINING_00 | r));
+        } else {
+            this.bools[isLOADED] = false;
+        }
         }
     }
 }
