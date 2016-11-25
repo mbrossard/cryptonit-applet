@@ -76,5 +76,13 @@ public class IOBuffer {
         if ((short) (le + offset) > (short) d.length) {
             le = (short) (d.length - offset);
         }
+
+        if((short) (le + offset) < (short) d.length) {
+            r = (short) (d.length - (le + offset));
+            this.bools[isLOADED] = true;
+            this.bools[isFILE]   = true;
+            this.shorts[OFFSET]  = (short) (le + offset);
+            this.shorts[PATH]  = id;
+        }
     }
 }
