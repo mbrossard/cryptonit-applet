@@ -31,7 +31,11 @@ public class IOBuffer {
         short le = apdu.setOutgoing();
 
         if(le == 0) {
-            le = apdu.getOutBlockSize();
+            le = (short) (APDU.getOutBlockSize() - 2);
+        }
+
+        if(le > length) {
+            le = length;
         }
 
         if(le < length) {
