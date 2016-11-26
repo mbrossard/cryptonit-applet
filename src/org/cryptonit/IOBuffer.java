@@ -99,6 +99,10 @@ public class IOBuffer {
     }
 
     public void getResponse(APDU apdu) {
+        if(!this.bools[isLOADED]) {
+            ISOException.throwIt(ISO7816.SW_UNKNOWN);
+        }
+
         if(this.bools[isFILE]) {
             sendFile(this.shorts[PATH], apdu, this.shorts[OFFSET]);
         } else {
