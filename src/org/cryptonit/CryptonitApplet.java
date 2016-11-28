@@ -294,9 +294,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         buf[off++] = (byte) 0x03;
         l = key.getExponent(buf, off);
         off += l;
-        apdu.setOutgoing();
-        apdu.setOutgoingLength(off);
-        apdu.sendBytesLong(buf, (byte) 0, off);
+        io.sendBuffer(buf, off, apdu);
     }
 
     void doGenRSA(APDU apdu, byte keyRef) {
