@@ -27,11 +27,11 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
 
-    public static final byte INS_GET_DATA =                    (byte) 0xCB;
-    public static final byte INS_GET_RESPONSE =                (byte) 0xC0;
-    public static final byte INS_PUT_DATA =                    (byte) 0xDB;
-    public static final byte INS_VERIFY_PIN =                  (byte) 0x20;
-    public static final byte INS_GENERAL_AUTHENTICATE =        (byte) 0x87;
+    public static final byte INS_GET_DATA                    = (byte) 0xCB;
+    public static final byte INS_GET_RESPONSE                = (byte) 0xC0;
+    public static final byte INS_PUT_DATA                    = (byte) 0xDB;
+    public static final byte INS_VERIFY_PIN                  = (byte) 0x20;
+    public static final byte INS_GENERAL_AUTHENTICATE        = (byte) 0x87;
     public static final byte INS_GENERATE_ASYMMETRIC_KEYPAIR = (byte) 0x47;
 
     public static final short SW_PIN_TRIES_REMAINING = 0x63C0;
@@ -39,7 +39,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         index = new FileIndex();
-        keys  = new Key[(byte) 4];
+        keys = new Key[(byte) 4];
         authenticated = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_DESELECT);
         rsa_cipher = Cipher.getInstance(Cipher.ALG_RSA_NOPAD, false);
         io = new IOBuffer(index);
@@ -117,7 +117,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         byte p2 = buf[ISO7816.OFFSET_P2];
         short offset, lc = apdu.setIncomingAndReceive();
 
-        if((p1 != (byte) 0x00 && p1 != (byte) 0x01) || (p2 != (byte) 0x80)) {
+        if ((p1 != (byte) 0x00 && p1 != (byte) 0x01) || (p2 != (byte) 0x80)) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
 
