@@ -105,9 +105,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 (byte) 0x4F, (byte) 0x05,
                 (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08
             };
-            apdu.setOutgoing();
-            apdu.setOutgoingLength((short) apt.length);
-            apdu.sendBytesLong(apt, (byte) 0, (short) apt.length);
+            io.sendBuffer(apt, (short) apt.length, apdu);
             return;
         }
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
