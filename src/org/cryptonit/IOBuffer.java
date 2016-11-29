@@ -19,6 +19,10 @@ public class IOBuffer {
     final private byte isLOADED = 0x0;
     final private byte isFILE   = 0x1;
 
+    public void clear() {
+        this.bools[isLOADED] = false;
+    }
+
     public IOBuffer(FileIndex index) {
         this.index = index;
         this.bools = JCSystem.makeTransientBooleanArray((short) 2, JCSystem.CLEAR_ON_DESELECT);
@@ -57,7 +61,7 @@ public class IOBuffer {
             Util.arrayCopy(buf, le, this.buffer, (short) 0, r);
             ISOException.throwIt((short) (ISO7816.SW_BYTES_REMAINING_00 | r));
         } else {
-            this.bools[isLOADED] = false;
+            clear();
         }
     }
 
@@ -93,7 +97,7 @@ public class IOBuffer {
             }
             ISOException.throwIt((short) (ISO7816.SW_BYTES_REMAINING_00 | r));
         } else {
-            this.bools[isLOADED] = false;
+            clear();
         }
     }
 
