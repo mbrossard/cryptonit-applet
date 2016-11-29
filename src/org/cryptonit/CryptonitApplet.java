@@ -290,8 +290,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         off += l;
         buf[off++] = (byte) 0x82;
         buf[off++] = (byte) 0x03;
-        l = key.getExponent(buf, off);
-        off += l;
+        off += key.getExponent(buf, off);
         io.sendBuffer(buf, off, apdu);
     }
 
