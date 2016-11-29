@@ -285,9 +285,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         Util.arrayCopy(header, (short) 0, buf, (short) 0, (short) header.length);
         off += header.length;
         short l = key.getModulus(buf, off);
-        if(l > 0x0100) {
-            buf[(short)0x04] = (byte)(l - 0x0100 + 9);
-            buf[(short)0x08] = (byte)(l - 0x0100);
+        if (l > 0x0100) {
+            buf[(short) 0x04] = (byte) (l - 0x0100 + 9);
+            buf[(short) 0x08] = (byte) (l - 0x0100);
         }
         off += l;
         buf[off++] = (byte) 0x82;
@@ -315,7 +315,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 keys[id].clearKey();
             }
             keys[id] = kp.getPrivate();
-            sendRSAPublicKey(apdu, (RSAPublicKey)kp.getPublic());
+            sendRSAPublicKey(apdu, (RSAPublicKey) kp.getPublic());
         }
     }
 
@@ -344,7 +344,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     public static short getTag(byte[] buf, short off, short length, byte tag) {
         short end = (short) (off + length - 1);
 
-        while((off < end) && (buf[off] != tag)) {
+        while ((off < end) && (buf[off] != tag)) {
             short l = decodeLength(buf, (short) (off + 1));
             off += lengthLength(l) + l + 1;
         }
@@ -359,25 +359,25 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         short offset = apdu.getOffsetCdata();
         short id = keyMapping(p2);
 
-        if(keys[id] == null) {
+        if (keys[id] == null) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
 
         short cur = offset;
-        if(buf[cur++] != (byte)0x7C) {
+        if (buf[cur++] != (byte) 0x7C) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
 
         cur += lengthLength(decodeLength(buf, cur));
         short m = getTag(buf, cur, lc, (byte) 0x81);
-        if(m < lc && buf[m] == (byte) 0x81) {
+        if (m < lc && buf[m] == (byte) 0x81) {
             short k = decodeLength(buf, (short) (m + 1));
             m += lengthLength(k) + 1;
 
             byte[] signature = null;
             short l = 0;
             if (keys[id].getType() == KeyBuilder.TYPE_RSA_CRT_PRIVATE) {
-                if(k != 256) {
+                if (k != 256) {
                     ISOException.throwIt(ISO7816.SW_DATA_INVALID);
                 }
                 l = (short) 264;
