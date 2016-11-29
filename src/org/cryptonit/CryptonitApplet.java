@@ -227,7 +227,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         index.entries[id].content = new byte[l];
         Util.arrayCopy(buf, offset, index.entries[id].content, (short) 0, l);
     }
-    
+
     private byte keyMapping(byte keyRef) {
         switch (keyRef) {
             case (byte)0x9A:
@@ -319,7 +319,6 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
     }
 
-    
     public static short decodeLength(byte[] buf, short offset) {
         byte b = buf[offset];
         short s = buf[offset];
