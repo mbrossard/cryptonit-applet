@@ -16,8 +16,8 @@ import javacardx.apdu.ExtendedLength;
 import javacardx.crypto.Cipher;
 
 public class CryptonitApplet extends Applet implements ExtendedLength {
-    private OwnerPIN pin;
-    private FileIndex index;
+    private final OwnerPIN pin;
+    private final FileIndex index;
     private Key[] keys = null;
     private boolean[] authenticated = null;
 
