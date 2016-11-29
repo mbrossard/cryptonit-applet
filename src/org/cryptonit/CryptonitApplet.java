@@ -20,9 +20,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private final FileIndex index;
     private Key[] keys = null;
     private boolean[] authenticated = null;
-
     private Cipher rsa_cipher = null;
-    IOBuffer io = null;
+    private IOBuffer io = null;
 
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
