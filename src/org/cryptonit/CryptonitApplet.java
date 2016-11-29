@@ -273,10 +273,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     }
 
     private void sendRSAPublicKey(APDU apdu, RSAPublicKey key) {
-        byte [] buf = new byte [271];
         short off = 0;
-
-        byte [] header = new byte [] {
+        byte[] buf = new byte[271];
+        byte[] header = new byte[]{
             (byte) 0x7F, (byte) 0x49, (byte) 0x82, (byte) 0x01, (byte) 0x09,
             (byte) 0x81, (byte) 0x82, (byte) 0x01, (byte) 0x00
         };
