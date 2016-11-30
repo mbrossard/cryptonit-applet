@@ -9,7 +9,11 @@ public class FileIndex {
      * X.509 Certificate for Digital Signature         (Key Reference '9C')  0x0100 '5FC10A' 1905
      * X.509 Certificate for Key Management            (Key Reference '9D')  0x0102 '5FC10B' 1905
      */
+    public final static byte X509_CARD_AUTH      = 0x0;
     public final static byte DISCOVERY           = 0x3;
+    public final static byte X509_AUTH           = 0x4;
+    public final static byte X509_SIGNATURE      = 0x9;
+    public final static byte X509_ENCRYPTION     = 0xA;
     public IndexEntry [] entries;
 
     public final static byte[] discovery = {
