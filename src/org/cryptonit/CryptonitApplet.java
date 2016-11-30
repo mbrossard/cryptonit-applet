@@ -125,9 +125,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
         offset = apdu.getOffsetCdata();
 
-        if(!pin.check(buf, offset, (byte) lc)) {
+        if (!pin.check(buf, offset, (byte) lc)) {
             authenticated[0] = false;
-            ISOException.throwIt((short)(SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
+            ISOException.throwIt((short) (SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
         } else {
             authenticated[0] = true;
             ISOException.throwIt(ISO7816.SW_NO_ERROR);
@@ -141,7 +141,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         short lc = apdu.setIncomingAndReceive();
         short offset = apdu.getOffsetCdata();
 
-        if(p1 != (byte) 0x3F || p2 != (byte) 0xFF) {
+        if (p1 != (byte) 0x3F || p2 != (byte) 0xFF) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
         if (lc != apdu.getIncomingLength()) {
@@ -164,9 +164,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                         || (buf[(short) (offset + 4)] > (byte) 0xA)) {
                     ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
                 }
-                byte id = (byte)(buf[(byte)(offset + 4)] - 1);
+                byte id = (byte) (buf[(byte) (offset + 4)] - 1);
                 if (((id == (byte) 0x2) || (id == (byte) 0x7)
-                     || (id == (byte) 0x8)) && authenticated[0] == false) {
+                        || (id == (byte) 0x8)) && authenticated[0] == false) {
                     ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
                 }
                 io.sendFile(id, apdu, (short) 0);
@@ -183,7 +183,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         short lc = apdu.setIncomingAndReceive();
         short offset = apdu.getOffsetCdata();
 
-        if(p1 != (byte) 0x3F || p2 != (byte) 0xFF) {
+        if (p1 != (byte) 0x3F || p2 != (byte) 0xFF) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
         if (lc != apdu.getIncomingLength() || lc < (byte) 0x06) {
