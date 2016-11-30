@@ -3,7 +3,11 @@ package org.cryptonit;
 public class FileIndex {
 
     /**
+     * X.509 Certificate for Card Authentication       (Key Reference '9E')  0x0500 '5FC101' 1905
      * Discovery Object                                                      0x6050 '7E'     19
+     * X.509 Certificate for PIV Authentication        (Key Reference '9A')  0x0101 '5FC105' 1905
+     * X.509 Certificate for Digital Signature         (Key Reference '9C')  0x0100 '5FC10A' 1905
+     * X.509 Certificate for Key Management            (Key Reference '9D')  0x0102 '5FC10B' 1905
      */
     public final static byte DISCOVERY           = 0x3;
     public IndexEntry [] entries;
