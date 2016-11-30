@@ -1,5 +1,9 @@
 package org.cryptonit;
 
+/**
+ * @author Mathias Brossard
+ */
+
 import javacard.framework.APDU;
 import javacard.framework.Applet;
 import javacard.framework.ISO7816;
