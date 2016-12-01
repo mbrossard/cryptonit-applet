@@ -197,17 +197,17 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (buf[offset] != (byte) 0x5C) {
             ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
         }
-        if((buf[(short) (offset + 1)] != (byte) 0x03)
+        if ((buf[(short) (offset + 1)] != (byte) 0x03)
                 || (buf[(short) (offset + 2)] != (byte) 0x5F)
                 || (buf[(short) (offset + 3)] != (byte) 0xC1)) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
         byte id = (byte) (buf[(short) (offset + 4)] - 1);
-        if((id == (byte) 0x03)
+        if ((id == (byte) 0x03)
                 || (id > (byte) 0x0A)) {
             ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
-        if(buf[(short) (offset + 5)] != (byte) 0x53) {
+        if (buf[(short) (offset + 5)] != (byte) 0x53) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
 
@@ -224,8 +224,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         } else {
             ISOException.throwIt(ISO7816.SW_UNKNOWN);
         }
-        if((short) (l - offset + apdu.getOffsetCdata()) > lc) {
-            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);            
+        if ((short) (l - offset + apdu.getOffsetCdata()) > lc) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
         }
         index.entries[id].content = new byte[l];
         Util.arrayCopy(buf, offset, index.entries[id].content, (short) 0, l);
