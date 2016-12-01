@@ -29,6 +29,10 @@ public class FileIndex {
 
     public FileIndex() {
         entries = new IndexEntry[11];
+        entries[X509_CARD_AUTH ] = new IndexEntry(X509_CARD_AUTH , (short) 0x0500, null);
         entries[DISCOVERY      ] = new IndexEntry(DISCOVERY      , (short) 0x6050, discovery);
+        entries[X509_AUTH      ] = new IndexEntry(X509_AUTH      , (short) 0x0101, null);
+        entries[X509_SIGNATURE ] = new IndexEntry(X509_SIGNATURE , (short) 0x0100, null);
+        entries[X509_ENCRYPTION] = new IndexEntry(X509_ENCRYPTION, (short) 0x0102, null);
     }
 }
