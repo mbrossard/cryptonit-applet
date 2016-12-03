@@ -37,7 +37,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     public static final byte INS_GENERAL_AUTHENTICATE        = (byte) 0x87;
     public static final byte INS_GENERATE_ASYMMETRIC_KEYPAIR = (byte) 0x47;
 
-    public static final short SW_PIN_TRIES_REMAINING = 0x63C0;
+    public static final short SW_PIN_TRIES_REMAINING           = 0x63C0;
+    public static final short SW_AUTHENTICATION_METHOD_BLOCKED = 0x6983;
 
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
