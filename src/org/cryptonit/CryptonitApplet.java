@@ -132,6 +132,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
         offset = apdu.getOffsetCdata();
 
+        if (pin.getTriesRemaining() == 0) {
+            ISOException.throwIt((short) 0x6983);
+        }
+
         if (!pin.check(buf, offset, (byte) lc)) {
             authenticated[0] = false;
             ISOException.throwIt((short) (SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
