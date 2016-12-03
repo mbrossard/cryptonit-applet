@@ -35,6 +35,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     public static final byte INS_PUT_DATA                    = (byte) 0xDB;
     public static final byte INS_VERIFY_PIN                  = (byte) 0x20;
     public static final byte INS_GENERAL_AUTHENTICATE        = (byte) 0x87;
+    public static final byte INS_CHANGE_REFERENCE_DATA       = (byte) 0x24;
     public static final byte INS_GENERATE_ASYMMETRIC_KEYPAIR = (byte) 0x47;
 
     public static final short SW_PIN_TRIES_REMAINING           = 0x63C0;
@@ -72,6 +73,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             case INS_VERIFY_PIN:
                 doVerifyPin(apdu);
+                break;
+            case INS_CHANGE_REFERENCE_DATA:
+                doChangePIN(apdu);
                 break;
             case INS_GET_DATA:
                 doGetData(apdu);
@@ -149,6 +153,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             authenticated[0] = true;
             ISOException.throwIt(ISO7816.SW_NO_ERROR);
         }
+    }
+
+    private void doChangePIN(APDU apdu) {
     }
 
     private void doGetData(APDU apdu) throws ISOException {
