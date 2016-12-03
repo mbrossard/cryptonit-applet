@@ -156,6 +156,14 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     }
 
     private void doChangePIN(APDU apdu) {
+        byte[] buf = apdu.getBuffer();
+        byte p1 = buf[ISO7816.OFFSET_P1];
+        byte p2 = buf[ISO7816.OFFSET_P2];
+        short off, lc = apdu.setIncomingAndReceive();
+
+        if (p1 != (byte) 0x00 || (p2 != (byte) 0x80)) {
+            ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
+        }
     }
 
     private void doGetData(APDU apdu) throws ISOException {
