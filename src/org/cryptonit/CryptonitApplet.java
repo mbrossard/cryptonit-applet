@@ -41,6 +41,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
+        pin.update(new byte[]{
+            0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
+        }, (short) 0, (byte) 8);
         index = new FileIndex();
         keys = new Key[(byte) 4];
         authenticated = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_DESELECT);
