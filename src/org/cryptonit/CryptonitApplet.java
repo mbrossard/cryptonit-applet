@@ -170,6 +170,15 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if ((lc != apdu.getIncomingLength()) || lc != (short) 16) {
             ISOException.throwIt((short) 0x6480);
         }
+        off = apdu.getOffsetCdata();
+
+        for (short i = 0; i < (short) 16; i++) {
+            if (((buf[(short) (i + off)] < 0x30)
+                    || (buf[(short) (i + off)] > 0x39))
+                    && (buf[(short) (i + off)] != 0xFF)) {
+                ISOException.throwIt((short) 0x6480);
+            }
+        }
     }
 
     private void doGetData(APDU apdu) throws ISOException {
