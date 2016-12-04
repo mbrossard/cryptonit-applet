@@ -167,6 +167,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (pin.getTriesRemaining() == 0) {
             ISOException.throwIt(SW_AUTHENTICATION_METHOD_BLOCKED);
         }
+        if ((lc != apdu.getIncomingLength()) || lc != (short) 16) {
+            ISOException.throwIt((short) 0x6480);
+        }
     }
 
     private void doGetData(APDU apdu) throws ISOException {
