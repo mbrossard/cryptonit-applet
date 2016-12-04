@@ -183,6 +183,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             authenticated[0] = false;
             ISOException.throwIt((short) (SW_PIN_TRIES_REMAINING | pin.getTriesRemaining()));
         }        
+
+        pin.update(buf, (short) (off + 8), (byte) 8);
     }
 
     private void doGetData(APDU apdu) throws ISOException {
