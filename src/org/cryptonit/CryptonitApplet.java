@@ -307,6 +307,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if ((p1 != (byte) 0x00) || (keyMapping(p2) == (byte) 0xFF)) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
+        if (authenticated[0] == false) {
+            ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
+        }
 
         byte[] prefix = new byte[]{
             (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01
