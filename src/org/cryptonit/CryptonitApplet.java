@@ -381,6 +381,13 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     }
 
     void doGenEC(APDU apdu, byte keyRef, short size) {
+        KeyPair kp = null;
+        byte id = keyMapping(keyRef);
+        try {
+            kp = new KeyPair(KeyPair.ALG_EC_FP, size);
+        } catch (CryptoException e) {
+           ISOException.throwIt(ISO7816.SW_UNKNOWN);
+        }
     }
 
     public static short decodeLength(byte[] buf, short offset) {
