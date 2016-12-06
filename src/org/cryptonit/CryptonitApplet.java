@@ -390,6 +390,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
         if (kp != null) {
             kp.genKeyPair();
+            keys[id] = kp.getPrivate();
         }
     }
 
