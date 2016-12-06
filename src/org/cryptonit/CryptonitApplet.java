@@ -487,7 +487,6 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 }
             }
             io.sendBuffer(signature, l, apdu);
-            return;
         }
     }
 }
