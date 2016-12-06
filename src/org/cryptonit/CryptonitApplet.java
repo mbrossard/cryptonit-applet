@@ -12,6 +12,7 @@ import javacard.framework.JCSystem;
 import javacard.framework.OwnerPIN;
 import javacard.framework.Util;
 import javacard.security.CryptoException;
+import javacard.security.ECPublicKey;
 import javacard.security.Key;
 import javacard.security.KeyBuilder;
 import javacard.security.KeyPair;
@@ -380,6 +381,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
     }
 
+    private void sendECPublicKey(APDU apdu, ECPublicKey key) {
+    }
+
     void doGenEC(APDU apdu, byte keyRef, short size) {
         KeyPair kp = null;
         byte id = keyMapping(keyRef);
@@ -391,6 +395,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (kp != null) {
             kp.genKeyPair();
             keys[id] = kp.getPrivate();
+            sendECPublicKey(apdu, (ECPublicKey) kp.getPublic());
         }
     }
 
