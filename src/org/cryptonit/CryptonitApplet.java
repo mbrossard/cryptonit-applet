@@ -388,6 +388,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         } catch (CryptoException e) {
            ISOException.throwIt(ISO7816.SW_UNKNOWN);
         }
+        if (kp != null) {
+            kp.genKeyPair();
+        }
     }
 
     public static short decodeLength(byte[] buf, short offset) {
