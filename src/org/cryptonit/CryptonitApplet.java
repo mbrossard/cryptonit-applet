@@ -382,6 +382,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     }
 
     private void sendECPublicKey(APDU apdu, ECPublicKey key) {
+        byte buf[] = new byte[70];
+        Util.arrayCopy(new byte[]{
+            (byte) 0x7F, (byte) 0x49, (byte) 0x43, (byte) 0x86, (byte) 0x41
+        }, (short) 0, buf, (short) 0, (short) 5);
     }
 
     void doGenEC(APDU apdu, byte keyRef, short size) {
