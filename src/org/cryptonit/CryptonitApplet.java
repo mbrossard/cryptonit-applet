@@ -328,6 +328,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 doGenRSA(apdu, buf[ISO7816.OFFSET_P2]);
                 break;
             case 0x11:
+                doGenEC(apdu, buf[ISO7816.OFFSET_P2], (short) 256);
+                break;
             case 0x14:
             default:
                 ISOException.throwIt(ISO7816.SW_WRONG_DATA);
@@ -376,6 +378,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             keys[id] = kp.getPrivate();
             sendRSAPublicKey(apdu, (RSAPublicKey) kp.getPublic());
         }
+    }
+
+    void doGenEC(APDU apdu, byte keyRef, short size) {
     }
 
     public static short decodeLength(byte[] buf, short offset) {
