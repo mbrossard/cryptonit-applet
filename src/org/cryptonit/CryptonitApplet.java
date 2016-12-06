@@ -397,6 +397,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         try {
             kp = new KeyPair(KeyPair.ALG_EC_FP, size);
         } catch (CryptoException e) {
+            if (e.getReason() == CryptoException.NO_SUCH_ALGORITHM) {
+                ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
+            }
            ISOException.throwIt(ISO7816.SW_UNKNOWN);
         }
         if (kp != null) {
