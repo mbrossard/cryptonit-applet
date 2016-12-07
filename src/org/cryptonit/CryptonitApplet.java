@@ -496,6 +496,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
                 l = (short) 69;
                 signature = new byte[l];
+                Util.arrayCopy(new byte[]{
+                    (byte) 0x7C, (byte) 0x43, (byte) 0x82, (byte) 0x41
+                }, (short) 0, signature, (short) 0, (short) 4);
             }
             io.sendBuffer(signature, l, apdu);
         }
