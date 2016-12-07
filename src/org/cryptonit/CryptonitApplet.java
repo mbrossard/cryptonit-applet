@@ -508,6 +508,11 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                     (byte) 0x7C, (byte) 0x43, (byte) 0x82, (byte) 0x41
                 }, (short) 0, signature, (short) 0, (short) 4);
                 ec_signature.init(keys[id], Signature.MODE_SIGN);
+                try {
+                    k = ec_signature.sign(buf, m, k, signature, (short) 4);
+                } catch (CryptoException e) {
+                    ISOException.throwIt(ISO7816.SW_UNKNOWN);
+                }
             }
             io.sendBuffer(signature, l, apdu);
         }
