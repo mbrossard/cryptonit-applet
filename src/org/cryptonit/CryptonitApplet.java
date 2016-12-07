@@ -404,6 +404,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
         if (kp != null) {
             kp.genKeyPair();
+            if (keys[id] != null) {
+                keys[id].clearKey();
+            }
             keys[id] = kp.getPrivate();
             sendECPublicKey(apdu, (ECPublicKey) kp.getPublic());
         }
