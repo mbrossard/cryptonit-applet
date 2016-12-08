@@ -25,9 +25,12 @@ public class IOBuffer {
 
     public IOBuffer(FileIndex index) {
         this.index = index;
-        this.bools = JCSystem.makeTransientBooleanArray((short) 2, JCSystem.CLEAR_ON_DESELECT);
-        this.buffer = JCSystem.makeTransientByteArray((short) 256, JCSystem.CLEAR_ON_DESELECT);
-        this.shorts = JCSystem.makeTransientShortArray((short) 3, JCSystem.CLEAR_ON_DESELECT);
+        this.bools = JCSystem.makeTransientBooleanArray((short) 2,
+                JCSystem.CLEAR_ON_DESELECT);
+        this.buffer = JCSystem.makeTransientByteArray((short) 256,
+                JCSystem.CLEAR_ON_DESELECT);
+        this.shorts = JCSystem.makeTransientShortArray((short) 3,
+                JCSystem.CLEAR_ON_DESELECT);
     }
 
     public void sendBuffer(byte[] buf, short length, APDU apdu) {
