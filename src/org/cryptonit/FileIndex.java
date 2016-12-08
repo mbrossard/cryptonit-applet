@@ -20,7 +20,7 @@ public class FileIndex {
     public final static byte X509_ENCRYPTION     = 0xA;
     public IndexEntry [] entries;
 
-    public final static byte[] discovery = {
+    public final static byte[] DISCOVERY_VALUE = {
         /* (0x7E) Discovery Object: interindustry ISO7816 template */
         (byte) 0x7E, (byte) 0x12,
         /* - (0x4F) AID of Application */
@@ -35,7 +35,7 @@ public class FileIndex {
     public FileIndex() {
         entries = new IndexEntry[11];
         entries[X509_CARD_AUTH ] = new IndexEntry(X509_CARD_AUTH , (short) 0x0500, null);
-        entries[DISCOVERY      ] = new IndexEntry(DISCOVERY      , (short) 0x6050, discovery);
+        entries[DISCOVERY      ] = new IndexEntry(DISCOVERY      , (short) 0x6050, DISCOVERY_VALUE);
         entries[X509_AUTH      ] = new IndexEntry(X509_AUTH      , (short) 0x0101, null);
         entries[X509_SIGNATURE ] = new IndexEntry(X509_SIGNATURE , (short) 0x0100, null);
         entries[X509_ENCRYPTION] = new IndexEntry(X509_ENCRYPTION, (short) 0x0102, null);
