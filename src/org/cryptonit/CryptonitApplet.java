@@ -503,6 +503,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                     }
                     ISOException.throwIt(ISO7816.SW_UNKNOWN);
                 }
+                if (k != 256) {
+                    ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+                }
             } else if (keys[id].getType() == KeyPair.ALG_EC_FP) {
                 if (ec_signature == null) {
                     ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
