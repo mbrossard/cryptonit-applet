@@ -34,6 +34,35 @@ public class FileIndex {
         (byte) 0x5F, (byte) 0x2F, (byte) 0x02, (byte) 0x40, (byte) 0x00
     };
 
+    public final static byte[] CHUID_VALUE = {
+        (byte) 0x53, (byte) 0x3B,
+
+        // FASCN
+        (byte) 0x30, (byte) 0x19,
+        (byte) 0xD4, (byte) 0xE7, (byte) 0x39, (byte) 0xDA,
+        (byte) 0x73, (byte) 0x9C, (byte) 0xED, (byte) 0x39,
+        (byte) 0xCE, (byte) 0x73, (byte) 0x9D, (byte) 0xA1,
+        (byte) 0x68, (byte) 0x58, (byte) 0x10, (byte) 0x46,
+        (byte) 0x49, (byte) 0x56, (byte) 0xF0, (byte) 0x53,
+        (byte) 0xCC, (byte) 0xE7, (byte) 0x39, (byte) 0xC3,
+        (byte) 0xEA, 
+
+        // GUID
+        (byte) 0x34, (byte) 0x10,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+
+        // Expiration date 2029-12-31
+        (byte) 0x35, (byte) 0x08,
+        (byte) 0x32, (byte) 0x30, (byte) 0x32, (byte) 0x39,
+        (byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x31,
+ 
+        (byte) 0x3E, (byte) 0x00,
+        (byte) 0xFE, (byte) 0x00
+    };
+    
     public FileIndex() {
         entries = new IndexEntry[11];
         entries[X509_CARD_AUTH ] = new IndexEntry(X509_CARD_AUTH , (short) 0x0500, null);
