@@ -66,6 +66,7 @@ public class FileIndex {
     public FileIndex() {
         entries = new IndexEntry[11];
         entries[X509_CARD_AUTH ] = new IndexEntry(X509_CARD_AUTH , (short) 0x0500, null);
+        entries[CHUID          ] = new IndexEntry(CHUID          , (short) 0x3000, CHUID_VALUE);
         entries[DISCOVERY      ] = new IndexEntry(DISCOVERY      , (short) 0x6050, DISCOVERY_VALUE);
         entries[X509_AUTH      ] = new IndexEntry(X509_AUTH      , (short) 0x0101, null);
         entries[X509_SIGNATURE ] = new IndexEntry(X509_SIGNATURE , (short) 0x0100, null);
