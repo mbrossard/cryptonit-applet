@@ -524,6 +524,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                     }
                     ISOException.throwIt(ISO7816.SW_UNKNOWN);
                 }
+                if (k != 65) {
+                    ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+                }
             }
             io.sendBuffer(signature, l, apdu);
         }
