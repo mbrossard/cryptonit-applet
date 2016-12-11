@@ -63,6 +63,48 @@ public class FileIndex {
         (byte) 0xFE, (byte) 0x00
     };
     
+    public final static byte[] CAPABILITY_VALUE = {
+        (byte) 0x53, (byte) 0x2F,
+        /* Card identifier */
+        (byte) 0xF0, (byte) 0x00,
+        /*
+        (byte) 0xF0, (byte) 0x15,
+        (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08, (byte) 0x0B,
+        (byte) 0x02, (byte) 0x01, (byte) 0x0A, (byte) 0x47, (byte) 0x90, (byte) 0x50,
+        (byte) 0x75, (byte) 0x19, (byte) 0x15, (byte) 0x00, (byte) 0x05, (byte) 0x02,
+        (byte) 0x98, (byte) 0x00, (byte) 0x00,
+        */
+        /* Capability Container version number */
+        (byte) 0xF1, (byte) 0x01, (byte) 0x21,
+        /* Capability Grammar version number */
+        (byte) 0xF2, (byte) 0x01, (byte) 0x21,
+        /* Applications CardURL */
+        (byte) 0xF3, (byte) 0x00,
+        /* PKCS#15 */
+        (byte) 0xF4, (byte) 0x01, (byte) 0x00,
+        /* Registered Data Model number */
+        (byte) 0xF5, (byte) 0x01, (byte) 0x10,
+        /* Access Control Rule Table */
+        (byte) 0xF6, (byte) 0x11,
+        (byte) 0x07, (byte) 0xA0, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00, (byte) 0x79, (byte) 0x10, (byte) 0x00,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+        (byte) 0x00,
+        /* Card APDUs */
+        (byte) 0xF7, (byte) 0x00,
+        /* Redirection Tag */
+        (byte) 0xFA, (byte) 0x00,
+        /* Capability Tuples (CTs) */
+        (byte) 0xFB, (byte) 0x00,
+        /* Status Tuples (STs) */
+        (byte) 0xFC, (byte) 0x00,
+        /* Next CCC */
+        (byte) 0xFD, (byte) 0x00,
+        /* Error Detection Code */
+        (byte) 0xFE, (byte) 0x00
+    };
+
     public FileIndex() {
         entries = new IndexEntry[11];
         entries[X509_CARD_AUTH ] = new IndexEntry(X509_CARD_AUTH , (short) 0x0500, null);
