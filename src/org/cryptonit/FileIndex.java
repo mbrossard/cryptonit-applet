@@ -11,6 +11,7 @@ public class FileIndex {
      * Card Holder Unique Identifier                                         0x3000 '5FC102' 2916
      * Discovery Object                                                      0x6050 '7E'     19
      * X.509 Certificate for PIV Authentication        (Key Reference '9A')  0x0101 '5FC105' 1905
+     * Card Capability Container                                             0xDB00 '5FC107' 287
      * X.509 Certificate for Digital Signature         (Key Reference '9C')  0x0100 '5FC10A' 1905
      * X.509 Certificate for Key Management            (Key Reference '9D')  0x0102 '5FC10B' 1905
      */
