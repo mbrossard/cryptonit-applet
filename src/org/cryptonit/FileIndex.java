@@ -18,6 +18,7 @@ public class FileIndex {
     public final static byte CHUID               = 0x1;
     public final static byte DISCOVERY           = 0x3;
     public final static byte X509_AUTH           = 0x4;
+    public final static byte CARD_CAPABILITY     = 0x6;
     public final static byte X509_SIGNATURE      = 0x9;
     public final static byte X509_ENCRYPTION     = 0xA;
     public IndexEntry [] entries;
