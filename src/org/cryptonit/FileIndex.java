@@ -108,6 +108,18 @@ public class FileIndex {
         (byte) 0xFE, (byte) 0x00
     };
 
+    public final static byte[] PRINTED_INFORMATION = {
+        (byte) 0x53, (byte) 0x2F,
+        (byte) 0x01, (byte) 0x00,
+        (byte) 0x02, (byte) 0x00,
+        (byte) 0x04, (byte) 0x08,
+        (byte) 0x32, (byte) 0x30, (byte) 0x32, (byte) 0x39,
+        (byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x31,
+        (byte) 0x05, (byte) 0x00,
+        (byte) 0x06, (byte) 0x00,
+        (byte) 0xFE, (byte) 0x00
+    };
+
     public FileIndex() {
         entries = new IndexEntry[11];
         entries[X509_CARD_AUTH ] = new IndexEntry(X509_CARD_AUTH , (short) 0x0500, null);
