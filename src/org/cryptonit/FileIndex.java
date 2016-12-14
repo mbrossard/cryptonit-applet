@@ -127,6 +127,7 @@ public class FileIndex {
         entries[DISCOVERY      ] = new IndexEntry(DISCOVERY      , (short) 0x6050, DISCOVERY_VALUE);
         entries[X509_AUTH      ] = new IndexEntry(X509_AUTH      , (short) 0x0101, null);
         entries[CARD_CAPABILITY] = new IndexEntry(CARD_CAPABILITY, (short) 0xDB00, CAPABILITY_VALUE);
+        entries[PRINTED_INFO   ] = new IndexEntry(PRINTED_INFO   , (short) 0x3001, null);
         entries[X509_SIGNATURE ] = new IndexEntry(X509_SIGNATURE , (short) 0x0100, null);
         entries[X509_ENCRYPTION] = new IndexEntry(X509_ENCRYPTION, (short) 0x0102, null);
     }
