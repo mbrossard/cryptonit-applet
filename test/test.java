@@ -1,6 +1,8 @@
 import com.licel.jcardsim.base.Simulator;
 import org.cryptonit.CryptonitApplet;
 import javacard.framework.AID;
+import javax.smartcardio.CommandAPDU;
+import javax.smartcardio.ResponseAPDU;
 
 class test {
     public static void main(String[] args) {
@@ -15,5 +17,10 @@ class test {
 
         simulator.installApplet(appletAID, CryptonitApplet.class);
         simulator.selectApplet(appletAID);
+
+        System.out.println("Select Applet");
+        ResponseAPDU response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xA4, 0x04, 0x00)).getBytes()));
+        System.out.println(response.toString());
+        System.out.println(toHex(response.getData()));
     }
 }
