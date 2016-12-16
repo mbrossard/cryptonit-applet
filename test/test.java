@@ -5,6 +5,17 @@ import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 
 class test {
+    private static String toHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            if((i != 0) && ((i % 32) == 0)) {
+                sb.append("\n");
+            }
+            sb.append(String.format("%02X ", bytes[i]));
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         Simulator simulator = new Simulator();
 
