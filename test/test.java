@@ -33,5 +33,12 @@ class test {
         ResponseAPDU response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xA4, 0x04, 0x00)).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+
+        System.out.println("Verify PIN");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x20, 0x00, 0x80, new byte []{
+            0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
+        })).getBytes()));
+        System.out.println(response.toString());
+        System.out.println(toHex(response.getData()));
     }
 }
