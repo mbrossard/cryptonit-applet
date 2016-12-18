@@ -40,5 +40,12 @@ class test {
         })).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+
+        System.out.println("Generate 2048 bit RSA key (9A)");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x47, 0x00, 0x9A, new byte []{
+                (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01, (byte) 0x07
+        }, 0x200)).getBytes()));
+        System.out.println(response.toString());
+        System.out.println(toHex(response.getData()));
     }
 }
