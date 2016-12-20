@@ -54,5 +54,11 @@ class test {
         }, 0x200)).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+
+        System.out.println("Read 0x5FC105 file");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte []{
+                (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05
+        })).getBytes()));
+        System.out.println(response.toString());
     }
 }
