@@ -60,5 +60,12 @@ class test {
                 (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05
         })).getBytes()));
         System.out.println(response.toString());
+
+        System.out.println("Write to 0x5FC105 file");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte []{
+                (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05,
+                (byte) 0x53, (byte) 0x04, (byte) 0x11, (byte) 0x22, (byte) 0x33, (byte) 0x44,
+        })).getBytes()));
+        System.out.println(response.toString());
     }
 }
