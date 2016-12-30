@@ -4,6 +4,10 @@ import javacard.framework.AID;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 
+/**
+ * @author Mathias Brossard
+ */
+
 class test {
     private static String toHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();

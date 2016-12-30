@@ -1,5 +1,9 @@
 package org.cryptonit;
 
+/**
+ * @author Mathias Brossard
+ */
+
 public class IndexEntry {
     public byte index;
     public short container;

@@ -6,6 +6,10 @@ import javacard.framework.ISOException;
 import javacard.framework.JCSystem;
 import javacard.framework.Util;
 
+/**
+ * @author Mathias Brossard
+ */
+
 public class IOBuffer {
     private FileIndex index = null;
     private byte[] buffer = null;

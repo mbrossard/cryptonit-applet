@@ -1,9 +1,5 @@
 package org.cryptonit;
 
-/**
- * @author Mathias Brossard
- */
-
 import javacard.framework.APDU;
 import javacard.framework.Applet;
 import javacard.framework.ISO7816;
@@ -20,6 +16,10 @@ import javacard.security.RSAPublicKey;
 import javacard.security.Signature;
 import javacardx.apdu.ExtendedLength;
 import javacardx.crypto.Cipher;
+
+/**
+ * @author Mathias Brossard
+ */
 
 public class CryptonitApplet extends Applet implements ExtendedLength {
     private final OwnerPIN pin;
