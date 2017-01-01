@@ -38,6 +38,13 @@ class test {
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
 
+        System.out.println("Get 0x7E file");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte []{
+            (byte) 0x5C, (byte) 0x01, (byte) 0x7E
+        }, 0x100)).getBytes()));
+        System.out.println(response.toString());
+        System.out.println(toHex(response.getData()));
+
         System.out.println("Verify PIN");
         response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x20, 0x00, 0x80, new byte []{
             0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
