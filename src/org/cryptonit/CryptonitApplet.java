@@ -474,6 +474,11 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             // Add checks
         }
 
+        if (cla == 0x10) {
+            io.receiveBuffer(buf, offset, lc);
+            ISOException.throwIt(ISO7816.SW_NO_ERROR);
+        }
+
         short cur = offset;
         if (buf[cur++] != (byte) 0x7C) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
