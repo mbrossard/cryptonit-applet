@@ -27,6 +27,10 @@ public class IOBuffer {
         this.bools[isLOADED] = false;
     }
 
+    public boolean isLoaded() {
+        return this.bools[isLOADED];
+    }
+
     public IOBuffer(FileIndex index) {
         this.index = index;
         this.bools = JCSystem.makeTransientBooleanArray((short) 2,
