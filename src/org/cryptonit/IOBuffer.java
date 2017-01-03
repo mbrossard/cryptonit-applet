@@ -126,4 +126,8 @@ public class IOBuffer {
 
     public void receiveBuffer(byte[] buf, short offset, short length) {
     }
+
+    public byte[] retrieveBuffer(byte[] buf, short offset, short length) {
+        return null;
+    }
 }
