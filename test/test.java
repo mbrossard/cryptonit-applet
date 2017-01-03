@@ -117,6 +117,7 @@ class test {
             (byte) 0x47, (byte) 0xBD, (byte) 0x2E, (byte) 0x93, (byte) 0x19, (byte) 0x94, (byte) 0x53, (byte) 0x76, // 31
             (byte) 0xFE, (byte) 0xA7, (byte) 0x91, (byte) 0x72, (byte) 0x14, (byte) 0x18, (byte) 0xBC, (byte) 0xA7  // 32
         };
+        byte [] arg = null;
         response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x87, 0x07, 0x9A, sig_request, 0x200)).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
