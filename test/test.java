@@ -80,7 +80,7 @@ class test {
         System.out.println(response.toString());
 
         System.out.println("RSA signature file");
-        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x87, 0x07, 0x9A, new byte []{
+        byte [] sig_request = new byte []{
             (byte) 0x7C, (byte) 0x82, (byte) 0x01, (byte) 0x06,
             (byte) 0x82, (byte) 0x00,
             (byte) 0x81, (byte) 0x82, (byte) 0x01, (byte) 0x00,
@@ -116,15 +116,8 @@ class test {
             (byte) 0x66, (byte) 0x87, (byte) 0xC4, (byte) 0x3E, (byte) 0xCF, (byte) 0xFF, (byte) 0x7D, (byte) 0x53, // 30
             (byte) 0x47, (byte) 0xBD, (byte) 0x2E, (byte) 0x93, (byte) 0x19, (byte) 0x94, (byte) 0x53, (byte) 0x76, // 31
             (byte) 0xFE, (byte) 0xA7, (byte) 0x91, (byte) 0x72, (byte) 0x14, (byte) 0x18, (byte) 0xBC, (byte) 0xA7  // 32
-        })).getBytes()));
-        System.out.println(response.toString());
-        System.out.println(toHex(response.getData()));
-
-        sw = (short) response.getSW();
-        le = (short) (sw & 0xFF);
-        System.out.println("Call GET RESPONSE");
-        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte []{
-        }, le)).getBytes()));
+        };
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x87, 0x07, 0x9A, sig_request, 0x200)).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
     }
