@@ -3,7 +3,7 @@ import org.cryptonit.CryptonitApplet;
 import javacard.framework.AID;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
-
+import java.util.Arrays;
 /**
  * @author Mathias Brossard
  */
