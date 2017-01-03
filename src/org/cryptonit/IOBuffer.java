@@ -132,6 +132,11 @@ public class IOBuffer {
     }
 
     public byte[] retrieveBuffer(byte[] buf, short offset, short length) {
-        return null;
+        short l = (short) (this.shorts[SIZE] + length);
+        byte[] r = new byte[l];
+
+        Util.arrayCopy(this.buffer, (short) 0, r, (short) 0, this.shorts[SIZE]);
+        Util.arrayCopy(buf, offset, r, this.shorts[SIZE], length);
+        return r;
     }
 }
