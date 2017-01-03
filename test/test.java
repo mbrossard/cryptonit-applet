@@ -132,5 +132,13 @@ class test {
         response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x87, 0x07, 0x9A, arg)).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+
+        sw = (short) response.getSW();
+        le = (short) (sw & 0xFF);
+        System.out.println("Call GET RESPONSE");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte []{
+        }, le)).getBytes()));
+        System.out.println(response.toString());
+        System.out.println(toHex(response.getData()));
     }
 }
