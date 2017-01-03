@@ -123,4 +123,7 @@ public class IOBuffer {
             sendBuffer(this.buffer, this.shorts[SIZE], apdu);
         }
     }
+
+    public void receiveBuffer(byte[] buf, short offset, short length) {
+    }
 }
