@@ -120,5 +120,10 @@ class test {
         response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x87, 0x07, 0x9A, sig_request, 0x200)).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+        
+        System.out.println("RSA signature file (chained APDUs) first command");
+        arg = Arrays.copyOfRange(sig_request, 0, 255);
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x10, 0x87, 0x07, 0x9A, arg)).getBytes()));
+        System.out.println(response.toString());
     }
 }
