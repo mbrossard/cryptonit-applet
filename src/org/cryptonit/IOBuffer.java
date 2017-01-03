@@ -137,6 +137,8 @@ public class IOBuffer {
 
         Util.arrayCopy(this.buffer, (short) 0, r, (short) 0, this.shorts[SIZE]);
         Util.arrayCopy(buf, offset, r, this.shorts[SIZE], length);
+
+        this.bools[isLOADED] = false;
         return r;
     }
 }
