@@ -125,10 +125,15 @@ public class IOBuffer {
     }
 
     public void receiveBuffer(byte[] buf, short offset, short length) {
-        Util.arrayCopy(buf, offset, this.buffer, (short) 0, length);
-        this.shorts[SIZE] = length;
-        this.bools[isLOADED] = true;
-        this.bools[isFILE] = false;
+        if (this.bools[isLOADED]) {
+            Util.arrayCopy(buf, offset, this.buffer, this.shorts[SIZE], length);
+            this.shorts[SIZE] += length;
+        } else {
+            Util.arrayCopy(buf, offset, this.buffer, (short) 0, length);
+            this.shorts[SIZE] = length;
+            this.bools[isLOADED] = true;
+            this.bools[isFILE] = false;
+        }
     }
 
     public byte[] retrieveBuffer(byte[] buf, short offset, short length) {
