@@ -137,6 +137,10 @@ public class IOBuffer {
     }
 
     public byte[] retrieveBuffer(byte[] buf, short offset, short length) {
+        if (!this.bools[isLOADED] || this.bools[isFILE]) {
+            ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
+        }
+
         short l = (short) (this.shorts[SIZE] + length);
         byte[] r = new byte[l];
 
