@@ -129,6 +129,9 @@ public class IOBuffer {
             if (this.bools[isFILE]) {
                 ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
             }
+            if ((short) (this.shorts[SIZE] + length) > this.buffer.length) {
+                ISOException.throwIt(ISO7816.SW_FILE_FULL);
+            }
             Util.arrayCopy(buf, offset, this.buffer, this.shorts[SIZE], length);
             this.shorts[SIZE] += length;
         } else {
