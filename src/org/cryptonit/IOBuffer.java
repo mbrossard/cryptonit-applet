@@ -126,6 +126,9 @@ public class IOBuffer {
 
     public void receiveBuffer(byte[] buf, short offset, short length) {
         if (this.bools[isLOADED]) {
+            if (this.bools[isFILE]) {
+                ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
+            }
             Util.arrayCopy(buf, offset, this.buffer, this.shorts[SIZE], length);
             this.shorts[SIZE] += length;
         } else {
