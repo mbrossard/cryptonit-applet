@@ -342,6 +342,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 doGenEC(apdu, buf[ISO7816.OFFSET_P2], (short) 256);
                 break;
             case 0x14:
+                doGenEC(apdu, buf[ISO7816.OFFSET_P2], (short) 384);
+                break;
             default:
                 ISOException.throwIt(ISO7816.SW_WRONG_DATA);
         }
