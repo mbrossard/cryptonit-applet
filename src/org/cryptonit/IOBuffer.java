@@ -156,4 +156,7 @@ public class IOBuffer {
         this.bools[isLOADED] = false;
         return r;
     }
+
+    public void receiveFile(short id, byte[] buf, short offset, short length) {
+    }
 }
