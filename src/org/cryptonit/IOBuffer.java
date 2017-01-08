@@ -157,6 +157,9 @@ public class IOBuffer {
         return r;
     }
 
-    public void receiveFile(short id, byte[] buf, short offset, short length) {
+    public void createFile(short id, short length) {
+    }
+
+    public void receiveFile(byte[] buf, short offset, short length) {
     }
 }
