@@ -158,6 +158,9 @@ public class IOBuffer {
     }
 
     public void createFile(short id, short length) {
+        if (this.bools[isLOADED]) {
+            ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
+        }
         index.entries[id].content = new byte[length];
         this.bools[isLOADED] = true;
         this.bools[isFILE] = true;
