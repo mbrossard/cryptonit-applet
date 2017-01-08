@@ -167,5 +167,8 @@ public class IOBuffer {
     }
 
     public void receiveFile(byte[] buf, short offset, short length) {
+        short id = this.shorts[PATH];
+        Util.arrayCopy(buf, offset, index.entries[id].content,
+                this.shorts[OFFSET], length);
     }
 }
