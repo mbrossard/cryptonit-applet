@@ -158,6 +158,12 @@ public class IOBuffer {
     }
 
     public void createFile(short id, short length) {
+        index.entries[id].content = new byte[length];
+        this.bools[isLOADED] = true;
+        this.bools[isFILE] = true;
+        this.shorts[OFFSET] = 0;
+        this.shorts[SIZE] = length;
+        this.shorts[PATH] = id;
     }
 
     public void receiveFile(byte[] buf, short offset, short length) {
