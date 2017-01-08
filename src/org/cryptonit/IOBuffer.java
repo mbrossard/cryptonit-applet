@@ -170,6 +170,9 @@ public class IOBuffer {
     }
 
     public void receiveFile(byte[] buf, short offset, short length) {
+        if (!this.bools[isLOADED] || !this.bools[isFILE]) {
+            ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
+        }
         short id = this.shorts[PATH];
         Util.arrayCopy(buf, offset, index.entries[id].content,
                 this.shorts[OFFSET], length);
