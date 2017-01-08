@@ -173,6 +173,9 @@ public class IOBuffer {
         if (!this.bools[isLOADED] || !this.bools[isFILE]) {
             ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
         }
+        if ((short) (this.shorts[OFFSET] + length) > this.shorts[SIZE]) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
         short id = this.shorts[PATH];
         Util.arrayCopy(buf, offset, index.entries[id].content,
                 this.shorts[OFFSET], length);
