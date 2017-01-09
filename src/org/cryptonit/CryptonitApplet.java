@@ -257,6 +257,15 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (authenticated[0] == false) {
             ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
         }
+
+        if (io.isLoaded()) {
+            io.receiveFile(buf, offset, lc);
+            if (cla == 0x00) {
+                io.clear();
+            }
+            ISOException.throwIt(ISO7816.SW_NO_ERROR);
+        }
+
         if (lc != apdu.getIncomingLength() || lc < (byte) 0x06) {
             ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
         }
