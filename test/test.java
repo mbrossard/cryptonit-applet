@@ -80,6 +80,14 @@ class test {
         System.out.println(response.toString());
 
         byte [] arg;
+        byte [] tmp = new byte[768 + 9];
+        Util.arrayCopy(new byte []{
+                (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05,
+                (byte) 0x53, (byte) 0x82, (byte) 0x03, (byte) 0x00
+        }, (byte)0, tmp, (byte)0, (byte)9);
+        for(int i = 0; i < 768; i++) {
+            tmp[i + 9] = (byte)(i % 10);
+        }
 
         /* RSA signature request */
         byte [] sig_request = new byte []{
