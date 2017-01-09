@@ -88,6 +88,9 @@ class test {
         for(int i = 0; i < 768; i++) {
             tmp[i + 9] = (byte)(i % 10);
         }
+        System.out.println("Write to 0x5FC105 file (large)");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, tmp, 0x400)).getBytes()));
+        System.out.println(response.toString());
 
         /* RSA signature request */
         byte [] sig_request = new byte []{
