@@ -93,6 +93,10 @@ class test {
         response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, tmp, 0x400)).getBytes()));
         System.out.println(response.toString());
 
+        arg = Arrays.copyOfRange(tmp, 0, 255);
+        System.out.println("Write to 0x5FC105 file (large, chaining 1)");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x10, 0xDB, 0x3F, 0xFF, arg)).getBytes()));
+        System.out.println(response.toString());
         /* RSA signature request */
         byte [] sig_request = new byte []{
             (byte) 0x7C, (byte) 0x82, (byte) 0x01, (byte) 0x06,
