@@ -269,24 +269,32 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (lc != apdu.getIncomingLength() || lc < (byte) 0x06) {
             ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
         }
-        if (buf[offset] != (byte) 0x5C) {
+
+        byte id;
+        if (buf[offset] == (byte) 0x5C) {
+            if ((buf[(short) (offset + 1)] != (byte) 0x03)
+                    || (buf[(short) (offset + 2)] != (byte) 0x5F)
+                    || (buf[(short) (offset + 3)] != (byte) 0xC1)) {
+                ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+            }
+            id = (byte) (buf[(short) (offset + 4)] - 1);
+            if ((id == (byte) 0x03)
+                    || (id > (byte) 0x0A)) {
+                ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
+            }
+            if (buf[(short) (offset + 5)] != (byte) 0x53) {
+                ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+            }
+
+            offset += 6;
+        } else if (buf[offset] == (byte) 0x7E) {
+            id = FileIndex.DISCOVERY;
+            offset += 1;
+        } else {
             ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
-        }
-        if ((buf[(short) (offset + 1)] != (byte) 0x03)
-                || (buf[(short) (offset + 2)] != (byte) 0x5F)
-                || (buf[(short) (offset + 3)] != (byte) 0xC1)) {
-            ISOException.throwIt(ISO7816.SW_DATA_INVALID);
-        }
-        byte id = (byte) (buf[(short) (offset + 4)] - 1);
-        if ((id == (byte) 0x03)
-                || (id > (byte) 0x0A)) {
-            ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
-        }
-        if (buf[(short) (offset + 5)] != (byte) 0x53) {
-            ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+            return;
         }
 
-        offset += 6;
         short l = (short) buf[offset];
         if ((buf[offset] & (byte) 0x80) == 0) {
             offset += 1;
