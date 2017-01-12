@@ -116,6 +116,14 @@ class test {
         })).getBytes()));
         System.out.println(response.toString());
 
+        short sw, le;
+        while (((sw = (short) response.getSW()) & 0xFF00) == 0x6100) {
+            le = (short) (sw & 0xFF);
+            System.out.println("Call GET RESPONSE");
+            response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le)).getBytes()));
+            System.out.println(response.toString());
+        }
+        
         /* RSA signature request */
         byte [] sig_request = new byte []{
             (byte) 0x7C, (byte) 0x82, (byte) 0x01, (byte) 0x06,
