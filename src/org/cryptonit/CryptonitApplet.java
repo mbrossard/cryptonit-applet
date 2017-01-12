@@ -537,7 +537,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 if (k != 256) {
                     ISOException.throwIt(ISO7816.SW_DATA_INVALID);
                 }
-                l = (short) 264;
+                l = (short) 264; // (256 + LL(256) + 1) + LL(260) + 1
                 signature = new byte[l];
                 Util.arrayCopy(new byte[]{
                     (byte) 0x7C, (byte) 0x82, (byte) 0x01, (byte) 0x04,
@@ -559,7 +559,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 if (ec_signature == null) {
                     ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
                 }
-                l = (short) 69;
+                l = (short) 69; // (65 + LL(65) + 1) + LL(67) + 1
                 signature = new byte[l];
                 Util.arrayCopy(new byte[]{
                     (byte) 0x7C, (byte) 0x43, (byte) 0x82, (byte) 0x41
