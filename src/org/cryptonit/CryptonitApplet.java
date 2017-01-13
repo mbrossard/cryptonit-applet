@@ -9,6 +9,7 @@ import javacard.framework.OwnerPIN;
 import javacard.framework.Util;
 import javacard.security.CryptoException;
 import javacard.security.ECPublicKey;
+import javacard.security.RandomData;
 import javacard.security.Key;
 import javacard.security.KeyBuilder;
 import javacard.security.KeyPair;
@@ -28,6 +29,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private boolean[] authenticated = null;
     private Cipher rsa_cipher = null;
     private Signature ec_signature = null;
+    private RandomData random = null;
     private IOBuffer io = null;
 
     private final static byte PIN_MAX_LENGTH = 8;
@@ -51,6 +53,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }, (short) 0, (byte) 8);
         index = new FileIndex();
         keys = new Key[(byte) 4];
+        random = RandomData.getInstance(RandomData.ALG_SECURE_RANDOM);
         authenticated = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_DESELECT);
         rsa_cipher = Cipher.getInstance(Cipher.ALG_RSA_NOPAD, false);
         try {
