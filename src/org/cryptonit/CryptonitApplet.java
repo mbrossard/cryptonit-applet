@@ -21,8 +21,8 @@ import javacardx.crypto.Cipher;
 /**
  * @author Mathias Brossard
  */
-
 public class CryptonitApplet extends Applet implements ExtendedLength {
+
     private final OwnerPIN pin;
     private final FileIndex index;
     private Key[] keys = null;
@@ -58,7 +58,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         rsa_cipher = Cipher.getInstance(Cipher.ALG_RSA_NOPAD, false);
         try {
             ec_signature = Signature.getInstance((byte) 33, false);
-        } catch(Exception e) {
+        } catch (Exception e) {
         }
         io = new IOBuffer(index);
         register();
