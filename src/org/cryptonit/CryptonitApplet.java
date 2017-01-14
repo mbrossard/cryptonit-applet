@@ -365,14 +365,14 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             case 0x11:
                 if (ec_signature == null) {
-                    ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);                    
+                    ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
                 }
                 doGenEC(apdu, buf[ISO7816.OFFSET_P2], (short) 256);
                 break;
             case 0x14:
                 if (ec_signature == null) {
-                    ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);                    
-                }                
+                    ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
+                }
                 doGenEC(apdu, buf[ISO7816.OFFSET_P2], (short) 384);
                 break;
             default:
@@ -447,7 +447,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             if (e.getReason() == CryptoException.NO_SUCH_ALGORITHM) {
                 ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
             }
-           ISOException.throwIt(ISO7816.SW_UNKNOWN);
+            ISOException.throwIt(ISO7816.SW_UNKNOWN);
         }
         if (kp != null) {
             kp.genKeyPair();
@@ -524,7 +524,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if ((cla != 0x0) && (cla != 0x10)) {
             ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
         }
-        
+
         if (cla == 0x10) {
             io.receiveBuffer(buf, offset, lc);
             ISOException.throwIt(ISO7816.SW_NO_ERROR);
