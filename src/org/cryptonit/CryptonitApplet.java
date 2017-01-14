@@ -100,7 +100,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 doGenerateKeyPair(apdu);
                 break;
             case INS_GENERAL_AUTHENTICATE:
-                doPrivateKeyOperation(apdu);
+                doGeneralAuthenticate(apdu);
                 break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
