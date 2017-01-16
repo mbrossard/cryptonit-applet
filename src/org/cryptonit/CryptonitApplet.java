@@ -536,6 +536,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             random.generateData(challenge, (short) 0, (short) 8);
             cipher.init(mgmt_key, Cipher.MODE_ENCRYPT);
             cipher.doFinal(challenge, (short) 0, (short) 8, out, (short) 4);
+            io.sendBuffer(out, (short) 12, apdu);
         }
     }    
 
