@@ -28,6 +28,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private final FileIndex index;
     private Key[] keys = null;
     private Key mgmt_key = null;
+    private byte[] challenge = null;
     private boolean[] authenticated = null;
     private Cipher rsa_cipher = null;
     private Signature ec_signature = null;
@@ -56,10 +57,14 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
         }, (short) 0);
+        challenge = JCSystem.makeTransientByteArray((short) 8,
+                JCSystem.CLEAR_ON_DESELECT);
+
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         pin.update(new byte[]{
             0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
         }, (short) 0, (byte) 8);
+
         index = new FileIndex();
         keys = new Key[(byte) 4];
         random = RandomData.getInstance(RandomData.ALG_SECURE_RANDOM);
