@@ -524,6 +524,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         byte[] buf = apdu.getBuffer();
         short lc = apdu.setIncomingAndReceive();
         short offset = apdu.getOffsetCdata();
+        if ((lc == (short) 4) && (Util.arrayCompare(buf, offset, new byte[]{
+            (byte) 0x7C, (byte) 0x02, (byte) 0x80, (byte) 0x00
+        }, (short) 0, (short) 4) == (short) 0)) {
+        }
     }    
 
     private void doPrivateKeyOperation(APDU apdu) throws ISOException {
