@@ -49,6 +49,13 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     public static final short SW_AUTHENTICATION_METHOD_BLOCKED = 0x6983;
 
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
+        mgmt_key = KeyBuilder.buildKey(KeyBuilder.TYPE_DES,
+                KeyBuilder.LENGTH_DES3_3KEY, false);
+        ((DESKey)mgmt_key).setKey(new byte[]{
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
+        }, (short) 0);
         pin = new OwnerPIN(PIN_MAX_TRIES, PIN_MAX_LENGTH);
         pin.update(new byte[]{
             0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
