@@ -543,6 +543,14 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             if (Util.arrayCompare(buf, (short) (offset + 4),
                     challenge, (short) 0, (short) 8) == 0) {
                 authenticated[0] = true;
+
+                if ((buf[(short) (offset + 0x0C)] == (byte) 0x81)
+                        && (buf[(short) (offset + 0x0D)] == (byte) 0x08)) {
+                    byte[] out = new byte[12];
+                    Util.arrayCopy(new byte[]{
+                        (byte) 0x7C, (byte) 0x0A, (byte) 0x82, (byte) 0x08
+                    }, (short) 0, out, (short) 0, (short) 4);
+                }
             } else {
                 authenticated[0] = false;
                 ISOException.throwIt((short) (SW_PIN_TRIES_REMAINING));
