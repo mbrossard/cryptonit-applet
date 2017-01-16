@@ -546,10 +546,13 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
                 if ((buf[(short) (offset + 0x0C)] == (byte) 0x81)
                         && (buf[(short) (offset + 0x0D)] == (byte) 0x08)) {
+                    Cipher cipher = Cipher.getInstance(Cipher.ALG_DES_ECB_NOPAD, false);
                     byte[] out = new byte[12];
                     Util.arrayCopy(new byte[]{
                         (byte) 0x7C, (byte) 0x0A, (byte) 0x82, (byte) 0x08
                     }, (short) 0, out, (short) 0, (short) 4);
+
+                    cipher.init(mgmt_key, Cipher.MODE_ENCRYPT);
                 }
             } else {
                 authenticated[0] = false;
