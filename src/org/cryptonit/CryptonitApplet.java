@@ -510,7 +510,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         byte p2 = buf[ISO7816.OFFSET_P2];
 
         if ((p1 == (byte) 0x07 || p1 == (byte) 0x11 || p1 == (byte) 0x14)
-                && (p2 == (byte) 0x9a || p2 == (byte) 0x9c || p2 == (byte) 0x9d)) {
+                && (keyMapping(p2) != (byte) 0xFF)) {
             doPrivateKeyOperation(apdu);
         } else if ((p1 == (byte) 0x00 || p1 == (byte) 0x03)
                 && (p2 == (byte) 0x9B)) {
