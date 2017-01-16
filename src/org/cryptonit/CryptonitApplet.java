@@ -527,6 +527,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if ((lc == (short) 4) && (Util.arrayCompare(buf, offset, new byte[]{
             (byte) 0x7C, (byte) 0x02, (byte) 0x80, (byte) 0x00
         }, (short) 0, (short) 4) == (short) 0)) {
+            random.generateData(challenge, (short) 0, (short) 8);
         }
     }    
 
