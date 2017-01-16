@@ -537,6 +537,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             cipher.init(mgmt_key, Cipher.MODE_ENCRYPT);
             cipher.doFinal(challenge, (short) 0, (short) 8, out, (short) 4);
             io.sendBuffer(out, (short) 12, apdu);
+        } else if ((lc == (short) 22) && (Util.arrayCompare(buf, offset, new byte[]{
+            (byte) 0x7C, (byte) 0x14, (byte) 0x80, (byte) 0x08
+        }, (short) 0, (short) 4) == (short) 0)) {
         } else {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
