@@ -9,6 +9,7 @@ import javacard.framework.OwnerPIN;
 import javacard.framework.Util;
 import javacard.security.CryptoException;
 import javacard.security.ECPublicKey;
+import javacard.security.DESKey;
 import javacard.security.RandomData;
 import javacard.security.Key;
 import javacard.security.KeyBuilder;
@@ -26,6 +27,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     private final OwnerPIN pin;
     private final FileIndex index;
     private Key[] keys = null;
+    private Key mgmt_key = null;
     private boolean[] authenticated = null;
     private Cipher rsa_cipher = null;
     private Signature ec_signature = null;
