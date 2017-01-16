@@ -512,6 +512,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if ((p1 == (byte) 0x07 || p1 == (byte) 0x11 || p1 == (byte) 0x14)
                 && (p2 == (byte) 0x9a || p2 == (byte) 0x9c || p2 == (byte) 0x9d)) {
             doPrivateKeyOperation(apdu);
+        } else if ((p1 == (byte) 0x00 || p1 == (byte) 0x03)
+                && (p2 == (byte) 0x9B)) {
+            doAuthenticate(apdu);
         } else {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
