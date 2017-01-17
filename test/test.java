@@ -208,5 +208,11 @@ class test {
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
         }, "DESede");
+        try {
+            Cipher cipher = Cipher.getInstance("DESede/ECB/NoPadding");
+            cipher.init(Cipher.DECRYPT_MODE, key);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
     }
 }
