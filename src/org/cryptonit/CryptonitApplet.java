@@ -547,6 +547,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }, (short) 0, (short) 4) == (short) 0)) {
             if (Util.arrayCompare(buf, (short) (offset + 4),
                     challenge, (short) 0, (short) 8) == 0) {
+                mgmt_counter.resetAndUnblock();
                 authenticated[0] = true;
 
                 if ((buf[(short) (offset + 0x0C)] == (byte) 0x81)
@@ -563,7 +564,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 }
             } else {
                 authenticated[0] = false;
-                ISOException.throwIt((short) (SW_PIN_TRIES_REMAINING));
+                mgmt_counter.check(new byte[]{0x01}, (short) 0, (byte) 1);
+                ISOException.throwIt((short) (SW_PIN_TRIES_REMAINING
+                        | mgmt_counter.getTriesRemaining()));
             }
         } else {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
