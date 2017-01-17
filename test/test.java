@@ -193,5 +193,13 @@ class test {
         })).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+
+        arg = new byte[]{
+            (byte) 0x7C, (byte) 0x14,
+            (byte) 0x80, (byte) 0x08,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            (byte) 0x81, (byte) 0x08,
+            (byte) 0x98, (byte) 0xFC, (byte) 0xE9, (byte) 0xDF, (byte) 0xA4, (byte) 0xD2, (byte) 0xBF, (byte) 0xE0
+        };
     }
 }
