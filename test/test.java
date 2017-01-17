@@ -211,6 +211,7 @@ class test {
         try {
             Cipher cipher = Cipher.getInstance("DESede/ECB/NoPadding");
             cipher.init(Cipher.DECRYPT_MODE, key);
+            cipher.doFinal(response.getData(), 4, 8, arg, 4);
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
