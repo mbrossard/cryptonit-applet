@@ -25,6 +25,7 @@ import javacardx.crypto.Cipher;
 public class CryptonitApplet extends Applet implements ExtendedLength {
 
     private final OwnerPIN pin;
+    private final OwnerPIN mgmt_counter;
     private final FileIndex index;
     private Key[] keys = null;
     private Key mgmt_key = null;
@@ -37,6 +38,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
 
     private final static byte PIN_MAX_LENGTH = 8;
     private final static byte PIN_MAX_TRIES  = 5;
+    private final static byte MGMT_MAX_TRIES = 3;
 
     public static final byte INS_GET_DATA                    = (byte) 0xCB;
     public static final byte INS_GET_RESPONSE                = (byte) 0xC0;
@@ -57,6 +59,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
         }, (short) 0);
+        mgmt_counter = new OwnerPIN(MGMT_MAX_TRIES, (byte) 1);
+        mgmt_counter.update(new byte[]{0x00}, (short) 0, (byte) 1);
+
         challenge = JCSystem.makeTransientByteArray((short) 8,
                 JCSystem.CLEAR_ON_DESELECT);
 
