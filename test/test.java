@@ -5,6 +5,8 @@ import javacard.framework.Util;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
 import java.util.Arrays;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 /**
  * @author Mathias Brossard
  */
@@ -201,5 +203,10 @@ class test {
             (byte) 0x81, (byte) 0x08,
             (byte) 0x98, (byte) 0xFC, (byte) 0xE9, (byte) 0xDF, (byte) 0xA4, (byte) 0xD2, (byte) 0xBF, (byte) 0xE0
         };
+        SecretKey key = new SecretKeySpec(new byte[]{
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
+        }, "DESede");
     }
 }
