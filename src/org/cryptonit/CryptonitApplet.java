@@ -545,6 +545,9 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         } else if ((lc == (short) 22) && (Util.arrayCompare(buf, offset, new byte[]{
             (byte) 0x7C, (byte) 0x14, (byte) 0x80, (byte) 0x08
         }, (short) 0, (short) 4) == (short) 0)) {
+            if (mgmt_counter.getTriesRemaining() == 0) {
+                ISOException.throwIt(SW_AUTHENTICATION_METHOD_BLOCKED);
+            }
             if (Util.arrayCompare(buf, (short) (offset + 4),
                     challenge, (short) 0, (short) 8) == 0) {
                 mgmt_counter.resetAndUnblock();
