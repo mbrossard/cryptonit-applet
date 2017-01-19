@@ -17,6 +17,15 @@ class piv {
         return sb.toString();
     }
 
+    private static ResponseAPDU sendAPDU(Simulator simulator, CommandAPDU command) {
+        ResponseAPDU response;
+        System.out.println(toHex(" > ", command.getBytes()));
+        response = new ResponseAPDU(simulator.transmitCommand(command.getBytes()));
+        System.out.println(toHex(" < ", response.getData())
+                + String.format("[sw=%04X l=%d]", response.getSW(), response.getData().length));
+        return response;
+    }
+
     public static void main(String[] args) {
         Simulator simulator = new Simulator();
         byte[] arg;
