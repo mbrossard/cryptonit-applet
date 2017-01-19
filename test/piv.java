@@ -31,5 +31,25 @@ class piv {
         })).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+
+        arg = new byte[]{
+            (byte) 0x7C, (byte) 0x14,
+            (byte) 0x80, (byte) 0x08,
+            (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            (byte) 0x81, (byte) 0x08,
+            (byte) 0x2B, (byte) 0x65, (byte) 0x4B, (byte) 0x22, (byte) 0xB2, (byte) 0x2D, (byte) 0x99, (byte) 0x7F
+        };
+        SecretKey key = new SecretKeySpec(new byte[]{
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+            0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
+        }, "DESede");
+        try {
+            Cipher cipher = Cipher.getInstance("DESede/ECB/NoPadding");
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            cipher.doFinal(response.getData(), 4, 8, arg, 4);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
     }
 }
