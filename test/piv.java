@@ -1,7 +1,11 @@
 import com.licel.jcardsim.base.Simulator;
 import javacard.framework.AID;
+import javacard.framework.Util;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import org.cryptonit.CryptonitApplet;
 
 /**
