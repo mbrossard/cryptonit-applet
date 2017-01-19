@@ -24,5 +24,12 @@ class piv {
         })).getBytes()));
         System.out.println(response.toString());
         System.out.println(toHex(response.getData()));
+
+        System.out.println("Management key authentication (part 1)");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x87, 0x03, 0x9B,  new byte []{
+            (byte) 0x7C, (byte) 0x02, (byte) 0x80, (byte) 0x00
+        })).getBytes()));
+        System.out.println(response.toString());
+        System.out.println(toHex(response.getData()));
     }
 }
