@@ -51,5 +51,10 @@ class piv {
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
+
+        System.out.println("Management key authentication (part 2)");
+        response = new ResponseAPDU(simulator.transmitCommand((new CommandAPDU(0x00, 0x87, 0x03, 0x9B, arg)).getBytes()));
+        System.out.println(response.toString());
+        System.out.println(toHex(response.getData()));
     }
 }
