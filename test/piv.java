@@ -1,10 +1,12 @@
 import com.licel.jcardsim.base.Simulator;
 import javacard.framework.AID;
+import javax.smartcardio.CommandAPDU;
+import javax.smartcardio.ResponseAPDU;
+import org.cryptonit.CryptonitApplet;
 
 /**
  * @author Mathias Brossard
  */
-
 class piv {
     public static void main(String[] args) {
         Simulator simulator = new Simulator();
