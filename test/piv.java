@@ -8,6 +8,15 @@ import org.cryptonit.CryptonitApplet;
  * @author Mathias Brossard
  */
 class piv {
+    private static String toHex(String prefix, byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(prefix);
+        for (int i = 0; i < bytes.length; i++) {
+            sb.append(String.format("%02x ", bytes[i]));
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         Simulator simulator = new Simulator();
         byte[] arg;
