@@ -16,5 +16,7 @@ class piv {
         };
         short sw, le;
         AID appletAID = new AID(appletAIDBytes, (short) 0, (byte) appletAIDBytes.length);
+
+        simulator.installApplet(appletAID, CryptonitApplet.class);
     }
 }
