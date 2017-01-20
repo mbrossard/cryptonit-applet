@@ -84,5 +84,10 @@ class piv {
             System.err.println("Error modulus");
             return;
         }
+
+        byte[] n = new byte[257];
+        byte[] e = new byte[3];
+        short s = (short) (arg.length - 9);
+        Util.arrayCopy(arg, (short) 9, n, (short) 1, s);
     }
 }
