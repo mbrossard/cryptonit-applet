@@ -308,29 +308,28 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 ISOException.throwIt(ISO7816.SW_DATA_INVALID);
             }
 
-            offset += 6;
+            offset += 5;
         } else if (buf[offset] == (byte) 0x7E) {
             id = FileIndex.DISCOVERY;
-            offset += 1;
         } else {
             ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
             return;
         }
 
         short l = (short) buf[offset];
-        if ((buf[offset] & (byte) 0x80) == 0) {
-            offset += 1;
-        } else if (buf[offset] == (byte) 0x81) {
-            l = (short) (buf[(short) (offset + 1)]);
-            offset += 2;
-        } else if (buf[offset] == (byte) 0x82) {
-            l = Util.getShort(buf, (short) (offset + 1));
-            offset += 3;
+        short off = (short) (offset + 1);
+        if ((buf[off] & (byte) 0x80) == 0) {
+            off += 1;
+        } else if (buf[off] == (byte) 0x81) {
+            l = (short) (buf[(short) (off + 1)]);
+            off += 2;
+        } else if (buf[off] == (byte) 0x82) {
+            l = Util.getShort(buf, (short) (off + 1));
+            off += 3;
         } else {
             ISOException.throwIt(ISO7816.SW_UNKNOWN);
         }
-
-        io.createFile(id, l);
+        io.createFile(id, (short) (l + (off - offset)));
         io.receiveFile(buf, offset, (short) (lc - (offset - apdu.getOffsetCdata())));
 
         if (cla == 0x00) {
