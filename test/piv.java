@@ -89,5 +89,10 @@ class piv {
         byte[] e = new byte[3];
         short s = (short) (arg.length - 9);
         Util.arrayCopy(arg, (short) 9, n, (short) 1, s);
+
+        sw = (short) response.getSW();
+        le = (short) (sw & 0xFF);
+        System.out.println("Call GET RESPONSE");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
     }
 }
