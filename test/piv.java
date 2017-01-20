@@ -101,5 +101,12 @@ class piv {
             return;            
         }
         Util.arrayCopy(arg, (short) 0, n, (short) (s + 1), (short) (256 - s));
+
+        s = (short) (256 - s);
+        if (arg[s] != (byte) 0x82 || arg[s + 1] != (byte) 0x3) {
+            System.err.println("Error exponent");
+            return;
+        }
+        Util.arrayCopy(arg, (short) (s + 2), e, (short) 0, (short) 3);
     }
 }
