@@ -179,5 +179,6 @@ public class IOBuffer {
         short id = this.shorts[PATH];
         Util.arrayCopy(buf, offset, index.entries[id].content,
                 this.shorts[OFFSET], length);
+        this.shorts[OFFSET] += length;
     }
 }
