@@ -75,5 +75,9 @@ class piv {
 
         System.out.println("Management key authentication (part 2)");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x03, 0x9B, arg));
+        System.out.println("Generate RSA key (9A)");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0x47, 0x00, 0x9A, new byte[]{
+            (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01, (byte) 0x07
+        }));
     }
 }
