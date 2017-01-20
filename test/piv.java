@@ -79,5 +79,10 @@ class piv {
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x47, 0x00, 0x9A, new byte[]{
             (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01, (byte) 0x07
         }));
+        arg = response.getData();
+        if (arg.length < 9 || arg[7] != 0x1 || arg[8] != 0x0) {
+            System.err.println("Error modulus");
+            return;
+        }
     }
 }
