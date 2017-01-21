@@ -2,6 +2,7 @@ import com.licel.jcardsim.base.Simulator;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Date;
 import javacard.framework.AID;
 import javacard.framework.Util;
@@ -173,5 +174,9 @@ class piv {
         Util.arrayCopy(sig_prefix, (short) 0, sig_request, (short) 0, (short) sig_prefix.length);
         sig_request[sig_request.length - digest.length - 1] = 0x0;
         Util.arrayCopy(digest, (short) 0, sig_request, (short) (sig_request.length - digest.length), (short) (digest.length));
+
+        System.out.println("RSA signature file (chained APDUs) first command");
+        arg = Arrays.copyOfRange(sig_request, 0, 255);
+        response = sendAPDU(simulator, new CommandAPDU(0x10, 0x87, 0x07, 0x9A, arg));
     }
 }
