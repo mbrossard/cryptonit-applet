@@ -182,5 +182,15 @@ class piv {
         System.out.println("RSA signature file (chained APDUs) second command");
         arg = Arrays.copyOfRange(sig_request, 255, sig_request.length);
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x07, 0x9A, arg));
+
+        arg = response.getData();
+        byte[] sig = new byte[256];
+        if (arg.length > 8 && arg[6] == 0x1 && arg[7] == 0x0) {
+            s = (short) (arg.length - 8);
+            Util.arrayCopy(arg, (short) 8, sig, (short) 0, s);
+        } else {
+            System.err.println("Error in signature");
+            return;
+        }
     }
 }
