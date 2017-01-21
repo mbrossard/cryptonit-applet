@@ -163,5 +163,10 @@ class piv {
             (byte) 0x81, (byte) 0x82, (byte) 0x01, (byte) 0x00,
             (byte) 0x00, (byte) 0x01
         };
+
+        Util.arrayFillNonAtomic(sig_request, (short) 0, (short) sig_request.length, (byte) 0xFF);
+        Util.arrayCopy(sig_prefix, (short) 0, sig_request, (short) 0, (short) sig_prefix.length);
+        sig_request[sig_request.length - digest.length - 1] = 0x0;
+        Util.arrayCopy(digest, (short) 0, sig_request, (short) (sig_request.length - digest.length), (short) (digest.length));
     }
 }
