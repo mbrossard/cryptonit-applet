@@ -178,5 +178,9 @@ class piv {
         System.out.println("RSA signature file (chained APDUs) first command");
         arg = Arrays.copyOfRange(sig_request, 0, 255);
         response = sendAPDU(simulator, new CommandAPDU(0x10, 0x87, 0x07, 0x9A, arg));
+
+        System.out.println("RSA signature file (chained APDUs) second command");
+        arg = Arrays.copyOfRange(sig_request, 255, sig_request.length);
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x07, 0x9A, arg));
     }
 }
