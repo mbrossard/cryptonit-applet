@@ -1,6 +1,7 @@
 import com.licel.jcardsim.base.Simulator;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Date;
 import javacard.framework.AID;
 import javacard.framework.Util;
@@ -140,6 +141,17 @@ class piv {
 
             ASN1OutputStream aOut = new ASN1OutputStream(bOut);
             aOut.writeObject(tbs);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            return;
+        }
+
+        byte[] digest = null;
+        try {
+            MessageDigest md;
+            md = MessageDigest.getInstance("SHA-256");
+            md.update(bOut.toByteArray());
+            digest = md.digest();
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
