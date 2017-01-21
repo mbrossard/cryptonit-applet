@@ -197,5 +197,8 @@ class piv {
         le = (short) (sw & 0xFF);
         System.out.println("Call GET RESPONSE");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
+
+        arg = response.getData();
+        Util.arrayCopy(arg, (short) 0, sig, s, (short) (256 - s));
     }
 }
