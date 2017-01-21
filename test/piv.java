@@ -1,5 +1,6 @@
 import com.licel.jcardsim.base.Simulator;
 import java.math.BigInteger;
+import java.util.Date;
 import javacard.framework.AID;
 import javacard.framework.Util;
 import javax.smartcardio.CommandAPDU;
@@ -7,10 +8,15 @@ import javax.smartcardio.ResponseAPDU;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.DERNull;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.asn1.x509.Time;
+import org.bouncycastle.asn1.x509.V1TBSCertificateGenerator;
+import org.bouncycastle.asn1.x500.X500Name;
 import org.cryptonit.CryptonitApplet;
 
 /**
@@ -117,6 +123,14 @@ class piv {
         try {
             RSAPublicKey rsa_pub = new RSAPublicKey(new BigInteger(n), new BigInteger(e));
             AlgorithmIdentifier palgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE);
+            V1TBSCertificateGenerator tbsGen = new V1TBSCertificateGenerator();
+            tbsGen.setSerialNumber(new ASN1Integer(0x1));
+            tbsGen.setStartDate(new Time(new Date(100, 01, 01, 00, 00, 00)));
+            tbsGen.setEndDate(new Time(new Date(130, 12, 31, 23, 59, 59)));
+            tbsGen.setIssuer(new X500Name("CN=Cryptonit"));
+            tbsGen.setSubject(new X500Name("CN=Cryptonit"));
+            tbsGen.setSignature(new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE));
+            tbsGen.setSubjectPublicKeyInfo(new SubjectPublicKeyInfo(palgo, rsa_pub));
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
