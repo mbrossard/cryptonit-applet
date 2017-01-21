@@ -1,4 +1,5 @@
 import com.licel.jcardsim.base.Simulator;
+import java.math.BigInteger;
 import javacard.framework.AID;
 import javacard.framework.Util;
 import javax.smartcardio.CommandAPDU;
@@ -6,6 +7,7 @@ import javax.smartcardio.ResponseAPDU;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.bouncycastle.asn1.pkcs.RSAPublicKey;
 import org.cryptonit.CryptonitApplet;
 
 /**
@@ -108,5 +110,12 @@ class piv {
             return;
         }
         Util.arrayCopy(arg, (short) (s + 2), e, (short) 0, (short) 3);
+
+        try {
+            RSAPublicKey rsa_pub = new RSAPublicKey(new BigInteger(n), new BigInteger(e));
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            return;
+        }
     }
 }
