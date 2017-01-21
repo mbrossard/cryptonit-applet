@@ -1,4 +1,5 @@
 import com.licel.jcardsim.base.Simulator;
+import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.util.Date;
 import javacard.framework.AID;
@@ -9,6 +10,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.ASN1OutputStream;
 import org.bouncycastle.asn1.DERNull;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
@@ -121,6 +123,7 @@ class piv {
         }
         Util.arrayCopy(arg, (short) (s + 2), e, (short) 0, (short) 3);
 
+        ByteArrayOutputStream bOut = new ByteArrayOutputStream();
         TBSCertificate tbs;
         try {
             RSAPublicKey rsa_pub = new RSAPublicKey(new BigInteger(n), new BigInteger(e));
@@ -134,6 +137,9 @@ class piv {
             tbsGen.setSignature(new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE));
             tbsGen.setSubjectPublicKeyInfo(new SubjectPublicKeyInfo(palgo, rsa_pub));
             tbs = tbsGen.generateTBSCertificate();
+
+            ASN1OutputStream aOut = new ASN1OutputStream(bOut);
+            aOut.writeObject(tbs);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
