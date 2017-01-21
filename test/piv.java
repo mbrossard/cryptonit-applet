@@ -17,6 +17,7 @@ import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.asn1.x509.Time;
 import org.bouncycastle.asn1.x509.V1TBSCertificateGenerator;
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.cryptonit.CryptonitApplet;
 
 /**
@@ -120,6 +121,7 @@ class piv {
         }
         Util.arrayCopy(arg, (short) (s + 2), e, (short) 0, (short) 3);
 
+        TBSCertificate tbs;
         try {
             RSAPublicKey rsa_pub = new RSAPublicKey(new BigInteger(n), new BigInteger(e));
             AlgorithmIdentifier palgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE);
@@ -131,6 +133,7 @@ class piv {
             tbsGen.setSubject(new X500Name("CN=Cryptonit"));
             tbsGen.setSignature(new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE));
             tbsGen.setSubjectPublicKeyInfo(new SubjectPublicKeyInfo(palgo, rsa_pub));
+            tbs = tbsGen.generateTBSCertificate();
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
