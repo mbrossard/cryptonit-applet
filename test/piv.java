@@ -156,6 +156,11 @@ class piv {
             ex.printStackTrace(System.err);
             return;
         }
+        System.out.println("Verify PIN");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0x20, 0x00, 0x80, new byte[]{
+            0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
+        }));
+
         /* RSA signature request */
         byte[] sig_request = new byte[266], sig_prefix = new byte[]{
             (byte) 0x7C, (byte) 0x82, (byte) 0x01, (byte) 0x06,
