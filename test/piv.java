@@ -7,7 +7,10 @@ import javax.smartcardio.ResponseAPDU;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.bouncycastle.asn1.DERNull;
+import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.cryptonit.CryptonitApplet;
 
 /**
@@ -113,6 +116,7 @@ class piv {
 
         try {
             RSAPublicKey rsa_pub = new RSAPublicKey(new BigInteger(n), new BigInteger(e));
+            AlgorithmIdentifier palgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
