@@ -192,5 +192,10 @@ class piv {
             System.err.println("Error in signature");
             return;
         }
+
+        sw = (short) response.getSW();
+        le = (short) (sw & 0xFF);
+        System.out.println("Call GET RESPONSE");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
     }
 }
