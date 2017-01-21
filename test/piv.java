@@ -156,5 +156,12 @@ class piv {
             ex.printStackTrace(System.err);
             return;
         }
+        /* RSA signature request */
+        byte[] sig_request = new byte[266], sig_prefix = new byte[]{
+            (byte) 0x7C, (byte) 0x82, (byte) 0x01, (byte) 0x06,
+            (byte) 0x82, (byte) 0x00,
+            (byte) 0x81, (byte) 0x82, (byte) 0x01, (byte) 0x00,
+            (byte) 0x00, (byte) 0x01
+        };
     }
 }
