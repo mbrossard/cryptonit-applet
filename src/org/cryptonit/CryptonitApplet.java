@@ -59,8 +59,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
         }, (short) 0);
-        mgmt_counter = new OwnerPIN(MGMT_MAX_TRIES, (byte) 1);
-        mgmt_counter.update(new byte[]{0x00}, (short) 0, (byte) 1);
+        mgmt_counter = new OwnerPIN(MGMT_MAX_TRIES, (byte) 4);
+        mgmt_counter.update(new byte[]{0x00, 0x00, 0x00, 0x00}, (short) 0, (byte) 4);
 
         challenge = JCSystem.makeTransientByteArray((short) 8,
                 JCSystem.CLEAR_ON_DESELECT);
@@ -566,7 +566,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 }
             } else {
                 authenticated[0] = false;
-                mgmt_counter.check(new byte[]{0x01}, (short) 0, (byte) 1);
+                mgmt_counter.check(new byte[]{0x01, 0x01, 0x01, 0x01}, (short) 0, (byte) 4);
                 ISOException.throwIt((short) (SW_PIN_TRIES_REMAINING
                         | mgmt_counter.getTriesRemaining()));
             }
