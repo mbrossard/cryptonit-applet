@@ -235,5 +235,7 @@ class piv {
 
         buffer[off++] = (byte) 0x70;
         buffer[off++] = (byte) 0x82;
+        buffer[off++] = (byte) ((crt.length >> 8) & 0xFF);
+        buffer[off++] = (byte) (crt.length & 0xFF);
     }
 }
