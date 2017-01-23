@@ -207,5 +207,13 @@ class piv {
         v.add(tbs);
         v.add(new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE));
         v.add(new DERBitString(sig));
+
+        byte [] crt = null;
+        try {
+            Certificate c = Certificate.getInstance(new DERSequence(v));
+            crt = c.getEncoded();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
     }
 }
