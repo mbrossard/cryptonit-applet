@@ -11,8 +11,10 @@ import javax.smartcardio.ResponseAPDU;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.bouncycastle.asn1.ASN1EncodableVector;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1OutputStream;
+import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.DERNull;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
@@ -200,5 +202,10 @@ class piv {
 
         arg = response.getData();
         Util.arrayCopy(arg, (short) 0, sig, s, (short) (256 - s));
+
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        v.add(tbs);
+        v.add(new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE));
+        v.add(new DERBitString(sig));
     }
 }
