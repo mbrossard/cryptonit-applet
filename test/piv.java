@@ -218,7 +218,7 @@ class piv {
             ex.printStackTrace(System.out);
         }
 
-        byte[] import_prefix = new byte[]{
+        byte[] prefix = new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05,
             (byte) 0x53, (byte) 0x82 
         };
