@@ -227,5 +227,7 @@ class piv {
 
         short len = (short) (prefix.length + crt.length + 6 + postfix.length);
         byte[] buffer = new byte[len];
+
+        Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
     }
 }
