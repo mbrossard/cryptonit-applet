@@ -237,5 +237,6 @@ class piv {
         buffer[off++] = (byte) 0x82;
         buffer[off++] = (byte) ((crt.length >> 8) & 0xFF);
         buffer[off++] = (byte) (crt.length & 0xFF);
+        Util.arrayCopy(crt, (short) 0, buffer, (short) off, (short) crt.length);
     }
 }
