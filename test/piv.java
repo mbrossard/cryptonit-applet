@@ -224,5 +224,8 @@ class piv {
         }, postfix = new byte[]{
             (byte) 0x71, (byte) 0x01, (byte) 0x00, (byte) 0xFE, (byte) 0x00
         };
+
+        short len = (short) (prefix.length + crt.length + 6 + postfix.length);
+        byte[] buffer = new byte[len];
     }
 }
