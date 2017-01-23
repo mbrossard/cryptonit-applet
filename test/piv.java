@@ -232,5 +232,8 @@ class piv {
         int off = prefix.length;
         buffer[off++] = (byte) (((crt.length + postfix.length + 4) >> 8) & 0xFF);
         buffer[off++] = (byte) ((crt.length + postfix.length + 4) & 0xFF);
+
+        buffer[off++] = (byte) 0x70;
+        buffer[off++] = (byte) 0x82;
     }
 }
