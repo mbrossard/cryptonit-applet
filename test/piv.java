@@ -229,5 +229,8 @@ class piv {
         byte[] buffer = new byte[len];
 
         Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
+        int off = prefix.length;
+        buffer[off++] = (byte) (((crt.length + postfix.length + 4) >> 8) & 0xFF);
+        buffer[off++] = (byte) ((crt.length + postfix.length + 4) & 0xFF);
     }
 }
