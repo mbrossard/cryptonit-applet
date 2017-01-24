@@ -256,5 +256,11 @@ class piv {
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05
         }));
+
+        while (((sw = (short) response.getSW()) & 0xFF00) == 0x6100) {
+            le = (short) (sw & 0xFF);
+            System.out.println("Call GET RESPONSE");
+            response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
+        }
     }
 }
