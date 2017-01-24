@@ -240,5 +240,16 @@ class piv {
         Util.arrayCopy(crt, (short) 0, buffer, (short) off, (short) crt.length);
         off += crt.length;
         Util.arrayCopy(postfix, (short) 0, buffer, (short) off, (short) postfix.length);
+
+        int i = 1, left = buffer.length, sent = 0;
+        while(left > 0) {
+            System.out.println(String.format("Uploading certificate part %d", i++));
+            int cla = (left <= 255) ? 0x00 : 0x10;
+            int sending = (left <= 255) ? left : 255;
+            arg = Arrays.copyOfRange(buffer, sent, sent + sending);
+            response = sendAPDU(simulator, new CommandAPDU(cla, 0xDB, 0x3F, 0xFF, arg));
+            sent += sending;
+            left -= sending;
+        }
     }
 }
