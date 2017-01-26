@@ -666,7 +666,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                     ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
                 }
                 l = (short) 69; // (65 + LL(65) + 1) + LL(67) + 1
-                signature = new byte[l];
+                signature = new byte[76];
                 ec_signature.init(keys[id], Signature.MODE_SIGN);
                 try {
                     k = ec_signature.sign(buf, m, k, signature, (short) 4);
