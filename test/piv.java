@@ -12,8 +12,10 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.bouncycastle.asn1.ASN1EncodableVector;
+import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.ASN1OutputStream;
+import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.DERBitString;
 import org.bouncycastle.asn1.DERNull;
 import org.bouncycastle.asn1.DERSequence;
@@ -287,6 +289,8 @@ class piv {
 
         bOut = new ByteArrayOutputStream();
         try {
+            ASN1InputStream aIn = new ASN1InputStream(buffer);
+            ASN1Sequence aSeq = (ASN1Sequence) aIn.readObject();
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
