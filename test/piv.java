@@ -272,6 +272,15 @@ class piv {
             System.err.println("Error EC Public key");
             return;
         }
+
+        prefix = new byte[]{
+            (byte) 0x30, (byte) 0x59, (byte) 0x30, (byte) 0x13, (byte) 0x06,
+            (byte) 0x07, (byte) 0x2A, (byte) 0x86, (byte) 0x48, (byte) 0xCE,
+            (byte) 0x3D, (byte) 0x02, (byte) 0x01, (byte) 0x06, (byte) 0x08,
+            (byte) 0x2A, (byte) 0x86, (byte) 0x48, (byte) 0xCE, (byte) 0x3D,
+            (byte) 0x03, (byte) 0x01, (byte) 0x07, (byte) 0x03, (byte) 0x42,
+            (byte) 0x00
+        };
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
