@@ -263,6 +263,10 @@ class piv {
             response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
         }
 
+        System.out.println("Generate EC P256 key (9C)");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0x47, 0x00, 0x9C, new byte[]{
+            (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01, (byte) 0x11
+        }));
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
