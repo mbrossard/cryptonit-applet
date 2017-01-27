@@ -302,6 +302,9 @@ class piv {
             tbsGen.setSignature(new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE));
             tbsGen.setSubjectPublicKeyInfo(new SubjectPublicKeyInfo(aSeq));
             tbs = tbsGen.generateTBSCertificate();
+
+            ASN1OutputStream aOut = new ASN1OutputStream(bOut);
+            aOut.writeObject(tbs);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
