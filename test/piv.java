@@ -310,6 +310,16 @@ class piv {
             return;
         }
         
+        digest = null;
+        try {
+            MessageDigest md;
+            md = MessageDigest.getInstance("SHA1");
+            md.update(bOut.toByteArray());
+            digest = md.digest();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            return;
+        }
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
