@@ -373,6 +373,22 @@ class piv {
         Util.arrayCopy(crt, (short) 0, buffer, (short) off, (short) crt.length);
         off += crt.length;
         Util.arrayCopy(postfix, (short) 0, buffer, (short) off, (short) postfix.length);
+
+        i = 1; left = buffer.length; sent = 0;
+        while(left > 0) {
+            System.out.println(String.format("Uploading certificate part %d", i++));
+            int cla = (left <= 255) ? 0x00 : 0x10;
+            int sending = (left <= 255) ? left : 255;
+            arg = Arrays.copyOfRange(buffer, sent, sent + sending);
+            response = sendAPDU(simulator, new CommandAPDU(cla, 0xDB, 0x3F, 0xFF, arg));
+            sent += sending;
+            left -= sending;
+        }
+
+        System.out.println("Read 0x5FC10A file");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte[]{
+            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x0A
+        }));
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
