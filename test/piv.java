@@ -334,6 +334,13 @@ class piv {
             ex.printStackTrace(System.err);
             return;
         }
+
+        /* ECDSA signature request */
+        sig_prefix = new byte[]{
+            (byte) 0x7C, (byte) 0x18,
+            (byte) 0x82, (byte) 0x00,
+            (byte) 0x81, (byte) 0x14,
+        };
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
