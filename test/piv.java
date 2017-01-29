@@ -352,6 +352,27 @@ class piv {
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
+
+        // Writing now to 5FC10A
+        prefix = new byte[]{
+            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x0A,
+            (byte) 0x53, (byte) 0x82 
+        };
+        len = (short) (prefix.length + crt.length + 6 + postfix.length);
+        buffer = new byte[len];
+
+        Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
+        off = prefix.length;
+        buffer[off++] = (byte) (((crt.length + postfix.length + 4) >> 8) & 0xFF);
+        buffer[off++] = (byte) ((crt.length + postfix.length + 4) & 0xFF);
+
+        buffer[off++] = (byte) 0x70;
+        buffer[off++] = (byte) 0x82;
+        buffer[off++] = (byte) ((crt.length >> 8) & 0xFF);
+        buffer[off++] = (byte) (crt.length & 0xFF);
+        Util.arrayCopy(crt, (short) 0, buffer, (short) off, (short) crt.length);
+        off += crt.length;
+        Util.arrayCopy(postfix, (short) 0, buffer, (short) off, (short) postfix.length);
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
