@@ -44,6 +44,29 @@ class piv {
         return sb.toString();
     }
 
+    private static TBSCertificate createTBS(ByteArrayOutputStream bOut, SubjectPublicKeyInfo ski, AlgorithmIdentifier algo) throws IOException {
+        TBSCertificate tbs = null;
+
+        V1TBSCertificateGenerator tbsGen = new V1TBSCertificateGenerator();
+        tbsGen.setSerialNumber(new ASN1Integer(0x1));
+        tbsGen.setStartDate(new Time(new Date(100, 01, 01, 00, 00, 00)));
+        tbsGen.setEndDate(new Time(new Date(130, 12, 31, 23, 59, 59)));
+        tbsGen.setIssuer(new X500Name("CN=Cryptonit"));
+        tbsGen.setSubject(new X500Name("CN=Cryptonit"));
+        tbsGen.setSignature(algo);
+        tbsGen.setSubjectPublicKeyInfo(ski);
+        tbs = tbsGen.generateTBSCertificate();
+
+        ASN1OutputStream aOut = new ASN1OutputStream(bOut);
+        aOut.writeObject(tbs);
+        System.out.println("Build TBS");
+        System.out.println(toHex(bOut.toByteArray()));
+        Base64.encode(bOut.toByteArray(), System.out);
+        System.out.println();
+
+        return tbs;
+    }    
+    
     private static ResponseAPDU sendAPDU(Simulator simulator, CommandAPDU command) {
         ResponseAPDU response;
         System.out.println(toHex(" > ", command.getBytes()));
