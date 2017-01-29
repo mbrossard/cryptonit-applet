@@ -335,6 +335,7 @@ class piv {
         
         Util.arrayCopy(sig_prefix, (short) 0, sig_request, (short) 0, (short) sig_prefix.length);
         Util.arrayCopy(digest, (short) 0, sig_request, (short) (sig_prefix.length), (short) (digest.length));
+        System.out.println("EC (9C) signature");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x07, 0x9C, sig_request));
 
         arg = response.getData();
