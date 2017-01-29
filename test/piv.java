@@ -160,19 +160,9 @@ class piv {
         TBSCertificate tbs;
         try {
             RSAPublicKey rsa_pub = new RSAPublicKey(new BigInteger(n), new BigInteger(e));
-            AlgorithmIdentifier palgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE);
-            V1TBSCertificateGenerator tbsGen = new V1TBSCertificateGenerator();
-            tbsGen.setSerialNumber(new ASN1Integer(0x1));
-            tbsGen.setStartDate(new Time(new Date(100, 01, 01, 00, 00, 00)));
-            tbsGen.setEndDate(new Time(new Date(130, 12, 31, 23, 59, 59)));
-            tbsGen.setIssuer(new X500Name("CN=Cryptonit"));
-            tbsGen.setSubject(new X500Name("CN=Cryptonit"));
-            tbsGen.setSignature(new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE));
-            tbsGen.setSubjectPublicKeyInfo(new SubjectPublicKeyInfo(palgo, rsa_pub));
-            tbs = tbsGen.generateTBSCertificate();
-
-            ASN1OutputStream aOut = new ASN1OutputStream(bOut);
-            aOut.writeObject(tbs);
+            AlgorithmIdentifier palgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE),
+                    salgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE);
+            tbs = createTBS(bOut, new SubjectPublicKeyInfo(palgo, rsa_pub), salgo);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
