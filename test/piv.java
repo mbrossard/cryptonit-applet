@@ -316,19 +316,9 @@ class piv {
         try {
             ASN1InputStream aIn = new ASN1InputStream(buffer);
             ASN1Sequence aSeq = (ASN1Sequence) aIn.readObject();
-
-            V1TBSCertificateGenerator tbsGen = new V1TBSCertificateGenerator();
-            tbsGen.setSerialNumber(new ASN1Integer(0x1));
-            tbsGen.setStartDate(new Time(new Date(100, 01, 01, 00, 00, 00)));
-            tbsGen.setEndDate(new Time(new Date(130, 12, 31, 23, 59, 59)));
-            tbsGen.setIssuer(new X500Name("CN=Cryptonit"));
-            tbsGen.setSubject(new X500Name("CN=Cryptonit"));
-            tbsGen.setSignature(new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE));
-            tbsGen.setSubjectPublicKeyInfo(new SubjectPublicKeyInfo(aSeq));
-            tbs = tbsGen.generateTBSCertificate();
-
-            ASN1OutputStream aOut = new ASN1OutputStream(bOut);
-            aOut.writeObject(tbs);
+            AlgorithmIdentifier palgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE),
+                    salgo = new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE);
+            tbs = createTBS(bOut, new SubjectPublicKeyInfo(aSeq), salgo);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
             return;
