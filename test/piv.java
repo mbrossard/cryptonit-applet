@@ -331,6 +331,10 @@ class piv {
             (byte) 0x82, (byte) 0x00,
             (byte) 0x81, (byte) 0x14,
         };
+        sig_request = new byte[sig_prefix.length + 20];
+        
+        Util.arrayCopy(sig_prefix, (short) 0, sig_request, (short) 0, (short) sig_prefix.length);
+        Util.arrayCopy(digest, (short) 0, sig_request, (short) (sig_prefix.length), (short) (digest.length));
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
