@@ -339,6 +339,19 @@ class piv {
 
         arg = response.getData();
         sig = Arrays.copyOfRange(arg, 4, arg.length);
+
+        v = new ASN1EncodableVector();
+        v.add(tbs);
+        v.add(new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE));
+        v.add(new DERBitString(sig));
+
+        crt = null;
+        try {
+            Certificate c = Certificate.getInstance(new DERSequence(v));
+            crt = c.getEncoded();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
