@@ -45,6 +45,19 @@ class piv {
         return sb.toString();
     }
 
+    private static byte[] digest(ByteArrayOutputStream bOut, String algo) {
+        byte[] digest = null;
+        try {
+            MessageDigest md;
+            md = MessageDigest.getInstance(algo);
+            md.update(bOut.toByteArray());
+            digest = md.digest();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
+        return digest;
+    }
+    
     private static TBSCertificate createTBS(ByteArrayOutputStream bOut, SubjectPublicKeyInfo ski, AlgorithmIdentifier algo) throws IOException {
         TBSCertificate tbs = null;
 
