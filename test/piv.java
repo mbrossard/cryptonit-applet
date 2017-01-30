@@ -326,17 +326,8 @@ class piv {
             ex.printStackTrace(System.err);
             return;
         }
-        
-        digest = null;
-        try {
-            MessageDigest md;
-            md = MessageDigest.getInstance("SHA1");
-            md.update(bOut.toByteArray());
-            digest = md.digest();
-        } catch (Exception ex) {
-            ex.printStackTrace(System.err);
-            return;
-        }
+
+        digest = digest(bOut, "SHA1");
 
         /* ECDSA signature request */
         sig_prefix = new byte[]{
