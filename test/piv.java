@@ -45,6 +45,24 @@ class piv {
         return sb.toString();
     }
 
+    private static byte[] buildCRT(TBSCertificate tbs, AlgorithmIdentifier aid, byte[] sig) {
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        v.add(tbs);
+        v.add(aid);
+        v.add(new DERBitString(sig));
+
+        byte [] crt = null;
+        try {
+            Certificate c = Certificate.getInstance(new DERSequence(v));
+            crt = c.getEncoded();
+            Base64.encode(crt, System.out);
+            System.out.println("");
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return crt;
+    }
+
     private static byte[] digest(ByteArrayOutputStream bOut, String algo) {
         byte[] digest = null;
         try {
