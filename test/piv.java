@@ -75,7 +75,7 @@ class piv {
         }
         return digest;
     }
-    
+
     private static TBSCertificate createTBS(ByteArrayOutputStream bOut, SubjectPublicKeyInfo ski, AlgorithmIdentifier algo) throws IOException {
         TBSCertificate tbs = null;
 
