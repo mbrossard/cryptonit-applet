@@ -355,18 +355,7 @@ class piv {
         arg = response.getData();
         sig = Arrays.copyOfRange(arg, 4, arg.length);
 
-        v = new ASN1EncodableVector();
-        v.add(tbs);
-        v.add(new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE));
-        v.add(new DERBitString(sig));
-
-        crt = null;
-        try {
-            Certificate c = Certificate.getInstance(new DERSequence(v));
-            crt = c.getEncoded();
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
-        }
+        crt = buildCRT(tbs, new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE), sig);
 
         // Writing now to 5FC10A
         prefix = new byte[]{
