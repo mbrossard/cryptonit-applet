@@ -181,16 +181,8 @@ class piv {
             return;
         }
 
-        byte[] digest = null;
-        try {
-            MessageDigest md;
-            md = MessageDigest.getInstance("SHA-256");
-            md.update(bOut.toByteArray());
-            digest = md.digest();
-        } catch (Exception ex) {
-            ex.printStackTrace(System.err);
-            return;
-        }
+        byte[] digest = digest(bOut, "SHA-256");
+
         System.out.println("Verify PIN");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x20, 0x00, 0x80, new byte[]{
             0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
