@@ -244,20 +244,9 @@ class piv {
 
         arg = response.getData();
         Util.arrayCopy(arg, (short) 0, sig, s, (short) (256 - s));
-
-        ASN1EncodableVector v = new ASN1EncodableVector();
-        v.add(tbs);
-        v.add(new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE));
-        v.add(new DERBitString(sig));
-
-        byte [] crt = null;
-        try {
-            Certificate c = Certificate.getInstance(new DERSequence(v));
-            crt = c.getEncoded();
-        } catch (Exception ex) {
-            ex.printStackTrace(System.out);
-        }
-
+        
+        byte [] crt = buildCRT(tbs, new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE), sig);
+        
         byte[] prefix = new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05,
             (byte) 0x53, (byte) 0x82 
