@@ -54,7 +54,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
     protected CryptonitApplet(byte[] bArray, short bOffset, byte bLength) {
         mgmt_key = KeyBuilder.buildKey(KeyBuilder.TYPE_DES,
                 KeyBuilder.LENGTH_DES3_3KEY, false);
-        ((DESKey)mgmt_key).setKey(new byte[]{
+        ((DESKey) mgmt_key).setKey(new byte[]{
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08
