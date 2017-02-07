@@ -499,23 +499,6 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
     }
 
-    public static short decodeLength(byte[] buf, short offset) {
-        byte b = buf[offset];
-        short s = buf[offset];
-        if ((b & (byte) 0x80) != 0) {
-            offset += 1;
-
-            if (b == (byte) 0x81) {
-                s = (short) (0x00FF & buf[offset]);
-            } else if (b == (byte) 0x82) {
-                s = Util.getShort(buf, offset);
-            } else {
-                ISOException.throwIt(ISO7816.SW_UNKNOWN);
-            }
-        }
-        return s;
-    }
-
     public static short lengthLength(short l) {
         return (short) ((l < 128) ? 1 : ((l < 256) ? 2 : 3));
     }
