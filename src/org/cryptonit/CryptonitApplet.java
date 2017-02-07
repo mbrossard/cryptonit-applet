@@ -524,7 +524,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         short end = (short) (off + length - 1);
 
         while ((off < end) && (buf[off] != tag)) {
-            short l = decodeLength(buf, (short) (off + 1));
+            short l = BERTLV.decodeLength(buf, (short) (off + 1));
             off += lengthLength(l) + l + 1;
         }
         return off;
@@ -635,10 +635,10 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
 
-        cur += lengthLength(decodeLength(buf, cur));
+        cur += lengthLength(BERTLV.decodeLength(buf, cur));
         short m = getTag(buf, cur, lc, (byte) 0x81);
         if (m < lc && buf[m] == (byte) 0x81) {
-            short k = decodeLength(buf, (short) (m + 1));
+            short k = BERTLV.decodeLength(buf, (short) (m + 1));
             m += lengthLength(k) + 1;
 
             byte[] signature = null;
