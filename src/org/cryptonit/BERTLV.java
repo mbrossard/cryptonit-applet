@@ -8,6 +8,12 @@ public class BERTLV {
     private byte [] buffer;
     private short begin, end, current;
 
+    public BERTLV(byte[] buffer, short begin, short end) {
+        this.buffer = buffer;
+        this.current = this.begin = begin;
+        this.end = end;
+    }
+
     public static short decodeLength(byte[] buf, short offset) {
         byte b = buf[offset];
         short s = buf[offset];
