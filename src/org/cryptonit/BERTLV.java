@@ -17,6 +17,10 @@ public class BERTLV {
         this.end = end;
     }
 
+    public short readLength() {
+        return (short) 0;
+    }
+
     public static short decodeLength(byte[] buf, short offset) {
         byte b = buf[offset];
         short s = buf[offset];
