@@ -5,6 +5,9 @@ import javacard.framework.ISOException;
 import javacard.framework.Util;
 
 public class BERTLV {
+    private byte [] buffer;
+    private short begin, end, current;
+
     public static short decodeLength(byte[] buf, short offset) {
         byte b = buf[offset];
         short s = buf[offset];
