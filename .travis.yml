@@ -1,0 +1,20 @@
+language: java
+sudo: false
+
+branches:
+  only:
+  - master
+
+os: linux
+
+cache:
+  directories:
+    - libs
+  
+matrix:
+  include:
+  - jdk: oraclejdk8
+  - jdk: openjdk7
+
+script:
+  - ant
