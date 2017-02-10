@@ -11,5 +11,9 @@ cache:
   directories:
     - lib
 
+jdk:
+  - oraclejdk8
+  - openjdk8
+
 script:
   - ant
