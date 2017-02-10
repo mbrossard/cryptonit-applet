@@ -578,7 +578,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         } else {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
-    }    
+    }
 
     private void doPrivateKeyOperation(APDU apdu) throws ISOException {
         byte[] buf = apdu.getBuffer();
