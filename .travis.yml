@@ -9,12 +9,7 @@ os: linux
 
 cache:
   directories:
-    - libs
-  
-matrix:
-  include:
-  - jdk: oraclejdk8
-  - jdk: openjdk7
+    - lib
 
 script:
   - ant
