@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="applet" name="Cryptonit Applet">
+<project xmlns:jacoco="antlib:org.jacoco.ant" basedir="." default="applet" name="Cryptonit Applet">
 
   <mkdir dir="lib"/>
   <get src="https://github.com/martinpaljak/ant-javacard/releases/download/v1.6/ant-javacard.jar" dest="lib" skipexisting="true" />
@@ -8,8 +8,10 @@
   <get src="http://central.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.56/bcprov-jdk15on-1.56.jar" dest="lib" skipexisting="true" />
   <get src="http://central.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" dest="lib" skipexisting="true" />
   <get src="http://central.maven.org/maven2/junit/junit/4.12/junit-4.12.jar" dest="lib" skipexisting="true" />
+  <get src="http://central.maven.org/maven2/org/jacoco/org.jacoco.ant/0.7.9/org.jacoco.ant-0.7.9-nodeps.jar" dest="lib" skipexisting="true" />
 
   <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="lib/ant-javacard.jar"/>
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpath="lib/org.jacoco.ant-0.7.9-nodeps.jar"/>
 
   <target name="applet">
     <javacard jckit="sdks/jc222_kit">
@@ -23,6 +25,10 @@
   <property name="main.src.dir" value="src"/>
   <property name="test.build.dir" value="build/test"/>
   <property name="test.src.dir" value="test"/>
+  <property name="jacoco.dir" location="./jacoco"/>
+  <property name="jacoco.report.dir" location="${jacoco.dir}"/>
+  <property name="jacoco.exec.file" location="${jacoco.dir}/jacoco.exec"/>
+
   <path id="classpath.main">
     <pathelement location="lib/jcardsim-3.0.4-SNAPSHOT.jar"/>
   </path>
@@ -38,28 +44,51 @@
 
   <target name="compile">
     <mkdir dir="${main.build.dir}"/>
-    <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeantruntime="false">
+    <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" debug="true" includeantruntime="false">
       <classpath refid="classpath.main"/>
     </javac>
   </target>
 
   <target name="test-compile" depends="compile">
     <mkdir dir="${test.build.dir}"/>
-    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" debug="true" includeantruntime="false">
       <classpath refid="classpath.test"/>
     </javac>
   </target>
 
   <target name="test" depends="test-compile">
-    <junit printsummary="on" haltonfailure="yes" fork="true">
-      <classpath>
-        <path refid="classpath.test"/>
-        <pathelement location="${test.build.dir}"/>
-      </classpath>
-      <formatter type="brief" usefile="false" />
-      <batchtest>
-        <fileset dir="${test.src.dir}" includes="**/*.java" />
-      </batchtest>
-    </junit>
+    <jacoco:coverage destfile="${jacoco.exec.file}">
+      <junit printsummary="on" haltonfailure="yes" fork="true">
+        <classpath>
+          <path refid="classpath.test"/>
+          <pathelement location="${test.build.dir}"/>
+        </classpath>
+        <formatter type="brief" usefile="false" />
+        <batchtest>
+          <fileset dir="${test.src.dir}" includes="**/*.java" />
+        </batchtest>
+      </junit>
+    </jacoco:coverage>
+  </target>
+
+  <target name="report" depends="test">
+    <jacoco:report>
+      <executiondata>
+        <file file="${jacoco.exec.file}"/>
+      </executiondata>
+
+      <structure name="Cryptonit">
+        <classfiles>
+          <fileset dir="${main.build.dir}"/>
+        </classfiles>
+        <sourcefiles encoding="UTF-8">
+          <fileset dir="${main.src.dir}"/>
+        </sourcefiles>
+      </structure>
+
+      <html destdir="${jacoco.report.dir}"/>
+      <csv destfile="${jacoco.report.dir}/report.csv"/>
+      <xml destfile="${jacoco.report.dir}/report.xml"/>
+    </jacoco:report>
   </target>
 </project>
