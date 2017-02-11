@@ -35,6 +35,7 @@ import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.util.encoders.Base64;
 import org.cryptonit.CryptonitApplet;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -149,6 +150,7 @@ public class PivTest {
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xA4, 0x04, 0x00, new byte[]{
             (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08
         }));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
     }
 
     @Test
@@ -180,6 +182,7 @@ public class PivTest {
 
         System.out.println("Management key authentication (part 2)");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x03, 0x9B, arg));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
     }
 
     @Test
@@ -431,6 +434,7 @@ public class PivTest {
             System.out.println("Call GET RESPONSE");
             response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
         }
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
     }
 
     @Test
@@ -474,5 +478,6 @@ public class PivTest {
             0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
             0x38, 0x37, 0x36, 0x35, 0x34, 0x33, 0x32, 0x31,
         }));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
     }
 }
