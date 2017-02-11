@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * @author Mathias Brossard
  */
-public class test {
+public class Test {
     private static String toHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
@@ -29,7 +29,7 @@ public class test {
         return toHex(arg.getBytes());
     }
 
-    public test() {
+    public Test() {
     }
 
     @Test

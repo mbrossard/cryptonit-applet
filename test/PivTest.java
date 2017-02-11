@@ -37,7 +37,7 @@ import org.junit.Test;
 /**
  * @author Mathias Brossard
  */
-public class piv {
+public class PivTest {
     private static String toHex(String prefix, byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
@@ -47,7 +47,7 @@ public class piv {
         return sb.toString();
     }
 
-    public piv() {
+    public PivTest() {
         // empty
     }
     
