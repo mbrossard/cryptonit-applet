@@ -34,11 +34,15 @@ import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.util.encoders.Base64;
 import org.cryptonit.CryptonitApplet;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * @author Mathias Brossard
  */
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PivTest {
     private static String toHex(String prefix, byte[] bytes) {
         StringBuilder sb = new StringBuilder();
