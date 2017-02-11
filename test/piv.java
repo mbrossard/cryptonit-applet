@@ -51,6 +51,17 @@ public class piv {
         // empty
     }
     
+    private static String toHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            if ((i != 0) && ((i % 32) == 0)) {
+                sb.append("\n");
+            }
+            sb.append(String.format("%02x ", bytes[i]));
+        }
+        return sb.toString();
+    }
+
     private static byte[] buildCRT(TBSCertificate tbs, AlgorithmIdentifier aid, byte[] sig) {
         ASN1EncodableVector v = new ASN1EncodableVector();
         v.add(tbs);
