@@ -29,9 +29,6 @@ public class OldTest {
         return toHex(arg.getBytes());
     }
 
-    public OldTest() {
-    }
-
     @Test
     public void main() {
         Simulator simulator = new Simulator();

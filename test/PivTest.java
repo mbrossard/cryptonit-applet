@@ -47,10 +47,6 @@ public class PivTest {
         return sb.toString();
     }
 
-    public PivTest() {
-        // empty
-    }
-    
     private static String toHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
