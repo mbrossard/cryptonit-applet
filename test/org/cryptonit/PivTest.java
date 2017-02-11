@@ -361,8 +361,7 @@ public class PivTest {
         try {
             ASN1InputStream aIn = new ASN1InputStream(buffer);
             ASN1Sequence aSeq = (ASN1Sequence) aIn.readObject();
-            AlgorithmIdentifier palgo = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE),
-                    salgo = new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE);
+            AlgorithmIdentifier salgo = new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE);
             tbs = createTBS(bOut, new SubjectPublicKeyInfo(aSeq), salgo);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
