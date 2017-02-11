@@ -272,7 +272,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 }
                 byte id = (byte) (buf[(byte) (offset + 4)] - 1);
                 if (((id == (byte) 0x2) || (id == (byte) 0x7)
-                        || (id == (byte) 0x8)) && authenticated[0] == false) {
+                        || (id == (byte) 0x8)) && !authenticated[0]) {
                     ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
                 }
                 io.sendFile(id, apdu, (short) 0);
@@ -298,7 +298,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
         }
 
-        if (authenticated[0] == false) {
+        if (!authenticated[0]) {
             ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
         }
 
@@ -384,7 +384,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if ((p1 != (byte) 0x00) || (keyMapping(p2) == (byte) 0xFF)) {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
-        if (authenticated[0] == false) {
+        if (!authenticated[0]) {
             ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
         }
         if (lc != apdu.getIncomingLength()) {
