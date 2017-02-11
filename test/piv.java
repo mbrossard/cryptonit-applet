@@ -31,11 +31,12 @@ import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.cryptonit.CryptonitApplet;
+import org.junit.Test;
 
 /**
  * @author Mathias Brossard
  */
-class piv {
+public class piv {
     private static String toHex(String prefix, byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
@@ -45,6 +46,10 @@ class piv {
         return sb.toString();
     }
 
+    public piv() {
+        // empty
+    }
+    
     private static byte[] buildCRT(TBSCertificate tbs, AlgorithmIdentifier aid, byte[] sig) {
         ASN1EncodableVector v = new ASN1EncodableVector();
         v.add(tbs);
@@ -108,7 +113,8 @@ class piv {
         return response;
     }
 
-    public static void main(String[] args) {
+    @Test
+    public void main() {
         ResponseAPDU response;
         Simulator simulator = new Simulator();
         byte[] arg;

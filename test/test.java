@@ -8,11 +8,12 @@ import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.junit.Test;
+
 /**
  * @author Mathias Brossard
  */
-
-class test {
+public class test {
     private static String toHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
@@ -24,9 +25,12 @@ class test {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        Simulator simulator = new Simulator();
+    public test() {
+    }
 
+    @Test
+    public void main() {
+        Simulator simulator = new Simulator();
         byte[] appletAIDBytes = new byte[]{
             (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03,
             (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x10,
