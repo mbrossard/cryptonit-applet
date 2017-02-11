@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Date;
 import javacard.framework.AID;
+import javacard.framework.ISO7816;
 import javacard.framework.Util;
 import javax.smartcardio.CommandAPDU;
 import javax.smartcardio.ResponseAPDU;
@@ -34,6 +35,7 @@ import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import org.bouncycastle.util.encoders.Base64;
 import org.cryptonit.CryptonitApplet;
+import org.junit.Assume;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -331,7 +333,12 @@ public class PivTest {
         }));
         arg = response.getData();
         if (arg.length < 9 || arg[3] != (byte) 0x86 || arg[4] != 0x41) {
-            System.err.println("Error EC Public key");
+            if ((short) response.getSW() == ISO7816.SW_FUNC_NOT_SUPPORTED) {
+                System.err.println("ECDSA not supported");
+                Assume.assumeTrue(false);
+            } else {
+                System.err.println("Error EC Public key");
+            }
             return;
         }
 
