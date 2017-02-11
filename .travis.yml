@@ -19,4 +19,4 @@ jdk:
 script:
 - ant
 - ant report
-- mvn exec:java
+- if [ -f jacoco/report.xml ] ; then mvn exec:java ; fi
