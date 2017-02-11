@@ -279,6 +279,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 io.sendFile(id, apdu, (short) 0);
                 return;
             default:
+                break;
         }
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
     }
@@ -418,6 +419,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             default:
                 ISOException.throwIt(ISO7816.SW_WRONG_DATA);
+                break;
         }
     }
 
