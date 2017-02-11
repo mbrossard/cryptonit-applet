@@ -360,7 +360,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
     }
 
-    private byte keyMapping(byte keyRef) {
+    private static byte keyMapping(byte keyRef) {
         switch (keyRef) {
             case (byte) 0x9A:
                 return 0;
