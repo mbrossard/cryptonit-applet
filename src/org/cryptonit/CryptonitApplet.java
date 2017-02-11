@@ -123,6 +123,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+                break;
         }
     }
 
