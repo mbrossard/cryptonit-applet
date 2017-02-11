@@ -46,6 +46,11 @@ import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PivTest {
+    private static Simulator simulator;
+    private ResponseAPDU response;
+    private byte[] arg;
+    private short sw, le;
+
     private static String toHex(String prefix, byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
@@ -128,12 +133,6 @@ public class PivTest {
                 + String.format("[sw=%04X l=%d]", response.getSW(), response.getData().length));
         return response;
     }
-
-    private static Simulator simulator;
-    
-    ResponseAPDU response;
-    byte[] arg;
-    short sw, le;
 
     @Test
     public void test_000_InitApplet() {
