@@ -25,6 +25,10 @@ public class test {
         return sb.toString();
     }
 
+    public static String toHex(String arg) {
+        return toHex(arg.getBytes());
+    }
+
     public test() {
     }
 
