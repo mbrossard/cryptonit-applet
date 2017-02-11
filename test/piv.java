@@ -30,6 +30,7 @@ import org.bouncycastle.asn1.x509.V1TBSCertificateGenerator;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.TBSCertificate;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
+import org.bouncycastle.util.encoders.Base64;
 import org.cryptonit.CryptonitApplet;
 import org.junit.Test;
 
