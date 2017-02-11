@@ -17,5 +17,6 @@ jdk:
 - openjdk7
 
 script:
+- ant
 - ant report
 - mvn exec:java
