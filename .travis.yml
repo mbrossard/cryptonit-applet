@@ -9,11 +9,13 @@ os: linux
 
 cache:
   directories:
-    - lib
+  - lib
+  - $HOME/.m2
 
 jdk:
-  - oraclejdk8
-  - openjdk7
+- oraclejdk8
+- openjdk7
 
 script:
-  - ant report
+- ant report
+- mvn exec:java

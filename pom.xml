@@ -1,0 +1,46 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <name>Cyptonit Applet</name>
+  <groupId>org.cryptonit</groupId>
+  <artifactId>cryptonit-applet</artifactId>
+  <version>1.0</version>
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>bintray</name>
+      <url>http://jcenter.bintray.com</url>
+    </repository>
+    <repository>
+      <id>typesafe</id>
+      <name>typesafe</name>
+      <url>https://bintray.com/typesafe</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.codacy</groupId>
+      <artifactId>codacy-coverage-reporter</artifactId>
+      <version>1.0.13</version>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>com.codacy.CodacyCoverageReporter</mainClass>
+          <arguments>
+            <argument>--language</argument>
+            <argument>Java</argument>
+            <argument>--coverageReport</argument>
+            <argument>jacoco/report.xml</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
