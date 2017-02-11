@@ -127,17 +127,20 @@ public class PivTest {
         return response;
     }
 
+    private static Simulator simulator;
+    
+    ResponseAPDU response;
+    byte[] arg;
+    short sw, le;
+
     @Test
-    public void main() {
-        ResponseAPDU response;
-        Simulator simulator = new Simulator();
-        byte[] arg;
+    public void test_000_InitApplet() {
+        simulator = new Simulator();
         byte[] appletAIDBytes = new byte[]{
             (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03,
             (byte) 0x08, (byte) 0x00, (byte) 0x00, (byte) 0x10,
             (byte) 0x00
         };
-        short sw, le;
         AID appletAID = new AID(appletAIDBytes, (short) 0, (byte) appletAIDBytes.length);
 
         simulator.installApplet(appletAID, CryptonitApplet.class);
@@ -145,7 +148,10 @@ public class PivTest {
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xA4, 0x04, 0x00, new byte[]{
             (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08
         }));
+    }
 
+    @Test
+    public void test_100_MgmtKeyAuthentication() {
         System.out.println("Management key authentication (part 1)");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x03, 0x9B, new byte[]{
             (byte) 0x7C, (byte) 0x02, (byte) 0x80, (byte) 0x00
@@ -173,6 +179,10 @@ public class PivTest {
 
         System.out.println("Management key authentication (part 2)");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x03, 0x9B, arg));
+    }
+
+    @Test
+    public void test_200_RsaCertificate() {        
         System.out.println("Generate RSA key (9A)");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x47, 0x00, 0x9A, new byte[]{
             (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01, (byte) 0x07
@@ -311,7 +321,10 @@ public class PivTest {
             System.out.println("Call GET RESPONSE");
             response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
         }
+    }
 
+    @Test
+    public void test_300_EcdsaCertificate() {        
         System.out.println("Generate EC P256 key (9C)");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x47, 0x00, 0x9C, new byte[]{
             (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01, (byte) 0x11
@@ -322,7 +335,7 @@ public class PivTest {
             return;
         }
 
-        prefix = new byte[]{
+        byte[] prefix = new byte[]{
             (byte) 0x30, (byte) 0x59, (byte) 0x30, (byte) 0x13, (byte) 0x06,
             (byte) 0x07, (byte) 0x2A, (byte) 0x86, (byte) 0x48, (byte) 0xCE,
             (byte) 0x3D, (byte) 0x02, (byte) 0x01, (byte) 0x06, (byte) 0x08,
@@ -330,11 +343,12 @@ public class PivTest {
             (byte) 0x03, (byte) 0x01, (byte) 0x07, (byte) 0x03, (byte) 0x42,
             (byte) 0x00
         };
-        buffer = new byte[prefix.length + 65];
+        byte[] buffer = new byte[prefix.length + 65];
         Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
         Util.arrayCopy(arg, (short) 5, buffer, (short) prefix.length, (short) 65);
 
-        bOut = new ByteArrayOutputStream();
+        TBSCertificate tbs;
+        ByteArrayOutputStream bOut = new ByteArrayOutputStream();
         try {
             ASN1InputStream aIn = new ASN1InputStream(buffer);
             ASN1Sequence aSeq = (ASN1Sequence) aIn.readObject();
@@ -346,15 +360,15 @@ public class PivTest {
             return;
         }
 
-        digest = digest(bOut, "SHA1");
+        byte[] digest = digest(bOut, "SHA1");
 
         /* ECDSA signature request */
-        sig_prefix = new byte[]{
+        byte[] sig_prefix = new byte[]{
             (byte) 0x7C, (byte) 0x18,
             (byte) 0x82, (byte) 0x00,
             (byte) 0x81, (byte) 0x14,
         };
-        sig_request = new byte[sig_prefix.length + 20];
+        byte[] sig_request = new byte[sig_prefix.length + 20];
         
         Util.arrayCopy(sig_prefix, (short) 0, sig_request, (short) 0, (short) sig_prefix.length);
         Util.arrayCopy(digest, (short) 0, sig_request, (short) (sig_prefix.length), (short) (digest.length));
@@ -362,20 +376,23 @@ public class PivTest {
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x07, 0x9C, sig_request));
 
         arg = response.getData();
-        sig = Arrays.copyOfRange(arg, 4, arg.length);
+        byte[] sig = Arrays.copyOfRange(arg, 4, arg.length);
 
-        crt = buildCRT(tbs, new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE), sig);
+        byte[] crt = buildCRT(tbs, new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE), sig);
 
         // Writing now to 5FC10A
         prefix = new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x0A,
             (byte) 0x53, (byte) 0x82 
         };
-        len = (short) (prefix.length + crt.length + 6 + postfix.length);
+        byte[] postfix = new byte[]{
+            (byte) 0x71, (byte) 0x01, (byte) 0x00, (byte) 0xFE, (byte) 0x00
+        };
+        short len = (short) (prefix.length + crt.length + 6 + postfix.length);
         buffer = new byte[len];
 
         Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
-        off = prefix.length;
+        short off = (short) prefix.length;
         buffer[off++] = (byte) (((crt.length + postfix.length + 4) >> 8) & 0xFF);
         buffer[off++] = (byte) ((crt.length + postfix.length + 4) & 0xFF);
 
@@ -387,7 +404,7 @@ public class PivTest {
         off += crt.length;
         Util.arrayCopy(postfix, (short) 0, buffer, (short) off, (short) postfix.length);
 
-        i = 1; left = buffer.length; sent = 0;
+        int i = 1; int left = buffer.length; int sent = 0;
         while(left > 0) {
             System.out.println(String.format("Uploading certificate part %d", i++));
             int cla = (left <= 255) ? 0x00 : 0x10;
@@ -408,7 +425,10 @@ public class PivTest {
             System.out.println("Call GET RESPONSE");
             response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
         }
+    }
 
+    @Test
+    public void test_999_Other() {
         System.out.println("Set Card Capabilities Container");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x07,
