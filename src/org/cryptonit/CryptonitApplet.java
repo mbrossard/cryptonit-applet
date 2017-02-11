@@ -446,7 +446,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         io.sendBuffer(buf, off, apdu);
     }
 
-    void doGenRSA(APDU apdu, byte keyRef) {
+    private void doGenRSA(APDU apdu, byte keyRef) {
         KeyPair kp = null;
         byte id = keyMapping(keyRef);
 
@@ -479,7 +479,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         io.sendBuffer(buf, (short) buf.length, apdu);
     }
 
-    void doGenEC(APDU apdu, byte keyRef, short size) {
+    private void doGenEC(APDU apdu, byte keyRef, short size) {
         KeyPair kp = null;
         byte id = keyMapping(keyRef);
         try {
