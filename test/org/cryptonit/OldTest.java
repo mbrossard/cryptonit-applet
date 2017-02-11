@@ -1,3 +1,5 @@
+package org.cryptonit;
+
 import com.licel.jcardsim.base.Simulator;
 import org.cryptonit.CryptonitApplet;
 import javacard.framework.AID;
