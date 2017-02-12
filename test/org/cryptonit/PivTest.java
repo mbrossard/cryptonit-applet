@@ -197,6 +197,7 @@ public class PivTest {
             (byte) 0x00
         };
         AID appletAID = new AID(appletAIDBytes, (short) 0, (byte) appletAIDBytes.length);
+        Assert.assertNotNull(appletAID);
 
         simulator.installApplet(appletAID, CryptonitApplet.class);
         System.out.println("Select Applet");
@@ -212,6 +213,7 @@ public class PivTest {
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x03, 0x9B, new byte[]{
             (byte) 0x7C, (byte) 0x02, (byte) 0x80, (byte) 0x00
         }));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         arg = new byte[]{
             (byte) 0x7C, (byte) 0x14,
@@ -259,6 +261,7 @@ public class PivTest {
         le = (short) (sw & 0xFF);
         System.out.println("Call GET RESPONSE");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         arg = response.getData();
         if(arg.length < (256 - s)) {
@@ -328,6 +331,7 @@ public class PivTest {
         le = (short) (sw & 0xFF);
         System.out.println("Call GET RESPONSE");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         arg = response.getData();
         Util.arrayCopy(arg, (short) 0, sig, s, (short) (256 - s));
@@ -390,8 +394,10 @@ public class PivTest {
         
         Util.arrayCopy(sig_prefix, (short) 0, sig_request, (short) 0, (short) sig_prefix.length);
         Util.arrayCopy(digest, (short) 0, sig_request, (short) (sig_prefix.length), (short) (digest.length));
+
         System.out.println("EC (9C) signature");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x87, 0x07, 0x9C, sig_request));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         arg = response.getData();
         byte[] sig = Arrays.copyOfRange(arg, 4, arg.length);
