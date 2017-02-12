@@ -76,7 +76,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         authenticated = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_DESELECT);
         rsa_cipher = Cipher.getInstance(Cipher.ALG_RSA_NOPAD, false);
         try {
-            ec_signature = Signature.getInstance((byte) 33, false);
+            ec_signature = Signature.getInstance(Signature.ALG_ECDSA_SHA, false);
         } catch (Exception e) {
         }
         io = new IOBuffer(index);
