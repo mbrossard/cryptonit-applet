@@ -24,15 +24,16 @@ public class BERTLV {
     }
 
     public static short decodeLength(byte[] buf, short offset) {
-        byte b = buf[offset];
-        short s = buf[offset];
+        short off = offset;
+        byte b = buf[off];
+        short s = buf[off];
         if ((b & (byte) 0x80) != 0) {
-            offset += 1;
+            off += 1;
 
             if (b == (byte) 0x81) {
-                s = (short) (0x00FF & buf[offset]);
+                s = (short) (0x00FF & buf[off]);
             } else if (b == (byte) 0x82) {
-                s = Util.getShort(buf, offset);
+                s = Util.getShort(buf, off);
             } else {
                 ISOException.throwIt(ISO7816.SW_UNKNOWN);
             }
