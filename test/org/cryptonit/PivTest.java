@@ -333,51 +333,8 @@ public class PivTest {
         Util.arrayCopy(arg, (short) 0, sig, s, (short) (256 - s));
         
         byte [] crt = buildCRT(tbs, new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE), sig);
-        
-        byte[] prefix = new byte[]{
-            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05,
-            (byte) 0x53, (byte) 0x82 
-        }, postfix = new byte[]{
-            (byte) 0x71, (byte) 0x01, (byte) 0x00, (byte) 0xFE, (byte) 0x00
-        };
-
-        short len = (short) (prefix.length + crt.length + 6 + postfix.length);
-        byte[] buffer = new byte[len];
-
-        Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
-        int off = prefix.length;
-        buffer[off++] = (byte) (((crt.length + postfix.length + 4) >> 8) & 0xFF);
-        buffer[off++] = (byte) ((crt.length + postfix.length + 4) & 0xFF);
-
-        buffer[off++] = (byte) 0x70;
-        buffer[off++] = (byte) 0x82;
-        buffer[off++] = (byte) ((crt.length >> 8) & 0xFF);
-        buffer[off++] = (byte) (crt.length & 0xFF);
-        Util.arrayCopy(crt, (short) 0, buffer, (short) off, (short) crt.length);
-        off += crt.length;
-        Util.arrayCopy(postfix, (short) 0, buffer, (short) off, (short) postfix.length);
-
-        int i = 1, left = buffer.length, sent = 0;
-        while(left > 0) {
-            System.out.println(String.format("Uploading certificate part %d", i++));
-            int cla = (left <= 255) ? 0x00 : 0x10;
-            int sending = (left <= 255) ? left : 255;
-            arg = Arrays.copyOfRange(buffer, sent, sent + sending);
-            response = sendAPDU(simulator, new CommandAPDU(cla, 0xDB, 0x3F, 0xFF, arg));
-            sent += sending;
-            left -= sending;
-        }
-
-        System.out.println("Read 0x5FC105 file");
-        response = sendAPDU(simulator, new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte[]{
-            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x05
-        }));
-
-        while (((sw = (short) response.getSW()) & 0xFF00) == 0x6100) {
-            le = (short) (sw & 0xFF);
-            System.out.println("Call GET RESPONSE");
-            response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
-        }
+        uploadCRT(crt, (byte) 0x05);
+        downloadCRT((byte) 0x05);
     }
 
     @Test
@@ -440,53 +397,8 @@ public class PivTest {
         byte[] sig = Arrays.copyOfRange(arg, 4, arg.length);
 
         byte[] crt = buildCRT(tbs, new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE), sig);
-
-        // Writing now to 5FC10A
-        prefix = new byte[]{
-            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x0A,
-            (byte) 0x53, (byte) 0x82 
-        };
-        byte[] postfix = new byte[]{
-            (byte) 0x71, (byte) 0x01, (byte) 0x00, (byte) 0xFE, (byte) 0x00
-        };
-        short len = (short) (prefix.length + crt.length + 6 + postfix.length);
-        buffer = new byte[len];
-
-        Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
-        short off = (short) prefix.length;
-        buffer[off++] = (byte) (((crt.length + postfix.length + 4) >> 8) & 0xFF);
-        buffer[off++] = (byte) ((crt.length + postfix.length + 4) & 0xFF);
-
-        buffer[off++] = (byte) 0x70;
-        buffer[off++] = (byte) 0x82;
-        buffer[off++] = (byte) ((crt.length >> 8) & 0xFF);
-        buffer[off++] = (byte) (crt.length & 0xFF);
-        Util.arrayCopy(crt, (short) 0, buffer, (short) off, (short) crt.length);
-        off += crt.length;
-        Util.arrayCopy(postfix, (short) 0, buffer, (short) off, (short) postfix.length);
-
-        int i = 1; int left = buffer.length; int sent = 0;
-        while(left > 0) {
-            System.out.println(String.format("Uploading certificate part %d", i++));
-            int cla = (left <= 255) ? 0x00 : 0x10;
-            int sending = (left <= 255) ? left : 255;
-            arg = Arrays.copyOfRange(buffer, sent, sent + sending);
-            response = sendAPDU(simulator, new CommandAPDU(cla, 0xDB, 0x3F, 0xFF, arg));
-            sent += sending;
-            left -= sending;
-        }
-
-        System.out.println("Read 0x5FC10A file");
-        response = sendAPDU(simulator, new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte[]{
-            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, (byte) 0x0A
-        }));
-
-        while (((sw = (short) response.getSW()) & 0xFF00) == 0x6100) {
-            le = (short) (sw & 0xFF);
-            System.out.println("Call GET RESPONSE");
-            response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
-        }
-        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
+        uploadCRT(crt, (byte) 0x0A);
+        downloadCRT((byte) 0x0A);
     }
 
     @Test
