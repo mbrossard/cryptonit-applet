@@ -506,7 +506,8 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         return (short) ((l < 128) ? 1 : ((l < 256) ? 2 : 3));
     }
 
-    public static short getTag(byte[] buf, short off, short length, byte tag) {
+    public static short getTag(byte[] buf, short offset, short length, byte tag) {
+        short off = offset;
         short end = (short) (off + length - 1);
 
         while ((off < end) && (buf[off] != tag)) {
