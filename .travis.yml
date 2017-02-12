@@ -1,6 +1,11 @@
 language: java
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
 branches:
   only:
   - master
@@ -12,9 +17,8 @@ cache:
   - lib
   - $HOME/.m2
 
-jdk:
-- oraclejdk8
-- openjdk7
+jdk: oraclejdk8
+
 
 script:
 - ant
