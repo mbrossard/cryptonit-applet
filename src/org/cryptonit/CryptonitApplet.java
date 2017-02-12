@@ -596,11 +596,6 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
         }
 
-        if (keys[id].getType() == KeyBuilder.TYPE_RSA_CRT_PRIVATE
-                || keys[id].getType() == KeyBuilder.TYPE_RSA_PRIVATE) {
-            // Add checks
-        }
-
         if ((cla != 0x0) && (cla != 0x10)) {
             ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
         }
