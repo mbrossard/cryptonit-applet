@@ -135,6 +135,44 @@ public class PivTest {
         return response;
     }
 
+    private void uploadCRT(byte[] crt, byte id) {
+        byte[] prefix = new byte[]{
+            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, id,
+            (byte) 0x53, (byte) 0x82
+        }, postfix = new byte[]{
+            (byte) 0x71, (byte) 0x01, (byte) 0x00, (byte) 0xFE, (byte) 0x00
+        };
+
+        short len = (short) (prefix.length + crt.length + 6 + postfix.length);
+        byte[] buffer = new byte[len];
+
+        Util.arrayCopy(prefix, (short) 0, buffer, (short) 0, (short) prefix.length);
+        int off = prefix.length;
+        buffer[off++] = (byte) (((crt.length + postfix.length + 4) >> 8) & 0xFF);
+        buffer[off++] = (byte) ((crt.length + postfix.length + 4) & 0xFF);
+
+        buffer[off++] = (byte) 0x70;
+        buffer[off++] = (byte) 0x82;
+        buffer[off++] = (byte) ((crt.length >> 8) & 0xFF);
+        buffer[off++] = (byte) (crt.length & 0xFF);
+        Util.arrayCopy(crt, (short) 0, buffer, (short) off, (short) crt.length);
+        off += crt.length;
+        Util.arrayCopy(postfix, (short) 0, buffer, (short) off, (short) postfix.length);
+
+        int i = 1;
+        int left = buffer.length;
+        int sent = 0;
+        while (left > 0) {
+            System.out.println(String.format("Uploading certificate 5FC1%02X part %d", id, i++));
+            int cla = (left <= 255) ? 0x00 : 0x10;
+            int sending = (left <= 255) ? left : 255;
+            arg = Arrays.copyOfRange(buffer, sent, sent + sending);
+            response = sendAPDU(simulator, new CommandAPDU(cla, 0xDB, 0x3F, 0xFF, arg));
+            sent += sending;
+            left -= sending;
+        }
+    }
+
     @Test
     public void test000InitApplet() {
         simulator = new Simulator();
