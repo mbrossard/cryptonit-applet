@@ -173,6 +173,21 @@ public class PivTest {
         }
     }
 
+    private void downloadCRT(byte id) {
+        int i = 1;
+
+        System.out.println(String.format("Download certificate 0x5FC1%02X file part %d", id, i++));
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte[]{
+            (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, id
+        }));
+
+        while (((sw = (short) response.getSW()) & 0xFF00) == 0x6100) {
+            le = (short) (sw & 0xFF);
+            System.out.println(String.format("Download certificate 0x5FC1%02X file part %d", id, i++));
+            response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
+        }
+    }
+
     @Test
     public void test000InitApplet() {
         simulator = new Simulator();
