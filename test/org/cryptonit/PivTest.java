@@ -171,6 +171,7 @@ public class PivTest {
             sent += sending;
             left -= sending;
         }
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
     }
 
     private void downloadCRT(byte id) {
@@ -186,6 +187,7 @@ public class PivTest {
             System.out.println(String.format("Download certificate 0x5FC1%02X file part %d", id, i++));
             response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
         }
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
     }
 
     @Test
@@ -295,6 +297,7 @@ public class PivTest {
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x20, 0x00, 0x80, new byte[]{
             0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
         }));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         /* RSA signature request */
         byte[] sig_request = new byte[266], sig_prefix = new byte[]{
@@ -312,6 +315,7 @@ public class PivTest {
         System.out.println("RSA signature file (chained APDUs) first command");
         arg = Arrays.copyOfRange(sig_request, 0, 255);
         response = sendAPDU(simulator, new CommandAPDU(0x10, 0x87, 0x07, 0x9A, arg));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         System.out.println("RSA signature file (chained APDUs) second command");
         arg = Arrays.copyOfRange(sig_request, 255, sig_request.length);
