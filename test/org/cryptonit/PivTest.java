@@ -85,6 +85,7 @@ public class PivTest {
             System.out.println("");
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
+            Assert.fail();
         }
         return crt;
     }
@@ -98,6 +99,7 @@ public class PivTest {
             digest = md.digest();
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
+            Assert.fail();
         }
         return digest;
     }
@@ -234,6 +236,8 @@ public class PivTest {
             cipher.doFinal(response.getData(), 4, 8, arg, 4);
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
+            Assert.fail();
+            return;
         }
 
         System.out.println("Management key authentication (part 2)");
@@ -250,6 +254,7 @@ public class PivTest {
         arg = response.getData();
         if (arg.length < 9 || arg[7] != 0x1 || arg[8] != 0x0) {
             System.err.println("Error modulus");
+            Assert.fail();
             return;
         }
 
@@ -267,6 +272,7 @@ public class PivTest {
         arg = response.getData();
         if(arg.length < (256 - s)) {
             System.err.println("Error remaining modulus");
+            Assert.fail();
             return;            
         }
         Util.arrayCopy(arg, (short) 0, n, (short) (s + 1), (short) (256 - s));
@@ -274,6 +280,7 @@ public class PivTest {
         s = (short) (256 - s);
         if (arg[s] != (byte) 0x82 || arg[s + 1] != (byte) 0x3) {
             System.err.println("Error exponent");
+            Assert.fail();
             return;
         }
         Util.arrayCopy(arg, (short) (s + 2), e, (short) 0, (short) 3);
@@ -287,6 +294,7 @@ public class PivTest {
             tbs = createTBS(bOut, new SubjectPublicKeyInfo(palgo, rsa_pub), salgo);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
+            Assert.fail();
             return;
         }
 
@@ -327,6 +335,7 @@ public class PivTest {
             Util.arrayCopy(arg, (short) 8, sig, (short) 0, s);
         } else {
             System.err.println("Error in signature");
+            Assert.fail();
             return;
         }
 
@@ -382,6 +391,7 @@ public class PivTest {
             tbs = createTBS(bOut, new SubjectPublicKeyInfo(aSeq), salgo);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
+            Assert.fail();
             return;
         }
 
