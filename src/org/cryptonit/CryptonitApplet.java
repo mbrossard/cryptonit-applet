@@ -400,13 +400,13 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         }
 
         switch (buf[(short) (offset + 4)]) {
-            case 0x07:
+            case 0x07: // RSA: 2048
                 doGenRSA(apdu, buf[ISO7816.OFFSET_P2]);
                 break;
-            case 0x11:
+            case 0x11: // ECC: Curve P-256
                 doGenEC(apdu, buf[ISO7816.OFFSET_P2], (short) 256);
                 break;
-            case 0x14:
+            case 0x14: // ECC: Curve P-384
                 doGenEC(apdu, buf[ISO7816.OFFSET_P2], (short) 384);
                 break;
             default:
