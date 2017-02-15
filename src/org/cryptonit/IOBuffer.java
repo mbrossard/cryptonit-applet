@@ -83,7 +83,8 @@ public class IOBuffer {
             ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
 
-        short le = apdu.setOutgoing(), r = 0;
+        short le = apdu.setOutgoing();
+        short r = 0;
         if (le == 0) {
             le = (short) (APDU.getOutBlockSize() - 2);
         }
