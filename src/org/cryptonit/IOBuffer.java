@@ -42,7 +42,8 @@ public class IOBuffer {
     }
 
     public void sendBuffer(byte[] buf, short length, APDU apdu) {
-        short le = apdu.setOutgoing(), r = 0;
+        short le = apdu.setOutgoing();
+        short r = 0;
 
         if (le == 0) {
             le = (short) (APDU.getOutBlockSize() - 2);
