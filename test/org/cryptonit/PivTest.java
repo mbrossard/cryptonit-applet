@@ -437,6 +437,7 @@ public class PivTest {
             (byte) 0xFB, (byte) 0x00, (byte) 0xFC, (byte) 0x00, (byte) 0xFD,
             (byte) 0x00, (byte) 0xFE, (byte) 0x00
         }));                
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         System.out.println("Set CHUID");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xDB, 0x3F, 0xFF, new byte[]{
@@ -455,6 +456,7 @@ public class PivTest {
             (byte) 0x30, (byte) 0x31, (byte) 0x3E, (byte) 0x00, (byte) 0xFE,
             (byte) 0x00
         }));                
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         System.out.println("Change PIN");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x24, 0x00, 0x80, new byte[]{
