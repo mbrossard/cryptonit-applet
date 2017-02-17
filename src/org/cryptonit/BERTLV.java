@@ -18,6 +18,10 @@ public class BERTLV {
         this.end = end;
     }
 
+    public short getOffset() {
+        return current;
+    }
+
     public short readLength() {
         byte b = buffer[current];
         short s = (short) buffer[current];
