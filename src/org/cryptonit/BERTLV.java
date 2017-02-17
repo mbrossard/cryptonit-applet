@@ -19,9 +19,27 @@ public class BERTLV {
     }
 
     public short readLength() {
+        byte b = buffer[current];
         short s = (short) buffer[current];
         current += 1;
 
+        if ((b & (byte) 0x80) != 0) {
+            if (b == (byte) 0x81) {
+                if (current >= end) {
+                    ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+                }
+                s = (short) (0x00FF & buffer[current]);
+                this.current += 1;
+            } else if (b == (byte) 0x82) {
+                if (current >= (short) (end + 1)) {
+                    ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+                }
+                s = Util.getShort(buffer, current);
+                this.current += 2;
+            } else {
+                ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+            }
+        }
         return s;
     }
 
