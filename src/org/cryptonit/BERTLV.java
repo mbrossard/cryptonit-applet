@@ -23,6 +23,9 @@ public class BERTLV {
     }
 
     public short readLength() {
+        if (current >= end) {
+            ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+        }
         byte b = buffer[current];
         short s = (short) buffer[current];
         current += 1;
