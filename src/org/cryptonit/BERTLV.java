@@ -19,8 +19,9 @@ public class BERTLV {
     }
 
     public short readLength() {
-        short s = this.buffer[this.current];
-        this.current += 1;
+        short s = (short) buffer[current];
+        current += 1;
+
         return s;
     }
 
