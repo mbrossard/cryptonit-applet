@@ -136,7 +136,7 @@ public class PivTest {
         return response;
     }
 
-    private void uploadCRT(byte[] crt, byte id) {
+    private short uploadCRT(byte[] crt, byte id) {
         byte[] prefix = new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, id,
             (byte) 0x53, (byte) 0x82
@@ -173,6 +173,7 @@ public class PivTest {
             left -= sending;
         }
         Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
+        return (short) (8 + crt.length + postfix.length);
     }
 
     private void downloadCRT(byte id) {
