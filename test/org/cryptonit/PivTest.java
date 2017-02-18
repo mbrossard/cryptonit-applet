@@ -176,20 +176,24 @@ public class PivTest {
         return (short) (8 + crt.length + postfix.length);
     }
 
-    private void downloadCRT(byte id) {
+    private short downloadCRT(byte id) {
         int i = 1;
+        short r = 0;
 
         System.out.println(String.format("Download certificate 0x5FC1%02X file part %d", id, i++));
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xCB, 0x3F, 0xFF, new byte[]{
             (byte) 0x5C, (byte) 0x03, (byte) 0x5F, (byte) 0xC1, id
         }));
+        r += response.getData().length;
 
         while (((sw = (short) response.getSW()) & 0xFF00) == 0x6100) {
             le = (short) (sw & 0xFF);
             System.out.println(String.format("Download certificate 0x5FC1%02X file part %d", id, i++));
             response = sendAPDU(simulator, new CommandAPDU(0x00, 0xC0, 0x00, 0x00, new byte[]{}, le));
+            r += response.getData().length;
         }
         Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
+        return r;
     }
 
     @Test
