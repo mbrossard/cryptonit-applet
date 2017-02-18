@@ -22,6 +22,11 @@ public class BERTLV {
         return current;
     }
 
+    public short rewind() {
+        current = begin;
+        return current;
+    }
+
     public short readLength() {
         if (current >= end) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
