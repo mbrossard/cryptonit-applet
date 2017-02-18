@@ -354,8 +354,9 @@ public class PivTest {
         Util.arrayCopy(arg, (short) 0, sig, s, (short) (256 - s));
         
         byte [] crt = buildCRT(tbs, new AlgorithmIdentifier(PKCSObjectIdentifiers.sha256WithRSAEncryption, DERNull.INSTANCE), sig);
-        uploadCRT(crt, (byte) 0x05);
-        downloadCRT((byte) 0x05);
+        short a = uploadCRT(crt, (byte) 0x05);
+        short b = downloadCRT((byte) 0x05);
+        Assert.assertTrue(a == b);
     }
 
     @Test
