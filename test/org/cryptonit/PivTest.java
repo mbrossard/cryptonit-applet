@@ -422,8 +422,9 @@ public class PivTest {
         byte[] sig = Arrays.copyOfRange(arg, 4, arg.length);
 
         byte[] crt = buildCRT(tbs, new AlgorithmIdentifier(X9ObjectIdentifiers.ecdsa_with_SHA1, DERNull.INSTANCE), sig);
-        uploadCRT(crt, (byte) 0x0A);
-        downloadCRT((byte) 0x0A);
+        short a = uploadCRT(crt, (byte) 0x0A);
+        short b = downloadCRT((byte) 0x0A);
+        Assert.assertTrue(a == b);
     }
 
     @Test
