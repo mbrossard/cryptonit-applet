@@ -30,6 +30,13 @@ public class BERTLV {
         return current;
     }
 
+    public short skip(short offset) {
+        if (((short) (current + offset)) >= end) {
+            ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+        }        
+        return current += offset;
+    }
+
     public short readLength() {
         if (current >= end) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
