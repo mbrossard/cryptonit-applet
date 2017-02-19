@@ -256,29 +256,25 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (buf[offset] != (byte) 0x5C) {
             ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
         }
-        switch (buf[(short) (offset + 1)]) {
-            case 0x1:
-                if (buf[(short) (offset + 2)] == (byte) 0x7E) {
-                    io.sendFile(FileIndex.DISCOVERY, apdu, (short) 0);
-                    return;
-                }
-                break;
-            case 0x3:
-                if ((buf[(short) (offset + 2)] != (byte) 0x5F)
-                        || (buf[(short) (offset + 3)] != (byte) 0xC1)
-                        || (buf[(short) (offset + 4)] == (byte) 0x4)
-                        || (buf[(short) (offset + 4)] > (byte) 0xA)) {
-                    ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
-                }
-                byte id = (byte) (buf[(byte) (offset + 4)] - 1);
-                if (((id == (byte) 0x2) || (id == (byte) 0x7)
-                        || (id == (byte) 0x8)) && !authenticated[0]) {
-                    ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
-                }
-                io.sendFile(id, apdu, (short) 0);
+        if (buf[(short) (offset + 1)] == 0x1) {
+            if (buf[(short) (offset + 2)] == (byte) 0x7E) {
+                io.sendFile(FileIndex.DISCOVERY, apdu, (short) 0);
                 return;
-            default:
-                break;
+            }
+        } else if(buf[(short) (offset + 1)] == 0x3) {
+            if ((buf[(short) (offset + 2)] != (byte) 0x5F)
+                    || (buf[(short) (offset + 3)] != (byte) 0xC1)
+                    || (buf[(short) (offset + 4)] == (byte) 0x4)
+                    || (buf[(short) (offset + 4)] > (byte) 0xA)) {
+                ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
+            }
+            byte id = (byte) (buf[(byte) (offset + 4)] - 1);
+            if (((id == (byte) 0x2) || (id == (byte) 0x7)
+                    || (id == (byte) 0x8)) && !authenticated[0]) {
+                ISOException.throwIt(ISO7816.SW_SECURITY_STATUS_NOT_SATISFIED);
+            }
+            io.sendFile(id, apdu, (short) 0);
+            return;
         }
         ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
     }
