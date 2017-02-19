@@ -323,31 +323,23 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                     || (id > (byte) 0x0A)) {
                 ISOException.throwIt(ISO7816.SW_FILE_NOT_FOUND);
             }
-            if (buf[(short) (offset + 5)] != (byte) 0x53) {
-                ISOException.throwIt(ISO7816.SW_DATA_INVALID);
-            }
-
             offset += 5;
         } else if (buf[offset] == (byte) 0x7E) {
             id = FileIndex.DISCOVERY;
+            offset += 1;
         } else {
             ISOException.throwIt(ISO7816.SW_FUNC_NOT_SUPPORTED);
             return;
         }
-
-        short l = (short) buf[offset];
-        short off = (short) (offset + 1);
-        if ((buf[off] & (byte) 0x80) == 0) {
-            off += 1;
-        } else if (buf[off] == (byte) 0x81) {
-            l = (short) (buf[(short) (off + 1)]);
-            off += 2;
-        } else if (buf[off] == (byte) 0x82) {
-            l = Util.getShort(buf, (short) (off + 1));
-            off += 3;
-        } else {
-            ISOException.throwIt(ISO7816.SW_UNKNOWN);
+        if (buf[offset] != (byte) 0x53) {
+            ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
+        
+        BERTLV btlv = new BERTLV(buf, (short) (offset + 1),
+                (short) (apdu.getOffsetCdata() + lc));
+        short l = btlv.readLength();
+        short off = btlv.getOffset();
+
         io.createFile(id, (short) (l + (off - offset)));
         io.receiveFile(buf, offset, (short) (lc - (offset - apdu.getOffsetCdata())));
 
