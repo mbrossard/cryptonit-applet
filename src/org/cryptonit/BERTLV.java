@@ -7,13 +7,16 @@ import javacard.framework.Util;
 /**
  * @author Mathias Brossard
  */
+
 public class BERTLV {
     final private byte [] buffer;
+    final private short begin;
     final private short end;
     private short current;
 
     public BERTLV(byte[] buffer, short begin, short end) {
         this.buffer = buffer;
+        this.begin = begin;
         this.current = begin;
         this.end = end;
     }
