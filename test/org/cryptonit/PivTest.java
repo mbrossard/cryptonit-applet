@@ -125,8 +125,8 @@ public class PivTest {
         System.out.println();
 
         return tbs;
-    }    
-    
+    }
+
     private static ResponseAPDU sendAPDU(Simulator simulator, CommandAPDU command) {
         ResponseAPDU response;
         System.out.println(toHex(" > ", command.getBytes()));
@@ -443,7 +443,7 @@ public class PivTest {
             (byte) 0x00, (byte) 0xF7, (byte) 0x00, (byte) 0xFA, (byte) 0x00,
             (byte) 0xFB, (byte) 0x00, (byte) 0xFC, (byte) 0x00, (byte) 0xFD,
             (byte) 0x00, (byte) 0xFE, (byte) 0x00
-        }));                
+        }));
         Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         System.out.println("Set CHUID");
@@ -462,7 +462,7 @@ public class PivTest {
             (byte) 0x30, (byte) 0x33, (byte) 0x30, (byte) 0x30, (byte) 0x31,
             (byte) 0x30, (byte) 0x31, (byte) 0x3E, (byte) 0x00, (byte) 0xFE,
             (byte) 0x00
-        }));                
+        }));
         Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
         System.out.println("Change PIN");

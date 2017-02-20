@@ -261,7 +261,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
                 io.sendFile(FileIndex.DISCOVERY, apdu, (short) 0);
                 return;
             }
-        } else if(buf[(short) (offset + 1)] == 0x3) {
+        } else if (buf[(short) (offset + 1)] == 0x3) {
             if ((buf[(short) (offset + 2)] != (byte) 0x5F)
                     || (buf[(short) (offset + 3)] != (byte) 0xC1)
                     || (buf[(short) (offset + 4)] == (byte) 0x4)
@@ -334,7 +334,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         if (buf[offset] != (byte) 0x53) {
             ISOException.throwIt(ISO7816.SW_DATA_INVALID);
         }
-        
+
         BERTLV btlv = new BERTLV(buf, (short) (offset + 1),
                 (short) (apdu.getOffsetCdata() + lc));
         short l = btlv.readLength();
@@ -520,6 +520,7 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
         byte[] buf = apdu.getBuffer();
         short lc = apdu.setIncomingAndReceive();
         short offset = apdu.getOffsetCdata();
+
         if ((lc == (short) 4) && (Util.arrayCompare(buf, offset, new byte[]{
             (byte) 0x7C, (byte) 0x02, (byte) 0x80, (byte) 0x00
         }, (short) 0, (short) 4) == (short) 0)) {
