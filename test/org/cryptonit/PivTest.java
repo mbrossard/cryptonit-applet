@@ -472,6 +472,12 @@ public class PivTest {
         }));
         Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
 
+        System.out.println("Generate key in invalid slot (9F)");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0x47, 0x00, 0x9F, new byte[]{
+            (byte) 0xAC, (byte) 0x03, (byte) 0x80, (byte) 0x01, (byte) 0x11
+        }));
+        Assert.assertTrue((short) response.getSW() == ISO7816.SW_INCORRECT_P1P2);
+
         System.out.println("Verify PIN");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0x20, 0x00, 0x80, new byte[]{
             0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
