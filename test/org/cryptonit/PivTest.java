@@ -471,5 +471,11 @@ public class PivTest {
             0x38, 0x37, 0x36, 0x35, 0x34, 0x33, 0x32, 0x31,
         }));
         Assert.assertTrue((short) response.getSW() == ISO7816.SW_NO_ERROR);
+
+        System.out.println("Verify PIN");
+        response = sendAPDU(simulator, new CommandAPDU(0x00, 0x20, 0x00, 0x80, new byte[]{
+            0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
+        }));
+        Assert.assertTrue((short) response.getSW() == (CryptonitApplet.SW_PIN_TRIES_REMAINING | 4));
     }
 }
