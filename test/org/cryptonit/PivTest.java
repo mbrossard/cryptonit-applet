@@ -207,7 +207,7 @@ public class PivTest {
         AID appletAID = new AID(appletAIDBytes, (short) 0, (byte) appletAIDBytes.length);
         Assert.assertNotNull(appletAID);
 
-        simulator.installApplet(appletAID, CryptonitApplet.class);
+        Assert.assertNotNull(simulator.installApplet(appletAID, CryptonitApplet.class));
         System.out.println("Select Applet");
         response = sendAPDU(simulator, new CommandAPDU(0x00, 0xA4, 0x04, 0x00, new byte[]{
             (byte) 0xA0, (byte) 0x00, (byte) 0x00, (byte) 0x03, (byte) 0x08
