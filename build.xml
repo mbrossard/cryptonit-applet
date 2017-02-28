@@ -13,8 +13,10 @@
   <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="lib/ant-javacard.jar"/>
   <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpath="lib/org.jacoco.ant-0.7.9-nodeps.jar"/>
 
+  <property name="jc.sdk" value="jc222_kit"/>
+
   <target name="applet">
-    <javacard jckit="sdks/jc222_kit">
+    <javacard jckit="sdks/${jc.sdk}">
       <cap output="Cryptonit.cap" sources="src/org/cryptonit" classes="classes">
         <applet class="org.cryptonit.CryptonitApplet" aid="A0:00:00:03:08:00:00:10:00"/>
       </cap>
