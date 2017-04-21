@@ -438,14 +438,18 @@ public class CryptonitApplet extends Applet implements ExtendedLength {
             }
             ISOException.throwIt(ISO7816.SW_UNKNOWN);
         }
-        if (kp != null) {
-            kp.genKeyPair();
-            if (keys[id] != null) {
-                keys[id].clearKey();
-            }
-            keys[id] = kp.getPrivate();
-            sendRSAPublicKey(apdu, (RSAPublicKey) kp.getPublic());
+
+        if (kp == null) {
+            ISOException.throwIt(ISO7816.SW_UNKNOWN);
+            return;
         }
+
+        kp.genKeyPair();
+        if (keys[id] != null) {
+            keys[id].clearKey();
+        }
+        keys[id] = kp.getPrivate();
+        sendRSAPublicKey(apdu, (RSAPublicKey) kp.getPublic());
     }
 
     private void sendECPublicKey(APDU apdu, ECPublicKey key) {
