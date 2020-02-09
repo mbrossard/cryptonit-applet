@@ -13,11 +13,11 @@
   <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="lib/ant-javacard.jar"/>
   <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpath="lib/org.jacoco.ant-0.7.9-nodeps.jar"/>
 
-  <property name="jc.sdk" value="jc222_kit"/>
+  <property name="jc.sdk" value="jc305u3_kit"/>
 
   <target name="applet">
     <javacard jckit="sdks/${jc.sdk}">
-      <cap output="Cryptonit.cap" sources="src/org/cryptonit" classes="classes">
+      <cap output="Cryptonit.cap" sources="src/org/cryptonit" classes="classes" javaversion="1.7">
         <applet class="org.cryptonit.CryptonitApplet" aid="A0:00:00:03:08:00:00:10:00"/>
       </cap>
     </javacard>
@@ -30,6 +30,8 @@
   <property name="jacoco.dir" location="./jacoco"/>
   <property name="jacoco.report.dir" location="${jacoco.dir}"/>
   <property name="jacoco.exec.file" location="${jacoco.dir}/jacoco.exec"/>
+  <property name="ant.build.javac.source" value="1.7"/>
+  <property name="ant.build.javac.target" value="1.7"/>
 
   <path id="classpath.main">
     <pathelement location="lib/jcardsim-3.0.4-SNAPSHOT.jar"/>
