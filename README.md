@@ -6,3 +6,6 @@ Compile the .cap file or download the pre-compiled one. For cap file compilation
 
 ### Use
 The applet can be used through OpenSC pksc11-tool, or PKCS Admin GUI tool (https://sourceforge.net/projects/pkcs11admin/) or with Cryptonit GUI tool (https://sourceforge.net/projects/cryptonit/files/latest/download). More on using the applets can be found at OpenSC wiki (https://github.com/OpenSC/OpenSC/wiki/Using-smart-cards-with-applications). Both GUI tools need to have PKCS11 driver specified, so you have to download OpenSC (driver locations here https://github.com/OpenSC/OpenSC/wiki/Installing-OpenSC-PKCS%2311-Module-in-Firefox,-Step-by-Step). 
+
+### Default values
+Default User PIN (in hex):  0x3132333435363738
